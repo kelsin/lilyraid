@@ -1,0 +1,35 @@
+<% inside_layout('master') do -%>
+  <table class="menu">
+    <tr>
+      <% if @current_account %>
+        <td>
+          <%= link_to("Home", raids_url) %>
+        </td>
+        <td>
+          <%= link_to("New Raid", new_raid_url) %>
+        </td>
+        <td>
+          <%= link_to("Account", account_url(@current_account)) %>
+        </td>
+        <td>
+          <%= link_to("Member List", accounts_url) %>
+        </td>
+        <td>
+          <%= link_to("Loot", :controller => "list", :action => "index") %>
+        </td>
+        <td>
+          <%= link_to("Calendars", :controller => "calendar", :action => "index") %>
+        </td>
+        <% if @current_account.admin %>
+          <td>
+            <%= link_to("Admin", cclasses_url) %>
+          </td>
+        <% end %>
+        <td>
+          <%= link_to("Log Out", :controller => "login", :action => "logout") %>
+        </td>
+      <% end %>
+    </tr>
+  </table>
+  <%= yield %>
+<% end -%>

@@ -1,0 +1,28 @@
+<% inside_layout('master') do -%>
+  <table class="menu">
+    <tr>
+      <td>
+        <%= link_to("Home", raids_url) %>
+      </td>
+      <td>
+        <%= link_to("Classes", cclasses_url) %>
+      </td>
+      <td>
+        <%= link_to("Races", races_url) %>
+      </td>
+      <td>
+        <%= link_to("Slots", slots_url) %>
+      </td>
+      <td>
+        <%= link_to("Instances", instances_url) %>
+      </td>
+      <td>
+        <%= link_to("Templates", templates_url) %>
+      </td>
+      <td>
+        <%= link_to("Log Out", :controller => "login", :action => "logout") %>
+      </td>
+    </tr>
+  </table>
+  <%= yield %>
+<% end -%>
