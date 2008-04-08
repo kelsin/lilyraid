@@ -1,0 +1,80 @@
+class SlotsController < ApplicationController
+    before_filter(:load_raid)
+    before_filter(:load_list, :only => [:update, :destroy])
+    before_filter(:load_slots, :only => [:index])
+    before_filter(:load_slot, :only => [:edit, :destroy, :update])
+
+    def index
+        respond_to do |format|
+            format.html
+            format.xml { render :xml => @slots.to_xml }
+        end
+    end
+
+    def edit
+        respond_to do |format|
+            format.js
+        end
+    end
+
+    def update
+        if @current_account.can_edit(@raid)
+            if params[:from_slot_id]
+                @from_slot = @raid.slots.find(params[:from_slot_id])
+
+                if @slot.accept(@from_slot.signup)
+                    @slot.signup = @from_slot.signup
+                    @from_slot.signup = nil
+                    @from_slot.save
+                    @slot.save
+                    @signup = nil
+                end
+            elsif params[:from_signup_id]
+                @signup = @raid.signups.find(params[:from_signup_id])
+
+                if @slot.accept(@signup)
+                    @slot.signup = @signup
+                    @slot.save
+                    @from_slot = nil
+                end
+            end
+            
+            @raid.reload
+
+            respond_to do |format|
+                format.html { redirect_to raid_url(@raid) }
+                format.js
+                format.xml { render :xml => @slot.to_xml }
+            end
+        end
+    end
+
+    def destroy
+        @signup = @slot.signup
+        @slot.signup = nil
+        @slot.save
+
+        respond_to do |format|
+            format.html { redirect_to raid_url(@raid) }
+            format.js
+        end
+    end
+
+    private
+
+    def load_raid
+        @raid = Raid.find(params[:raid_id])
+    end
+
+    def load_list
+        @list = List.get_list("Master")
+    end
+
+    def load_slots
+        @slots = @raid.slots.find(:all, :order => :name)
+    end
+
+    def load_slot
+        @slot = @raid.slots.find(params[:id])
+    end
+end

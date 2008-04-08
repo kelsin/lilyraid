@@ -1,0 +1,136 @@
+<% @title="DotA Raid Signup" %>
+
+<% if flash[:error] %>
+  <p style="color: red;"><%= flash[:error] %></p>
+<% end %>
+
+<div id="raid">
+  <%= calendar_date_select_includes "silver" %>
+  <table class="info">
+    <tr>
+      <th></th>
+      <td><h1><%= @raid %></h1></td>
+    </tr>
+    <% if @current_account.can_edit(@raid) -%>
+      <tr>
+        <th></th>
+        <td><%= link_to("Edit", edit_raid_url(@raid)) %></td>
+      </tr>
+    <% end -%>
+    <tr>
+      <th>Created By:</th>
+      <td><%= @raid.account.name %></td>
+    </tr>
+    <tr>
+      <th>Date:</th>
+      <td><%= @raid.date.to_s(:raid) %></td>
+    </tr>
+    <tr>
+      <th>Needs resser:</th>
+      <td><%= @raid.require_resser ? "Yes" : "No" %></td>
+    </tr>
+    <tr>
+      <th>Levels:</th>
+      <td>
+        <%= @raid.min_level %>
+        <% if @raid.max_level != @raid.min_level %> to <%= @raid.max_level %><% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>Signups:</th>
+      <td><%= @raid.signups.size %> / <%= @raid.instance.max_number %></td>
+    </tr>
+    <% if !@raid.loot.blank? -%>
+      <tr>
+        <th>Loot rules:</th>
+        <td><%= @raid.loot %></td>
+      </tr>
+    <% end -%>
+    <% if !@raid.notes.blank? -%>
+      <tr>
+        <th>Notes:</th>
+        <td><%= @raid.notes %></td>
+      </tr>
+    <% end -%>
+    <% if @raid.is_open -%>
+      <tr>
+        <th></th>
+        <td>
+          <%= render(:parial => "signups/form",
+                     :locals => { :signup => @signup,
+                         :avail_chars => @characters,
+                         :raid => @raid }) %>
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td id="slots">
+          <% @raid.each_group do |group| -%>
+            <% render(:layout => "shared/box",
+                      :locals => { :title => "Group #{cycle(*(1..8).to_a)}" }) do %>
+              <%= render(:partial => "slots/slot", :collection => group) %>
+            <% end %>
+          <% end -%>
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td id="signups">
+          <div id="waiting_list">
+            <%= render(:partial => "signups/waiting_list",
+                       :layout => "shared/box",
+                       :locals => { 
+                           :waiting_list => @raid.waiting_list,
+                           :raid => @raid
+                       }) %>
+          </div>
+          <div id="needed">
+            <%= render(:partial => "signups/needed",
+                       :layout => "shared/box",
+                       :locals => {
+                           :needed => @raid.needed,
+                           :title => "Needed"
+                       }) %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td>
+          <div id="loot_list">
+            <%= render(:partial => "loots/list",
+                       :locals => {
+                           :list => @list,
+                           :raid => @raid
+                       }) %>
+          </div>
+          <div id="item_list">
+            <% render(:layout => "shared/box", :locals => { :title => "Item History" }) do %>
+              <%= render(:partial => "loots/loot",
+                         :collection => @raid.loots) %> <%#Loot.from(@raid)) %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <%= render(:partial => "loots/form",
+                 :locals => { :raid => @raid }) if @current_account.can_edit(@raid) %>
+      <% if @current_account.admin && @admin_characters.length > 0 -%>
+        <tr>
+          <th></th>
+          <td><h2>Add a Character</h2></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <%= render(:partial => "signups/form",
+                       :locals => { :signup => @admin_signup,
+                           :avail_chars => @admin_characters,
+                           :raid => @raid }) %>
+          </td>
+        </tr>
+      <% end -%>
+    <% else -%>
+      <tr><th></th><td>Not yet open for signups</td></tr>
+    <% end -%>
+  </table>
+</div>

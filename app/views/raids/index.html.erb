@@ -1,0 +1,20 @@
+<% @title="DotA Raid Signup" %>
+
+<table class="dota">
+  <tr>
+    <th class="raidname">Name</th>
+    <th>Date</th>
+    <th>Requirements</th>
+    <th>What's Needed</th>
+  </tr>
+  <%= render(:partial => "raid", :collection => @raids) %>
+  <tr>
+    <td align="left" colspan="5">
+      <% if @old %>
+        <%= link_to "See New Raids", :old => false %>
+      <% else %>
+        <%= link_to "See Old Raids", :old => true %>
+      <% end %>
+    </td>
+  </tr>
+</table>

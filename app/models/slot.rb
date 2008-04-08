@@ -1,0 +1,82 @@
+class Slot < ActiveRecord::Base
+    belongs_to :raid
+    belongs_to :signup
+
+    belongs_to :role
+    belongs_to :cclass
+
+    def eql?(o)
+        o.is_a?(Slot) && self.role_id == o.role_id && self.cclass_id == o.cclass_id
+    end
+
+    def hash
+        "#{self.role.to_s}:#{self.cclass.to_s}".hash
+    end
+
+    def <=>(slot)
+        if self.cclass != nil && slot.cclass != nil
+            # Both have a cclass have to compare
+            if self.role != nil && slot.role != nil
+                # Both have both
+                comp = self.cclass <=> slot.cclass
+                if comp == 0
+                    self.role <=> slot.role
+                else
+                    comp
+                end
+            elsif self.role != nil
+                -1
+            elsif slot.role != nil
+                1
+            else
+                self.cclass <=> slot.cclass
+            end
+        elsif self.cclass != nil
+            -1
+        elsif slot.cclass != nil
+            1
+        else
+            # Both don't have a cclass, compare roles
+            if self.role != nil && slot.role != nil
+                # Both have a slot type, compare them
+                self.role <=> slot.role
+            elsif self.role != nil
+                -1
+            elsif slot.role != nil
+                1
+            else
+                0
+            end
+        end
+    end            
+
+    def accept(su)
+        if closed
+            false
+        elsif role == nil and cclass == nil
+            true
+        elsif cclass == nil and su.roles.member?(role)
+            true
+        elsif role == nil and cclass == su.character.cclass
+            true
+        elsif su.roles.member?(role) and cclass == su.character.cclass
+            true
+        else
+            false
+        end            
+    end
+
+    def display
+        if closed
+            "Closed"
+        elsif role == nil and cclass == nil
+            "Open"
+        elsif role == nil
+            cclass.to_s
+        elsif cclass == nil
+            role.to_s
+        else
+            "#{cclass} #{role}"
+        end
+    end
+end

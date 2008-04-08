@@ -1,0 +1,257 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.fieldWithErrors {
+    padding: 2px;
+    background-color: red;
+    display: inline;
+}
+
+body{
+	background-color: #17000A;
+	background-image: url("/images/bg.gif");
+	background-repeat: repeat-x;
+	color: #fff;
+	padding-left: 20px;
+	font-family: arial;
+	font-size: 13px;
+    padding-bottom: 100px;
+}
+
+p {
+    width: 600px;
+    margin: 20px;
+}
+
+p.note {
+    font-size: .8em;
+    color: #dddddd;
+    margin: 0px;
+    width: auto;
+}
+
+span.note {
+    color: #aaa;
+}
+
+table.dota {
+	width: 900px;
+	padding-top: 15px;
+	border-collapse: collapse;
+}
+
+table.character {
+	margin: 20px 0px 20px 0px;
+	border-spacing: 0px;
+	border: 2px solid yellow;
+	height: 400px;
+	background-color: #320023;
+}
+
+table.character td img{
+	padding: 0px;
+	border: 0px;
+	margin: 0px;
+	display: block;
+}
+
+.charinfo{
+	padding: 3px 10px 10px 10px;
+}
+
+table.character div.prof img{
+	padding: 2px 5px 0px 5px;
+	display: inline;
+}
+
+table.character div.prof {
+	text-align: center;
+}
+
+table.character td {
+	vertical-align: top;
+}
+
+div.bio {
+	width: 900px;
+	background-color: #320023;
+	border: 2px solid yellow;
+	padding: 10px;
+}
+
+table.form td {
+	padding: 3px;
+}
+
+div.info {
+	padding-bottom: 20px;
+}
+
+table.dota td{
+	text-align: center;
+	padding: 7px 5px 7px 0px;
+}
+
+table.dota tr.odd {
+	background-color: #320023;
+}
+
+table.dota td.raidname, table.dota th.raidname {
+	text-align: left;
+}
+
+table.menu {
+	border-spacing: 10px;
+	font-size: 16px;
+	padding-bottom: 10px;
+}
+
+table.menusmaller {
+	font-size: 10px;
+}
+
+table.menu td {
+	background-color: #320023;
+	color: #fdec3c;
+	padding: 4px;
+	border: 2px solid #730065;
+}
+
+/* Info Tables */
+table.info {
+    margin-bottom: 50px;
+}
+
+table.info th {
+    width: 125px;
+    text-align: right;
+    vertical-align: top;
+    font-weight: bold;
+}
+
+
+table.group th {
+    width: auto;
+}
+
+table.info td, table.info th {
+    padding: 5px;
+    vertical-align: top;
+}
+
+/* Box Format */
+table.box {
+    float: left;
+    background-color: #111;
+    border: 1px solid #000;
+    padding: 0px 5px 5px 5px;
+    margin: 0px 10px 10px 0px;
+    vertical-align: top;
+}
+
+table.box th {
+    color: #ffd302;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+    vertical-align: top;
+    width: auto;
+}
+
+table.box td {
+    border: 1px solid #000;
+    background-color: #222;
+    padding: 5px;
+    vertical-align: top;
+    text-align: center;
+}
+
+table.box td.closed {
+    color: #333;
+}
+
+table.box td.selected {
+    border: 1px solid #f00;
+}
+
+a:link, a:visited, a:active {
+	color: #fdec3c;
+	text-decoration: none;
+}
+
+a:hover {
+	color: white;
+}
+
+a.loot:link, a.loot:visited, a.loot:active, a.loot:hover {
+    color: #a335ee;
+}
+
+table.box td a {
+    color: white;
+}
+
+table.box div {
+    position: relative;
+}
+
+table.box div.note {
+    display: none;
+}
+
+table.box tr:hover div.note {
+    display: block;
+    color: white;
+    font-weight: normal;
+    width: 225px;
+    border: 1px dashed #ffd302;
+    background-color: #222222;
+    padding: 5px;
+    position: absolute;
+    top: -5px;
+    right: -258px;
+    text-align: left;
+    z-index: 5;
+}
+
+td.container {
+    width: 800px;
+    overflow: auto;
+}
+
+div.data {
+    font-size: 12pt;
+    margin-bottom: 10px;
+    clear: left;
+    overflow: auto;
+    position: relative;
+    padding: 5px 10px 5px 10px;
+}
+
+div.data span {
+    width: 150px;
+}
+
+div.data span.op {
+    font-size: 0.7em;
+}
+
+div#error {
+    position: absolute;
+    padding: 10px;
+    font-weight: bold;
+    border: 1px solid #a00;
+    background-color: #000;
+    top: 250px:
+    left: 20px;
+}
+
+.invisible {
+    opacity: 0;
+}
+
+#loot_list table.box tr td, #item_list table.box tr td {
+    text-align: left;
+}

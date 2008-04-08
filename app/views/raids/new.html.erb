@@ -1,0 +1,58 @@
+<%= calendar_date_select_includes "silver" %>
+<%= error_messages_for(:raid) %>
+<% form_for(@raid) do |f| %>
+  <table class="info">
+    <tr>
+      <th>Name:</th>
+      <td><%= f.text_field :name, :size => 30 %></td>
+    </tr>
+    <tr>
+      <th>Date:</th>
+      <td><%= f.calendar_date_select :date, :time => true, :minute_interval => 15 %></td>
+    </tr>
+    <tr>
+      <th>Instance:</th>
+      <td><%= f.collection_select(:instance_id, @instances,
+                                  :id, :name_with_number, {},
+                                  { :onchange => remote_function(:url => {
+                                                                     :action => "instance_levels",
+                                                                     :id => "'+this.value+'"
+                                                                 },
+                                                                 :loading => update_page do |page|
+                                                                     page[:level_loading].replace_html(image_tag("loading.gif"))
+                                                                 end)}) %></td>
+    </tr>
+    <tr>
+      <th>Template:</th>
+      <td><%=f.collection_select(:raid_template_id, 
+                                 @raid_templates, :id, :label,
+                                 { :include_blank => "Empty" }) %></td>
+    </tr>
+    <tr>
+      <th>Level Requirement:</th>
+      <td><%= f.text_field :min_level, :size => 3 %>-<%= f.text_field :max_level, :size => 3 %> <span id="level_loading"></span></td>
+    </tr>
+    <% if @current_account.admin %>
+      <tr>
+        <th>Locked?</th>
+        <td><%= f.check_box :locked %></td>
+      </tr>
+      <tr>
+        <th>Uses Loot System?</th>
+        <td><%= f.check_box :uses_loot_system %></td>
+      </tr>
+    <% end %>
+    <!-- <tr>
+         <th>Require Resser?</th>
+          <td><%= f.check_box :require_resser %></td>
+          </tr> -->
+    <tr>
+      <th>Creator:</th>
+      <td><%= @current_account.name %><% if @current_account.admin %> (Admin)<% end %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= submit_tag %></td>
+    </tr>
+  </table>
+<% end %>

@@ -1,0 +1,10 @@
+<% if slot.closed -%>
+  Closed
+<% elsif slot.role == nil and slot.cclass == nil -%>
+  Open
+<% else -%>
+  <%= render(:partial => "shared/cclass",
+             :object => slot.cclass) if slot.cclass %>
+  <%= render(:partial => "shared/role",
+             :object => slot.role) if slot.role %>
+<% end -%>
