@@ -1,0 +1,28 @@
+<% form_remote_for([raid, Loot.new(:raid => raid)],
+                   :confirm => "Are you sure you want to assign loot? This will move the Master loot list in the correct mannaer", 
+                   :loading => update_page do |page|
+                       page[:loot_submit].disable
+                       page[:loot_submit].value = "Saving"
+                   end) do |f| -%>
+  <h2>New Loot</h2>
+  <table>
+    <tr>
+      <th>Account</th>
+      <td><%= f.collection_select(:character_id,
+                                  raid.confirmed_characters,
+                                  :id, :name_with_account) %><br /></td>
+    </tr>
+    <tr>
+      <th><nobr>Item URL</nobr></th>
+      <td><%= f.text_field :item_url %></td>
+    </tr>
+    <tr>
+      <th><nobr>Item Name</nobr></th>
+      <td><%= f.text_field :item_name %></td>
+    </tr>
+    <tr>
+      <th></th>
+      <td><%= submit_tag "Save", :id => "loot_submit" %><br/><br/></td>
+    </tr>
+  </table>
+<% end %>

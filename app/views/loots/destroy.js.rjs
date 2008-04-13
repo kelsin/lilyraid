@@ -1,0 +1,4 @@
+page[:item_list].replace_html(:layout => "shared/box", :locals => {:title => "Item History" }) do
+    render(:partial => "loots/loot",
+           :collection => @raid.loots)
+end

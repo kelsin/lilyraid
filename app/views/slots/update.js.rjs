@@ -1,0 +1,20 @@
+page[@slot].replace(:partial => "slot", :locals => { :slot => @slot })
+
+if @signup && @slot.signup
+    page[@signup].fade
+    page[:waiting_list_size].replace_html @raid.waiting_list.size
+    page[:needed].replace_html(:partial => "signups/needed",
+                               :layout => "shared/box",
+                               :locals => {
+                                   :needed => @raid.needed,
+                                   :title => "Needed"
+                               })
+    page[:loot_list].replace_html(:partial => "loots/list",
+                                  :locals => {
+                                      :list => @list,
+                                      :raid => @raid
+                                  })
+
+elsif @from_slot
+    page[@from_slot].replace(:partial => "slot", :object => @from_slot)
+end

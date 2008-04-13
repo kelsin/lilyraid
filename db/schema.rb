@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(:version => 16) do
 
   create_table "lists", :force => true do |t|
     t.string   "name",       :null => false
-    t.datetime "date",       :null => false
+    t.datetime "date"
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,0 +1,15 @@
+<%= calendar_date_select_includes "silver" %>
+<h2>Loot List</h2>
+<div id="loot_list">
+  <%= render(:partial => "lists/list",
+             :locals => {:list => @list}) %>
+</div>
+<div id="history" style="clear: both;">
+  <% render(:layout => "shared/box",
+            :locals => { :title => "History" }) do %>
+    <%= render(:partial => "lists/history",
+               :collection => @list.history) %>
+  <% end %>
+</div>
+
+

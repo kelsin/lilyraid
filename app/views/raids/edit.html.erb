@@ -1,0 +1,65 @@
+<%= calendar_date_select_includes "silver" %>
+<% form_for(@raid) do |f| %>
+  <table class="info">
+    <tr><th>Name:</th><td><%= f.text_field :name %></td></tr>
+    <tr><th>Date:</th><td><%= f.calendar_date_select :date, :time => true %></td></tr>
+    <tr>
+      <th>Level Requirement:</th>
+      <td>
+        <%= f.text_field :min_level, :size => 3 %>-<%= f.text_field :max_level, :size => 3 %>
+      </td>
+    </tr>
+    <tr>
+      <th>Loot:</th>
+      <td><%= f.text_area :loot_note, :rows => 5, :cols => 40 %></td>
+    </tr>
+    <tr>
+      <th>Note:</th>
+      <td><%= f.text_area :note, :rows => 5, :cols => 40 %></td>
+    </tr>
+    <% if @current_account.admin %>
+      <tr>
+        <th>Locked?</th>
+        <td><%= f.check_box :locked %></td>
+      </tr>
+      <tr>
+        <th>Uses Loot System?</th>
+        <td><%= f.check_box :uses_loot_system %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th></th>
+      <td>
+        <% @raid.each_group do |group| -%>
+          <% render(:layout => "shared/box",
+                    :locals => { :title => "Group #{cycle(*(1..8).to_a)}" }) do -%>
+            <% group.each do |slot| -%>
+              <tr>
+                <td>
+                  <% fields_for("slot[]", slot) do |s| -%>
+                    Closed <%= s.check_box :closed %>
+                    <%= s.collection_select(:role_id, @roles, :id, :name) %>
+                    <%= s.collection_select(:cclass_id, @cclasses, :id, :name) %><br />
+                  <% end -%>
+                </td>
+              </tr>
+            <% end -%>
+          <% end -%>
+        <% end -%>
+        <%#= render_partial "edit_slots" %>
+      </td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>
+        <p class="note">
+          Once you edit a slot type, it will unset it's character (if it was
+          set) and not allow you to change it. This is to prevent invalid
+          states. Finish editing your slots and save the raid in order to edit
+          characters from the main raid page itself.
+        </p>
+      </td>
+    </tr>
+    <tr><th></th><td><%= submit_tag "Save" %></td></tr>
+  </table>
+<% end %>

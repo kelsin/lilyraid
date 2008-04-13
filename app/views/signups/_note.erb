@@ -1,0 +1,13 @@
+<%= render(:partial => "shared/character",
+           :object => signup.character) %><br />
+<b>Level</b>: <%= signup.character.level %><br />
+<% if signup.character.guild %>
+  <b>Guild</b>: <%= signup.character.guild %><br />
+<% end %>
+<% if !signup.note.empty? %>
+  <%= "<b>Note</b>: #{signup.note}" %><br />
+<% end %>
+<% if signup.roles.length > 0 %>
+  <b>Roles</b>: <%= signup.roles.map { |role| role.name }.join ", " %><br />
+<% end %>
+<%= signup.date.to_s(:raid) %>

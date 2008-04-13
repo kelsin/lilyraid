@@ -4,4 +4,8 @@ class Role < ActiveRecord::Base
 
     has_many :signup_roles, :dependent => :destroy
     has_many :signups, :through => :signup_roles
+
+    def <=>(o)
+        self.name <=> o.name
+    end
 end

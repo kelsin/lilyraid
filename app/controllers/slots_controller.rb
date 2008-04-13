@@ -1,6 +1,5 @@
 class SlotsController < ApplicationController
     before_filter(:load_raid)
-    before_filter(:load_list, :only => [:update, :destroy])
     before_filter(:load_slots, :only => [:index])
     before_filter(:load_slot, :only => [:edit, :destroy, :update])
 
@@ -41,6 +40,8 @@ class SlotsController < ApplicationController
             
             @raid.reload
 
+            load_list
+
             respond_to do |format|
                 format.html { redirect_to raid_url(@raid) }
                 format.js
@@ -54,6 +55,8 @@ class SlotsController < ApplicationController
         @slot.signup = nil
         @slot.save
 
+        load_list
+        
         respond_to do |format|
             format.html { redirect_to raid_url(@raid) }
             format.js
@@ -67,7 +70,7 @@ class SlotsController < ApplicationController
     end
 
     def load_list
-        @list = List.get_list("Master")
+        @list = List.get_list_from_raid("Master", @raid)
     end
 
     def load_slots

@@ -1,0 +1,50 @@
+<tr>
+  <th id="waiting_list_title">
+    <div>
+      <% if @current_account.can_edit(raid) %>
+        <%= link_to_remote("Waiting List",
+                           :url => raid_slot_url(raid, "'+slot+'"),
+                           :method => :delete,
+                           :loading => update_page do |page|
+                               page[:waiting_list_title].replace_html "Loading ..."
+                           end,
+                           :with => "'slot_id=' + get_selected_slot()",
+                           :condition => "slot > -1") %>
+        (<%= content_tag(:span,
+                        waiting_list.size,
+                        :id => "waiting_list_size") if waiting_list.size > 0 %>)
+        <div class="note">
+          Select a character in the raid and then click here to add them
+          to the waiting list
+        </div>
+      <% else %>
+        Waiting List
+        (<%= content_tag(:span,
+                        waiting_list.size,
+                        :id => "waiting_list_size") if waiting_list.size > 0 %>)
+      <% end %>
+    </div>
+  </th>
+</tr>
+<% if waiting_list.length > 0 %>
+  <%= render(:partial => "signups/signup",
+             :collection => waiting_list,
+             :locals => { :raid => raid }) %>
+  <% if @current_account.can_edit(raid) %>
+    <tr><td id="add_whole_waiting_list">
+        <div>
+          <%= link_to_remote "Add To Raid",
+              :url => { :action => "add_waiting_list", :id => raid.id },
+              :method => :post,
+              :loading => update_page { |page|
+                  page[:add_whole_waiting_list].replace_html "Loading ..."
+              } %>
+          <div class="note">
+            Adds the whole waiting list to the raid
+          </div>
+        </div>
+      </td></tr>
+  <% end %>
+<% else %>
+  <tr><td class="closed">Empty</td></tr>
+<% end %>

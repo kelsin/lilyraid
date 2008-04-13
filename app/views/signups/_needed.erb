@@ -1,0 +1,3 @@
+<% needed.each do |slot, num| %>
+  <tr><td><%= num %> <%= render(:partial => "shared/slot", :object => slot) %></td></tr>
+<% end %>

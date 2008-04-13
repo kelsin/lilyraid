@@ -1,0 +1,2 @@
+page[@character].replace(:partial => "characters/character",
+                         :object => @character)

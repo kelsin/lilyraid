@@ -1,0 +1,21 @@
+<% if flash[:notice] %><%= flash[:notice] %><% end %>
+
+<%= render(:partial => "accounts/account",
+           :object => @account) %>
+
+<div id="characters">
+  <%= render(:partial => "characters/character",
+             :collection => if @current_account == @account 
+                                @account.characters 
+                            else 
+                                @account.active_characters
+                            end) %>
+</div>
+
+<%= render(:partial => "characters/form",
+           :locals => {
+               :character => @character,
+               :instances => @instances,
+               :races => @races,
+               :cclasses => @cclasses
+           }) if @current_account == @account %>

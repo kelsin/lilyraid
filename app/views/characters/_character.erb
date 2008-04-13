@@ -1,0 +1,63 @@
+<% div_for(character) do %>
+  <table class="info">
+    <tr>
+      <th></th>
+      <td>
+        <h2><%= character.name %></h2>
+        <%= "Inactive" if character.inactive %>
+      </td>
+    </tr>
+    <% if @current_account == character.account %>
+      <tr>
+        <th></th>
+        <td>
+          <span id="<%=dom_id(character)%>_edit_link">
+            <%= link_to_remote("Edit",
+                               :url => edit_account_character_url(character.account, character),
+                               :method => :get,
+                               :loading => update_page do |page|
+                                   page["#{dom_id(character)}_edit_link"].replace_html "Loading ..."
+                               end) %>
+          </span>
+          <% if character.raids.empty? %>
+            | <span id="<%=dom_id(character)%>_delete_link">
+              <%= link_to_remote("Delete",
+                                 :url => account_character_url(character.account, character),
+                                 :method => :delete,
+                                 :confirm => "Are you sure you want to remove #{character.name}?",
+                                 :loading => update_page do |page|
+                                     page["#{dom_id(character)}_delete_link"].replace_html "Deleting ..."
+                                 end) %>
+            </span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Level:</th>
+      <td><%= character.level %></td>
+    </tr>
+    <tr>
+      <th>Race:</th>
+      <td><%= character.race.name %></td>
+    </tr>
+    <tr>
+      <th>Class:</th>
+      <td><%= render (:partial => "shared/cclass", :object => character.cclass) %></td>
+    </tr>
+    <% if !character.guild.blank? %>
+      <tr>
+        <th>Guild:</th>
+        <td><%= character.guild %></td>
+      </tr>
+    <% end %>
+    <% if !character.instances.empty? %>
+      <tr>
+        <th>Keyed:</th>
+        <td>
+          <%= character.instances.map { |instance| instance.name }.join(", ") %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

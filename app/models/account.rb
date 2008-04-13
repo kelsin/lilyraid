@@ -4,14 +4,14 @@ class Account < ActiveRecord::Base
     has_many(:characters,
              :dependent => :nullify,
              :order => "characters.name",
-             :include => [{:cclass => :slot_types},
+             :include => [{:cclass => :roles},
                           :instances,
                           :raids])
     has_many(:active_characters,
              :class_name => "Character",
              :order => "characters.name",
              :conditions => ["characters.inactive = ?", false],
-             :include => [{:cclass => :slot_types},
+             :include => [{:cclass => :roles},
                           :instances,
                           :raids])
     has_many(:old_signups,

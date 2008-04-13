@@ -1,0 +1,21 @@
+<% content_tag_for(:tr, signup) do %>
+  <% content_tag_for(:td, signup, :td) do %>
+    <div>
+      <% if @current_account.can_edit(raid) %>
+        <%= link_to_function(render(:partial => "shared/character",
+                                    :object => signup.character),
+                             nil) do |page|
+                page.select('table.box td.selected').each do |item|
+                    item.remove_class_name 'selected'
+                end
+                page["td_signup_#{signup.id}"].toggle_class_name 'selected'
+            end %>
+      <% else %>
+        <%= signup.character.to_s_html %> <%= signup.character.level %>
+      <% end %>
+      <div class="note">
+        <%= render :partial => "signups/note", :locals => { :signup => signup } %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

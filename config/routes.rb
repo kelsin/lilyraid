@@ -29,8 +29,10 @@ ActionController::Routing::Routes.draw do |map|
 
     # See how all your routes lay out with "rake routes"
 
+    map.resources :lists
+
     map.resources :accounts do |accounts|
-        accounts.resources :characters
+        accounts.resources :characters, :member => { 'roles' => :get }
     end
 
     map.resources :raids do |raids|

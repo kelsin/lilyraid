@@ -1,0 +1,7 @@
+page[@character].replace(:partial => "characters/form",
+                         :locals => {
+                             :character => @character,
+                             :instances => @instances,
+                             :races => @races,
+                             :cclasses => @cclasses
+                         })

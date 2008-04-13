@@ -66,6 +66,15 @@ class CharactersController < ApplicationController
         end
     end
 
+    def roles
+        @character = Character.find(params[:id])
+
+        respond_to do |format|
+            format.js { render(:partial => "characters/roles",
+                               :locals => { :character => @character }) }
+        end
+    end
+
     private
 
     def load_account

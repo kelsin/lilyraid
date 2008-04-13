@@ -1,0 +1,54 @@
+<% content_tag_for(:tr, slot) do %>
+  <% if slot == nil || slot.closed -%>
+    <td class="closed">Closed</td>
+  <% elsif slot.signup == nil -%>
+    <% content_tag_for(:td, slot, :td) do %>
+      <div>
+        <% if @current_account.can_edit(slot.raid) -%>
+          <nobr>
+            <%= link_to_remote(content_tag("b", render(:partial => "shared/slot",
+                                                       :object => slot)),
+                               :url => raid_slot_url(slot.raid, slot),
+                               :method => :put,
+                               :with => "get_selected_url()",
+                               :condition => "$$('td.selected').length > 0",
+                               :loading => update_page { |page|
+                                   page["slot_#{slot.id}"].replace_html(content_tag("td", "Loading ..."))
+                               }) %>
+          </nobr>
+          <div class="note">
+            Select a character in the waiting list and then click here to add that
+            character to this slot.
+          </div>
+        <% else -%>
+          <b><%= render(:partial => "shared/slot", :object => slot) %></b>
+        <% end -%>
+      </div>
+    <% end -%>
+  <% else %>
+    <% content_tag_for(:td, slot, :td) do %>
+      <div>
+        <nobr>
+          <% if @current_account.can_edit(slot.raid) %>
+            <%= link_to_function(render(:partial => "shared/character",
+                                        :object => slot.signup.character),
+                                 nil) do |page|
+                    page.select('table.box td.selected').each do |item|
+                        item.remove_class_name 'selected'
+                    end
+
+                    page["td_slot_#{slot.id}"].toggle_class_name 'selected'
+                    page.assign("slot", slot.id)
+                end %> <%= slot.signup.character.level %>
+          <% else %>
+            <%= slot.signup.character.to_s_html %> <%= slot.signup.character.level %>
+          <% end %>
+        </nobr>
+        <div class="note">
+          <%= render(:partial => "slots/note",
+                     :locals => { :slot => slot }) %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

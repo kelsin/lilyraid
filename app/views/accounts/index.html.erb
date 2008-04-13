@@ -1,0 +1,17 @@
+<% if flash[:notice] %><%= flash[:notice] %><% end %>
+<table class="info">
+  <tr>
+    <th>Admins</th>
+    <td>
+      <%= render(:partial => "accounts/characters",
+                 :collection => @admins) %>
+    </td>
+  </tr>
+  <tr>
+    <th>Members</th>
+    <td>
+      <%= render(:partial => "accounts/characters",
+                 :collection => @members) %>
+    </td>
+  </tr>
+</table>

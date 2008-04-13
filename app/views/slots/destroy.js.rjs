@@ -1,0 +1,21 @@
+page[@slot].replace(:partial => "slot", :object => @slot)
+
+page[:waiting_list].replace_html(:partial => "signups/waiting_list",
+                                 :layout => "shared/box",
+                                 :locals => { 
+                                     :waiting_list => @raid.waiting_list,
+                                     :raid => @raid
+                                 })
+page[:needed].replace_html(:partial => "signups/needed",
+                           :layout => "shared/box",
+                           :locals => {
+                               :needed => @raid.needed,
+                               :title => "Needed"
+                           })
+page[:loot_list].replace_html(:partial => "loots/list",
+                              :locals => {
+                                  :list => @list,
+                                  :raid => @raid
+                              })
+
+page[@signup].visual_effect(:pulsate, :from => 0.7, :duration => 1, :pulses => 2)

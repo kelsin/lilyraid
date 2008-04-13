@@ -1,0 +1,14 @@
+page.insert_html(:bottom,
+                 :characters,
+                 :partial => "characters/character",
+                 :object => @character)
+page[@character].hide
+page[@character].appear
+
+page[:new_character].replace(:partial => "characters/form",
+                             :locals => {
+                                 :character => @new_character,
+                                 :instances => @instances,
+                                 :races => @races,
+                                 :cclasses => @cclasses
+                             })

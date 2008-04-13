@@ -23,12 +23,6 @@
                                                                  end)}) %></td>
     </tr>
     <tr>
-      <th>Template:</th>
-      <td><%=f.collection_select(:raid_template_id, 
-                                 @raid_templates, :id, :label,
-                                 { :include_blank => "Empty" }) %></td>
-    </tr>
-    <tr>
       <th>Level Requirement:</th>
       <td><%= f.text_field :min_level, :size => 3 %>-<%= f.text_field :max_level, :size => 3 %> <span id="level_loading"></span></td>
     </tr>
@@ -42,10 +36,6 @@
         <td><%= f.check_box :uses_loot_system %></td>
       </tr>
     <% end %>
-    <!-- <tr>
-         <th>Require Resser?</th>
-          <td><%= f.check_box :require_resser %></td>
-          </tr> -->
     <tr>
       <th>Creator:</th>
       <td><%= @current_account.name %><% if @current_account.admin %> (Admin)<% end %></td>

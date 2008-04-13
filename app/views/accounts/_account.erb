@@ -1,0 +1,33 @@
+<% div_for(account) do %>
+  <table class="info">
+    <tr>
+      <th></th>
+      <td><h1><%= account.name %></h1></td></tr>
+    <% if @current_account == account %>
+      <tr>
+        <th></th>
+        <td id="editlink"><%= link_to_remote "Edit",
+                              :url => edit_account_url(account),
+                              :method => :get,
+                              :loading => update_page { |page|
+                                  page[:editlink].replace_html "Loading..."
+                              } %></td>
+      </tr>
+    <% end %>
+    <% if !account.lj_account.blank? -%>
+      <tr>
+        <th>LJ:</th>
+        <td><%= link_to account.lj_account, account.lj_link %></td>
+      </tr>
+    <% end -%>
+    <% if !account.age.blank? %>
+      <tr><th>Age:</th><td><%= account.age %></td></tr>
+    <% end %>
+    <% if !account.location.blank? %>
+      <tr><th>Location:</th><td><%= account.location %></td></tr>
+    <% end %>
+    <% if !account.bio.blank? %>
+      <tr><th>Bio:</th><td style="width: 600px;"><%= account.bio %></td></tr>
+    <% end %>
+  </table>
+<% end %>

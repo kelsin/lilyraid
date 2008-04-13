@@ -1,0 +1,3 @@
+page[@account].replace(:partial => "accounts/account",
+                       :object => @account)
+

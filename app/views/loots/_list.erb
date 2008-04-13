@@ -1,0 +1,26 @@
+<% render(:layout => "shared/box",
+          :locals => { :title => "Master Loot List" }) do %>
+  <% if list && list.list_positions.length > 0 %>
+    <%= render(:partial => "loots/position",
+               :collection => list.list_positions) %>
+  <% else %>
+    <tr>
+      <td class="closed">Empty</td>
+    </tr>
+  <% end %>
+<% end %>
+
+<% if list %>
+  <% render(:layout => "shared/box",
+            :locals => { :title => "Display" }) do %>
+    <%= render(:partial => "loots/display",
+               :collection => list.cclasses) %>
+  <% end %>
+<% end %>
+
+<script type="text/javascript">
+  eles = $$('input.list_checkboxes');
+  for(var i=0; i < eles.length; i++) {
+    eles[i].checked = true;
+  }
+</script>

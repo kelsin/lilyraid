@@ -5,5 +5,9 @@ class Signup < ActiveRecord::Base
     has_many :signup_roles, :dependent => :destroy
     has_many :roles, :through => :signup_roles
 
-    has_many :slots, :dependent => :nullify
+    has_one :slot, :dependent => :nullify
+
+    def date
+        created_at
+    end
 end

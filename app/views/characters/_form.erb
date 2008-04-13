@@ -1,0 +1,61 @@
+<% div_for(character) do %>
+  <% remote_form_for([character.account, character],
+                     :loading => update_page do |page|
+                         page["new_character_submit"].value = "Saving"
+                         page["new_character_submit"].disable
+                     end) do |f| %>
+    <table id="new_character_table" class="info">
+      <% if character.new_record? %>
+        <tr>
+          <th></th>
+          <td><h2>New Character</h2>
+        </tr>
+      <% end %>
+      <tr>
+        <th>Name:</th>
+        <td><%= f.text_field :name, :id => "new_character_name" %></td>
+      </tr>
+      <tr>
+        <th>Level:</th>
+        <td><%= f.text_field :level, :size => 5, :id => "new_character_level" %></td>
+      </tr>
+      <% if character.new_record? %>
+        <tr>
+          <th>Race:</th>
+          <td><%= f.collection_select(:race_id, races, :id, :name) %></td>
+        </tr>
+        <tr>
+          <th>Class:</th>
+          <td><%= f.collection_select(:cclass_id, cclasses, :id, :name) %></td>
+        </tr>
+      <% else %>
+        <tr>
+          <th>Inactive:</th>
+          <td>
+            <%= f.check_box :inactive %>
+            <p class="note">
+              If you mark a character inactive they won't show up on the public
+              member list, and won't be available when signing up for raids. You
+              can mark them active again at any time.
+            </p>
+        <tr>
+          <th>Keyed:</th>
+          <td>
+            <% instances.each do |instance| %>
+              <%= check_box_tag("character[instances][]",
+                                instance.id,
+                                character.keyed(instance)) %>
+              <nobr><%= instance.name %></nobr><br />
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
+        <th></th>
+        <td>
+          <%= submit_tag "Save", :id => "new_character_submit" %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+<% end %>

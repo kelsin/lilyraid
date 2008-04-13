@@ -1,0 +1,37 @@
+<% div_for(account) do %>
+  <% form_remote_for(account) do |f| %>
+    <table class="info">
+      <tr>
+        <th></th>
+        <td><h1><%= @account.name %></h1></td>
+      </tr>
+      <tr>
+        <th>LJ:</th>
+        <td>
+          <%= f.text_field :lj_account %><br />
+          <p class="note">
+            This is just your livejournal username. For example, if your journal
+            exists at "ayashi.livejournal.com", you should only enter "ayashi"
+            here.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <th>Age:</th>
+        <td><%= f.text_field :age %></td>
+      </tr>
+      <tr>
+        <th>Location:</th>
+        <td><%= f.text_field :location %></td>
+      </tr>
+      <tr>
+        <th>Bio:</th>
+        <td><%= f.text_area :bio, :rows => 8 %></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td><%= submit_tag "Save" %></td>
+      </tr>
+    </table>
+  <% end %>
+<% end %>

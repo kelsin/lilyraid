@@ -1,0 +1,24 @@
+<tr>
+  <td>
+    <div>
+      <%= if @current_account == position.account
+              content_tag(:b, "#{position.position} #{position.account.name}")
+          else
+              "#{position.position} #{position.account.name}"
+          end %>
+        <div class="note">
+          <% render(:layout => "shared/box",
+                    :locals => {:title => "Characters"}) do -%>
+            <% position.account.characters.each do |character| -%>
+              <tr>
+                <td>
+                  <%= render(:partial => "shared/character",
+                             :object => character) %>
+                </td>
+              </tr>
+            <% end -%>
+          <% end -%>
+        </div>
+    </div>
+  </td>
+</tr>

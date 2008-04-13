@@ -1,18 +1,18 @@
 class RaidsController < ApplicationController
-    before_filter(:load_raid, :only => [:show])
+    before_filter(:load_raid, :only => [:show, :edit, :update])
 
     def index
         @old = params[:old]
 
         if @old
             @raids = Raid.find(:all,
-                               :include => [:instance, { :slots => [:cclass, :signup, :slot_type] }],
-                               :conditions => ["raids.date < now()"],
+                               :include => [:instance, { :slots => [:cclass, :signup, :role] }],
+                               :conditions => ["raids.date < ?", Time.now],
                                :order => "raids.date desc")
         else
             @raids = Raid.find(:all,
-                               :include => [:instance, { :slots => [:cclass, :signup, :slot_type] }],
-                               :conditions => ["raids.date >= now()"],
+                               :include => [:instance, { :slots => [:cclass, :signup, :role] }],
+                               :conditions => ["raids.date >= ?", Time.now],
                                :order => "raids.date")
         end
 
@@ -26,7 +26,7 @@ class RaidsController < ApplicationController
             signup.character.account == @current_account
         end
 
-        @list = List.get_list("Master")
+        @list = List.get_list_from_raid("Master", @raid)
 
         @signup = Signup.new(:raid => @raid)
         
@@ -48,22 +48,35 @@ class RaidsController < ApplicationController
     end
 
     def edit
-        @raid = Raid.find(params[:id])
-
         if @current_account == @raid.account or @current_account.admin
-            @slot_types = SlotType.find(:all)
+            @roles = Role.find(:all)
             @cclasses = Cclass.find(:all)
             
-
-            render :update do |page|
-                page[:raid].replace_html :partial => "edit_raid"
+            respond_to do |format|
+                format.html
             end
         else
-            render :update do |page|
-                page[:raid].replace_html "You are not authorized to edit this account"
+            flash[:error] = "You are not authorized to edit this account"
+            respond_to do |format|
+                format.html { redirect_to raid_url(@raid) }
             end
         end
     end
+
+    def update
+        if @current_account.can_edit(@raid)
+            @raid.update_attributes(params[:raid])
+
+            # Update Slots
+
+            Slot.update(params[:slot].keys, params[:slot].values)
+
+            respond_to do |format|
+                format.html { redirect_to raid_url(@raid) }
+            end
+        end
+    end
+
 
     def destroy
         if @current_account.can_edit(raid)
@@ -94,7 +107,6 @@ class RaidsController < ApplicationController
 
     def new
         @instances = Instance.find(:all, :order => "name")
-        @raid_templates = RaidTemplate.find(:all)
         @raid = Raid.new
         @raid.min_level = @instances[0].min_level
         @raid.max_level = @instances[0].max_level
@@ -119,19 +131,7 @@ class RaidsController < ApplicationController
     private
 
     def load_raid
-        @raid = Raid.find(params[:id],
-                          :include => [{:characters => :account},
-                                       {:slots => [{:signup => [{:character => [:cclass,
-                                                                                :account]},
-                                                                :roles]},
-                                                   :role,
-                                                   :cclass,
-                                                   :raid]},
-                                       {:signups => [{:character => [:cclass,
-                                                                     :account]},
-                                                     :roles]},
-                                       :account,
-                                       :instance,
-                                       :loots])
+        @raid = Raid.find(params[:id])
     end
 end
+

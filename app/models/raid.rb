@@ -2,13 +2,16 @@ class Raid < ActiveRecord::Base
     belongs_to :account
     belongs_to :instance
     belongs_to :raid_template
-    has_many :slots, :dependent => :destroy, :include => [:signup, :slot_type]
+    has_many(:slots,
+             :dependent => :destroy,
+             :include => [:signup, :role, :cclass],
+             :order => "slots.id")
     has_many :signups, :dependent => :destroy
     has_many :characters, :through => :signups, :order => "characters.name"
     has_many :loots
 
     def display_name
-        name ? name : instance.name
+        name.blank? ? instance.name : name
     end
 
     def started?
@@ -19,6 +22,14 @@ class Raid < ActiveRecord::Base
         slots.map do |slot|
             if slot.signup
                 slot.signup.character
+            end
+        end.compact
+    end
+
+    def accounts
+        slots.map do |slot|
+            if slot.signup
+                slot.signup.character.account
             end
         end.compact
     end
@@ -95,7 +106,7 @@ class Raid < ActiveRecord::Base
     end
     
     def waiting_list
-        signups - slots.map { |slot| slot.signup }.compact
+        signups - (slots.map { |slot| slot.signup }.compact)
     end
 
     def place_character(signup)
@@ -131,7 +142,7 @@ class Raid < ActiveRecord::Base
         needed = {}
 
         slots.each do |slot|
-            if !slot.signup
+            if !slot.signup and !slot.closed
                 if needed[slot]
                     needed[slot] = needed[slot] + 1
                 else

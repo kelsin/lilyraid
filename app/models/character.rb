@@ -29,6 +29,10 @@ class Character < ActiveRecord::Base
         reload
     end
 
+    def keyed(instance)
+        instances.member?(instance)
+    end
+
     def can_join(raid)
         if level < raid.min_level or level > raid.max_level
             false

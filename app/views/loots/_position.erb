@@ -1,0 +1,8 @@
+<tr class="<%= position.account.characters[0].cclass.name %>" style="width: 100%;">
+  <td style="width: 100%;">
+    <% if @current_account == position.account %><b><% end %>
+    <%= position.position %> <%= render(:partial => "shared/character",
+                                        :object => position.account.characters[0]) %>
+    <% if @current_account == position.account %></b><% end %>
+  </td>
+</tr>

@@ -9,7 +9,7 @@
   <table class="info">
     <tr>
       <th></th>
-      <td><h1><%= @raid %></h1></td>
+      <td><h1><%= @raid.display_name %></h1></td>
     </tr>
     <% if @current_account.can_edit(@raid) -%>
       <tr>
@@ -26,10 +26,6 @@
       <td><%= @raid.date.to_s(:raid) %></td>
     </tr>
     <tr>
-      <th>Needs resser:</th>
-      <td><%= @raid.require_resser ? "Yes" : "No" %></td>
-    </tr>
-    <tr>
       <th>Levels:</th>
       <td>
         <%= @raid.min_level %>
@@ -40,25 +36,26 @@
       <th>Signups:</th>
       <td><%= @raid.signups.size %> / <%= @raid.instance.max_number %></td>
     </tr>
-    <% if !@raid.loot.blank? -%>
+    <% if !@raid.loot_note.blank? -%>
       <tr>
         <th>Loot rules:</th>
-        <td><%= @raid.loot %></td>
+        <td><%= @raid.loot_note %></td>
       </tr>
     <% end -%>
-    <% if !@raid.notes.blank? -%>
+    <% if !@raid.note.blank? -%>
       <tr>
-        <th>Notes:</th>
-        <td><%= @raid.notes %></td>
+        <th>Note:</th>
+        <td><%= @raid.note %></td>
       </tr>
     <% end -%>
     <% if @raid.is_open -%>
       <tr>
         <th></th>
         <td>
-          <%= render(:parial => "signups/form",
-                     :locals => { :signup => @signup,
-                         :avail_chars => @characters,
+          <%= render(:partial => "signups/form",
+                     :locals => { :signups => @signups,
+                         :signup => @signup,
+                         :characters => @characters,
                          :raid => @raid }) %>
         </td>
       </tr>
@@ -94,26 +91,32 @@
           </div>
         </td>
       </tr>
-      <tr>
-        <th></th>
-        <td>
-          <div id="loot_list">
-            <%= render(:partial => "loots/list",
-                       :locals => {
-                           :list => @list,
-                           :raid => @raid
-                       }) %>
-          </div>
-          <div id="item_list">
-            <% render(:layout => "shared/box", :locals => { :title => "Item History" }) do %>
-              <%= render(:partial => "loots/loot",
-                         :collection => @raid.loots) %> <%#Loot.from(@raid)) %>
-            <% end %>
-          </div>
-        </td>
-      </tr>
-      <%= render(:partial => "loots/form",
-                 :locals => { :raid => @raid }) if @current_account.can_edit(@raid) %>
+      <% if @raid.uses_loot_system %>
+        <tr>
+          <th></th>
+          <td>
+            <div id="loot_list">
+              <%= render(:partial => "loots/list",
+                         :locals => {:list => @list}) %>
+            </div>
+            <div id="item_list">
+              <% render(:layout => "shared/box", :locals => { :title => "Item History" }) do %>
+                <%= render(:partial => "loots/loot",
+                           :collection => @raid.loots) %> <%#Loot.from(@raid)) %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>
+            <div id="loot_form">
+              <%= render(:partial => "loots/form",
+                         :locals => { :raid => @raid }) if @current_account.can_edit(@raid) %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
       <% if @current_account.admin && @admin_characters.length > 0 -%>
         <tr>
           <th></th>
@@ -124,7 +127,8 @@
           <td>
             <%= render(:partial => "signups/form",
                        :locals => { :signup => @admin_signup,
-                           :avail_chars => @admin_characters,
+                           :signups => nil,
+                           :characters => @admin_characters,
                            :raid => @raid }) %>
           </td>
         </tr>

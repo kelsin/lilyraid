@@ -1,0 +1,21 @@
+<% list = history %>
+<tr>
+  <td>
+    <div>
+      <%= list.note %>
+      <div class="note">
+        <%= render(:partial => "shared/loot",
+                   :object => list.loot) if list.loot %>
+        <%= "<br />" if list.loot %>
+        <% list.list_positions.each do |lp| %>
+          <%= if @current_account == lp.account
+                  content_tag(:b, "#{lp.position} #{lp.account.name}")
+              else
+                  "#{lp.position} #{lp.account.name}"
+              end %> <br />
+          <% end %>
+          <%= list.date.to_s() %>
+      </div>
+    </div>
+  </td>
+</tr>
