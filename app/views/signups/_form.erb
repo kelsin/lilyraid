@@ -1,43 +1,51 @@
-<% if signups && signups.size > 0 -%>
-  You are signed up with:<br />
-  <% signups.each do |signup| -%>
-    <%= render(:partial => "shared/character",
-               :object => signup.character) %>
-    <%= link_to("Leave Raid",
-                raid_signup_url(raid.id, signup.id),
-                :confirm => "Are you sure you want to leave the raid?",
-                :method => :delete) unless raid.started? %><br />
+<% if signups -%>
+  <% if signups.size > 0 -%>
+    <% render(:layout => "shared/box", 
+              :locals => { :title => "Your Signups" }) do %>
+      <% signups.each do |signup| -%>
+        <tr>
+          <td><%= render(:partial => "shared/character",
+                         :object => signup.character) %></td>
+          <td><%= link_to("Remove",
+                          raid_signup_url(raid.id, signup.id),
+                          :confirm => "Are you sure you want to leave the raid?",
+                          :method => :delete) unless raid.started? %></td>
+        </tr>
+      <% end -%>
+    <% end %>
+  <% else -%>
+    You don't have any characters in this raid.
   <% end -%>
-<% else -%>
-  You don't have any characters in this raid.
 <% end -%>
 
-<% if raid.started? -%>
-  This raid has already started, sign ups are closed!
-<% else -%>
-  <% if characters && characters.length > 0 %>
-    <p class="note">Please select your character and if you wish, type a
-      note. Please select which roles you wish to sign up for as well.</p>
-    <% form_for([raid, new_signup]) do |f| %>
-      <p>
-        <%= f.collection_select(:character_id, characters, :id, :name_with_account,
-                                {},
-                                { :onchange => remote_function(:url => { :controller => :characters,
-                                                                   :action => "roles",
-                                                                   :account_id => @current_account.id,
-                                                                   :id => "'+this.value+'" },
-                                                               :update => div,
-                                                               :method => :get,
-                                                               :loading => update_page do |page|
-                                                                   page[div].replace_html(image_tag("loading.gif"))
-                                                               end )}) %>
-        <%= f.text_field :note %>
-        <%= submit_tag "Sign up!" %>
-      </p>
-      <p id="<%= div %>">
-        <%= render(:partial => "characters/roles",
-                   :locals => { :character => characters[0] }) %>
-      </p>
+<div style="clear: both;">
+  <% if raid.started? -%>
+    This raid has already started, sign ups are closed!
+  <% else -%>
+    <% if characters && characters.length > 0 %>
+      <p class="note">Please select your character and if you wish, type a
+        note. Please select which roles you wish to sign up for as well.</p>
+      <% form_for([raid, new_signup]) do |f| %>
+        <p>
+          <%= f.collection_select(:character_id, characters, :id, :name_with_account,
+                                  {},
+                                  { :onchange => remote_function(:url => { :controller => :characters,
+                                                                     :action => "roles",
+                                                                     :account_id => @current_account.id,
+                                                                     :id => "'+this.value+'" },
+                                                                 :update => div,
+                                                                 :method => :get,
+                                                                 :loading => update_page do |page|
+                                                                     page[div].replace_html(image_tag("loading.gif"))
+                                                                 end )}) %>
+          <%= f.text_field :note %>
+          <%= submit_tag "Sign up!" %>
+        </p>
+        <p id="<%= div %>">
+          <%= render(:partial => "characters/roles",
+                     :locals => { :character => characters[0] }) %>
+        </p>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
+</div>

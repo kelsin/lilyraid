@@ -144,13 +144,22 @@
           <tr>
             <th></th>
             <td>
-              <% @raid.signups.each do |signup| %>
-                <%= render(:partial => "shared/character", :object => signup.character) %>
-                (<%= signup.character.account.name %>)
-                <%= link_to("Remove",
-                            raid_signup_url(@raid, signup),
-                            :method => :delete,
-                            :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?") %><br />
+              <% render(:layout => "shared/box", 
+                        :locals => { :title => "Signups" }) do %>
+                <% @raid.signups.each do |signup| %>
+                  <tr>
+                    <td>
+                      <%= render(:partial => "shared/character", :object => signup.character) %>
+                      (<%= signup.character.account.name %>)
+                    </td>
+                    <td>
+                      <%= link_to("Remove",
+                                  raid_signup_url(@raid, signup),
+                                  :method => :delete,
+                                  :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?") %>
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
             </td>
           </tr>
