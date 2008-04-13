@@ -2,6 +2,7 @@
 <% form_for(@raid) do |f| %>
   <table class="info">
     <tr><th>Name:</th><td><%= f.text_field :name %></td></tr>
+    <tr><th>Instance:</th><td><%= @raid.instance.name %></td></tr>
     <tr><th>Date:</th><td><%= f.calendar_date_select :date, :time => true %></td></tr>
     <tr>
       <th>Level Requirement:</th>
@@ -38,8 +39,8 @@
                 <td>
                   <% fields_for("slot[]", slot) do |s| -%>
                     Closed <%= s.check_box :closed %>
-                    <%= s.collection_select(:role_id, @roles, :id, :name) %>
-                    <%= s.collection_select(:cclass_id, @cclasses, :id, :name) %><br />
+                    <%= s.collection_select(:role_id, @roles, :id, :name, :include_blank => "Any") %>
+                    <%= s.collection_select(:cclass_id, @cclasses, :id, :name, :include_blank => "Any") %><br />
                   <% end -%>
                 </td>
               </tr>
