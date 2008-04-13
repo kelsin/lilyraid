@@ -19,6 +19,10 @@ class Signup < ActiveRecord::Base
         other_signups.size > 0
     end
 
+    def in_raid_slot?
+        !slot.blank?
+    end
+
     def role_ids=(roles)
         @roles = roles
     end

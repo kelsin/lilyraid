@@ -136,6 +136,10 @@ class Raid < ActiveRecord::Base
         end
     end
 
+    def can_be_deleted?
+        loots.size == 0
+    end
+
     def after_create        
         instance.max_number.times do |num|
             Slot.new(:raid => self).save

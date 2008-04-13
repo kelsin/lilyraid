@@ -1,0 +1,5 @@
+<%= render(:partial => "shared/character",
+           :object => signup.character) %>
+<% if signup.in_raid_slot? -%>
+  <b>(In Raid)</b>
+<% end -%>

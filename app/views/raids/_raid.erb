@@ -1,5 +1,8 @@
 <tr id="raid_<%= raid.id %>" class="<%= cycle("even", "odd") %>">
   <td class="raidname"><b><%= link_to(raid.display_name, raid_url(raid.id)) %></b></td>
+  <td><%= render(:partial => "raids/signup",
+                 :collection => raid.signups_from(@current_account),
+                 :spacer_template => "raids/signup_spacer") %></td>
   <td><%= raid.date.to_s(:raid) %></td>
   <td>Level
     <% if raid.min_level == raid.max_level -%>
@@ -15,7 +18,7 @@
     <% end %>
   </td>
   <td>
-    <% if @current_account.can_edit(raid) %>
+    <% if @current_account.can_edit(raid) && raid.can_be_deleted? %>
       <span id="loader_<%= raid.id %>">
         <%= link_to_remote "Delete",
             :url => raid_url(raid),
