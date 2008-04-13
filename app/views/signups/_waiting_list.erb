@@ -31,7 +31,7 @@
              :collection => waiting_list,
              :locals => { :raid => raid }) %>
   <% if @current_account.can_edit(raid) %>
-    <tr><td id="add_whole_waiting_list">
+    <tr id="add_whole_waiting_list"><td>
         <div>
           <%= link_to_remote "Add To Raid",
               :url => { :action => "add_waiting_list", :id => raid.id },
