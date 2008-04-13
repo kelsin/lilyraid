@@ -11,7 +11,8 @@
                 page["td_signup_#{signup.id}"].toggle_class_name 'selected'
             end %>
       <% else %>
-        <%= signup.character.to_s_html %> <%= signup.character.level %>
+        <%= render(:partial => "shared/character", :object => signup.character) %>
+        <%= signup.character.level %>
       <% end %>
       <div class="note">
         <%= render :partial => "signups/note", :locals => { :signup => signup } %>
