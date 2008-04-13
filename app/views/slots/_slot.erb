@@ -17,8 +17,15 @@
                                }) %>
           </nobr>
           <div class="note">
-            Select a character in the waiting list and then click here to add that
-            character to this slot.
+            Select a character in the waiting list and then click here to add
+            that character to this slot.<br /><br />
+
+            You can also click on a character already in a slot and then here to
+            try and move that character to this slot. If the character can't be
+            assigned to this slot (wrong class, or wrong role) we will try to
+            use an alternate signup by that account as well. If you have trouble
+            getting the right alternate signup, just move the account to the
+            waiting list and chose the character from there.
           </div>
         <% else -%>
           <b><%= render(:partial => "shared/slot", :object => slot) %></b>
