@@ -50,7 +50,7 @@ class Account < ActiveRecord::Base
     end
 
     def can_edit(raid)
-        self.admin or self.account == raid.account
+        self.admin or self == raid.account
     end
 
     def lj_link
