@@ -38,8 +38,8 @@ class Raid < ActiveRecord::Base
         confirmed_characters.member?(character)
     end
 
-    def signups_by_account
-        signups.inject([]) do |list, signup|
+    def waiting_list_by_account
+        waiting_list.inject([]) do |list, signup|
             if list.empty?
                 [[signup]]            
             elsif list.last.first.character.account_id == signup.character.account_id
@@ -106,7 +106,11 @@ class Raid < ActiveRecord::Base
     end
     
     def waiting_list
-        signups - (slots.map { |slot| slot.signup }.compact)
+        accounts = slots.map { |slot| slot.signup }.compact.map { |signup| signup.character.account }
+
+        signups.select do |signup|
+            !accounts.member?(signup.character.account)
+        end
     end
 
     def place_character(signup)

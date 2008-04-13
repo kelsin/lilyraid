@@ -3,7 +3,7 @@ page[@slot].replace(:partial => "slot", :object => @slot)
 page[:waiting_list].replace_html(:partial => "signups/waiting_list",
                                  :layout => "shared/box",
                                  :locals => { 
-                                     :waiting_list => @raid.waiting_list,
+                                     :waiting_list => @raid.waiting_list_by_account,
                                      :raid => @raid
                                  })
 page[:needed].replace_html(:partial => "signups/needed",
@@ -12,10 +12,11 @@ page[:needed].replace_html(:partial => "signups/needed",
                                :needed => @raid.needed,
                                :title => "Needed"
                            })
-page[:loot_list].replace_html(:partial => "loots/list",
-                              :locals => {
-                                  :list => @list,
-                                  :raid => @raid
-                              })
-
+if @raid.uses_loot_system
+    page[:loot_list].replace_html(:partial => "loots/list",
+                                  :locals => {
+                                      :list => @list,
+                                      :raid => @raid
+                                  })
+end
 page[@signup].visual_effect(:pulsate, :from => 0.7, :duration => 1, :pulses => 2)

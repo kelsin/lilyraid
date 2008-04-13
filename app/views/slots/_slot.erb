@@ -39,9 +39,12 @@
 
                     page["td_slot_#{slot.id}"].toggle_class_name 'selected'
                     page.assign("slot", slot.id)
-                end %> <%= slot.signup.character.level %>
+                end %>
+            <%= "*" if slot.signup.has_other_signups %>
+            <%= slot.signup.character.level %>
           <% else %>
             <%= render(:partial => "shared/character", :object => slot.signup.character) %>
+            <%= "*" if slot.signup.has_other_signups %>
             <%= slot.signup.character.level %>
           <% end %>
         </nobr>

@@ -51,10 +51,11 @@
     <% if @raid.is_open -%>
       <tr>
         <th></th>
-        <td>
+        <td id="signups">
           <%= render(:partial => "signups/form",
                      :locals => { :signups => @signups,
-                         :signup => @signup,
+                         :new_signup => @signup,
+                         :div => "user_role_choice",
                          :characters => @characters,
                          :raid => @raid }) %>
         </td>
@@ -77,7 +78,7 @@
             <%= render(:partial => "signups/waiting_list",
                        :layout => "shared/box",
                        :locals => { 
-                           :waiting_list => @raid.waiting_list,
+                           :waiting_list => @raid.waiting_list_by_account,
                            :raid => @raid
                        }) %>
           </div>
@@ -126,8 +127,9 @@
           <th></th>
           <td>
             <%= render(:partial => "signups/form",
-                       :locals => { :signup => @admin_signup,
+                       :locals => { :new_signup => @admin_signup,
                            :signups => nil,
+                           :div => "admin_role_choice",
                            :characters => @admin_characters,
                            :raid => @raid }) %>
           </td>

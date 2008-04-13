@@ -201,7 +201,7 @@ table.box div.note {
     display: none;
 }
 
-table.box tr:hover div.note {
+table.box td:hover div.note {
     display: block;
     color: white;
     font-weight: normal;

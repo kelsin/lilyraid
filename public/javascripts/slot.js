@@ -14,17 +14,17 @@ function get_selected_slot() {
 }
 
 function get_selected_url() {
-    var id = $$('td.selected')[0].id; 
-    
+    var id = $$('td.selected')[0].id;
+
     if(id.match(/signup_/)) {
-        return 'from_signup_id=' + id.replace(/^td_signup_/,'');
+        return 'from_signup_id=' + id.replace(/^signup_/,'');
     } else if(id.match(/slot_/)) {
         return 'from_slot_id=' + id.replace(/^td_slot_/,'');
     } else {
         return '';
     }
 }
-    
+
 function list_display(cclass_name, checked) {
     eles = $$('tr.' + cclass_name);
     for(var i=0; i < eles.length; i++) {

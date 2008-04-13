@@ -1,3 +1,11 @@
 <%= render(:partial => "signups/note",
-           :locals => { :signup => slot.signup }) %><br />
+           :object => slot.signup) %><br />
 <b>Slot</b>: <%= render(:partial => "shared/slot", :object => slot) %>
+
+<% if slot.signup.has_other_signups -%>
+  <br /><br />
+  <b>-- Other Signups --</b><br /><br />
+  <%= render(:partial => "signups/note",
+             :collection => slot.signup.other_signups,
+             :spacer_template => "slots/spacer") %>
+<% end -%>

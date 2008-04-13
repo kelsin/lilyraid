@@ -11,7 +11,7 @@
   </td>
   <td>
     <% raid.needed.each do |slot, num| %>
-      <%= num %> <%= render(:parial => "shared/slot", :object => slot) %><br/>
+      <%= num %> <%= render(:partial => "shared/slot", :object => slot) %><br/>
     <% end %>
   </td>
   <td>

@@ -3,10 +3,10 @@
   <% signups.each do |signup| -%>
     <%= render(:partial => "shared/character",
                :object => signup.character) %>
-    <%= link_to_remote("Leave Raid",
-                       :url => signups_url(raid.id, signup.id),
-                       :confirm => "Are you sure you want to leave the raid?",
-                       :method => delete) unless raid.started? %><br />
+    <%= link_to("Leave Raid",
+                raid_signup_url(raid.id, signup.id),
+                :confirm => "Are you sure you want to leave the raid?",
+                :method => :delete) unless raid.started? %><br />
   <% end -%>
 <% else -%>
   You don't have any characters in this raid.
@@ -18,7 +18,7 @@
   <% if characters && characters.length > 0 %>
     <p class="note">Please select your character and if you wish, type a
       note. Please select which roles you wish to sign up for as well.</p>
-    <% form_for([raid, signup]) do |f| %>
+    <% form_for([raid, new_signup]) do |f| %>
       <p>
         <%= f.collection_select(:character_id, characters, :id, :name_with_account,
                                 {},
@@ -26,15 +26,15 @@
                                                                    :action => "roles",
                                                                    :account_id => @current_account.id,
                                                                    :id => "'+this.value+'" },
-                                                               :update => "slot_type_choice",
+                                                               :update => div,
                                                                :method => :get,
                                                                :loading => update_page do |page|
-                                                                   page[:slot_type_choice].replace_html(image_tag("loading.gif"))
+                                                                   page[div].replace_html(image_tag("loading.gif"))
                                                                end )}) %>
         <%= f.text_field :note %>
         <%= submit_tag "Sign up!" %>
       </p>
-      <p id="slot_type_choice">
+      <p id="<%= div %>">
         <%= render(:partial => "characters/roles",
                    :locals => { :character => characters[0] }) %>
       </p>
