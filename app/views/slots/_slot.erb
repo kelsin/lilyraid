@@ -41,7 +41,8 @@
                     page.assign("slot", slot.id)
                 end %> <%= slot.signup.character.level %>
           <% else %>
-            <%= slot.signup.character.to_s_html %> <%= slot.signup.character.level %>
+            <%= render(:partial => "shared/character", :object => slot.signup.character) %>
+            <%= slot.signup.character.level %>
           <% end %>
         </nobr>
         <div class="note">
