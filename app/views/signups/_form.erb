@@ -6,10 +6,10 @@
         <tr>
           <td><%= render(:partial => "shared/character",
                          :object => signup.character) %></td>
-          <td><%= link_to("Remove",
-                          raid_signup_url(raid.id, signup.id),
-                          :confirm => "Are you sure you want to leave the raid?",
-                          :method => :delete) unless raid.started? %></td>
+          <%= content_tag(:td, link_to("Remove",
+                                       raid_signup_url(raid.id, signup.id),
+                                       :confirm => "Are you sure you want to leave the raid?",
+                                       :method => :delete)) unless raid.started? %>
         </tr>
       <% end -%>
     <% end %>
