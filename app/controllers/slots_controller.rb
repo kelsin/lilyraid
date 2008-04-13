@@ -27,6 +27,18 @@ class SlotsController < ApplicationController
                     @from_slot.save
                     @slot.save
                     @signup = nil
+                else
+                    others = @from_slot.signup.other_signups.select do |other_signup|
+                        @slot.accept(other_signup)
+                    end
+
+                    if others.size > 0
+                        @slot.signup = others[0]
+                        @from_slot.signup = nil
+                        @from_slot.save
+                        @slot.save
+                        @signup = nil
+                    end
                 end
             elsif params[:from_signup_id]
                 @signup = @raid.signups.find(params[:from_signup_id])

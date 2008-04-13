@@ -118,22 +118,43 @@
           </td>
         </tr>
       <% end %>
-      <% if @current_account.admin && @admin_characters.length > 0 -%>
-        <tr>
-          <th></th>
-          <td><h2>Add a Character</h2></td>
-        </tr>
-        <tr>
-          <th></th>
-          <td>
-            <%= render(:partial => "signups/form",
-                       :locals => { :new_signup => @admin_signup,
-                           :signups => nil,
-                           :div => "admin_role_choice",
-                           :characters => @admin_characters,
-                           :raid => @raid }) %>
-          </td>
-        </tr>
+      <% if @current_account.admin -%>
+        <% if @admin_characters.length > 0 -%>
+          <tr>
+            <th></th>
+            <td><h2>Add a Character</h2></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td>
+              <%= render(:partial => "signups/form",
+                         :locals => { :new_signup => @admin_signup,
+                             :signups => nil,
+                             :div => "admin_role_choice",
+                             :characters => @admin_characters,
+                             :raid => @raid }) %>
+            </td>
+          </tr>
+        <% end -%>
+        <% if @raid.signups.size > 0 %>
+          <tr>
+            <th></th>
+            <td><h2>Remove a Character</h2></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td>
+              <% @raid.signups.each do |signup| %>
+                <%= render(:partial => "shared/character", :object => signup.character) %>
+                (<%= signup.character.account.name %>)
+                <%= link_to("Remove",
+                            raid_signup_url(@raid, signup),
+                            :method => :delete,
+                            :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?") %><br />
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
       <% end -%>
     <% else -%>
       <tr><th></th><td>Not yet open for signups</td></tr>
