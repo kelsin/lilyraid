@@ -3,6 +3,7 @@ page[@slot].replace(:partial => "slot", :object => @slot)
 page[:waiting_list].replace_html(:partial => "signups/waiting_list",
                                  :layout => "shared/box",
                                  :locals => { 
+                                     :title => nil,
                                      :waiting_list => @raid.waiting_list_by_account,
                                      :raid => @raid
                                  })

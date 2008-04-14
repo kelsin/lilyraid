@@ -78,6 +78,7 @@
             <%= render(:partial => "signups/waiting_list",
                        :layout => "shared/box",
                        :locals => { 
+                           :title => nil,
                            :waiting_list => @raid.waiting_list_by_account,
                            :raid => @raid
                        }) %>
