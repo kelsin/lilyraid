@@ -1,15 +1,17 @@
 <tr>
   <td>
-    <%= if @current_account == position.account
-            content_tag(:b, "#{position.position} #{position.account.name}")
-        else
-            "#{position.position} #{position.account.name}"
-        end %>
+    <%= link_to(if @current_account == position.account
+                    content_tag(:b, "#{position.position} #{position.account.name}")
+                else
+                    "#{position.position} #{position.account.name}"
+                end,
+                account_url(position.account)) %>
   </td>
   <% position.account.active_characters.each do |character| -%>
     <td>
-      <%= render(:partial => "shared/character",
-                 :object => character) %>
+      <%= link_to(render(:partial => "shared/character",
+                         :object => character),
+                  "#{account_url(position.account)}##{dom_id(character)}") %>
     </td>
   <% end -%>
 </tr>
