@@ -1,5 +1,5 @@
 class RaidsController < ApplicationController
-    before_filter(:load_raid, :only => [:show, :edit, :update])
+    before_filter(:load_raid, :only => [:show, :edit, :update, :destroy])
 
     def index
         @old = params[:old]
@@ -79,7 +79,7 @@ class RaidsController < ApplicationController
 
 
     def destroy
-        if @current_account.can_edit(raid)
+        if @current_account.can_edit(@raid)
             @raid.destroy
 
             respond_to do |format|
