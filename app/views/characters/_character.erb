@@ -59,5 +59,16 @@
         </td>
       </tr>
     <% end %>
+    <% if character.loots.size > 0 %>
+      <tr>
+        <th>Loot:</th>
+        <td>
+          <% character.loots.each do |loot| -%>
+            <a class="loot" href="<%= loot.item_url %>"><%= loot.item_name %></a>
+            from <%= link_to(loot.raid.name, raid_url(loot.raid)) %><br />
+          <% end -%>
+        </td>
+      </tr>
+    <% end %>
   </table>
 <% end %>
