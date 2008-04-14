@@ -19,7 +19,7 @@
 <% end -%>
 
 <div style="clear: both;">
-  <% if raid.started? -%>
+  <% if raid.started? and signups -%>
     This raid has already started, sign ups are closed!
   <% else -%>
     <% if characters && characters.length > 0 %>
