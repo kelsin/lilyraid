@@ -172,7 +172,7 @@ table.box td.closed {
     color: #333;
 }
 
-table.box td.selected {
+table.box td.selected, table.box td.highlight {
     border: 1px solid #f00;
 }
 
