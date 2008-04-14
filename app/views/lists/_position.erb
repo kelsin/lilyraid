@@ -6,12 +6,10 @@
             "#{position.position} #{position.account.name}"
         end %>
   </td>
-  <% position.account.characters.each do |character| -%>
-    <% if !character.inactive -%>
-      <td>
-        <%= render(:partial => "shared/character",
-                   :object => character) %>
-      </td>
-    <% end -%>
+  <% position.account.active_characters.each do |character| -%>
+    <td>
+      <%= render(:partial => "shared/character",
+                 :object => character) %>
+    </td>
   <% end -%>
 </tr>
