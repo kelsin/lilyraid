@@ -22,7 +22,7 @@
       <span id="loader_<%= raid.id %>">
         <%= link_to_remote "Delete",
             :url => raid_url(raid),
-            :confirm=>"Are you sure you want to delete #{raid}?",
+            :confirm=>"Are you sure you want to delete #{raid.display_name}?",
             :method => :delete, 
             :loading => update_page{|page| 
                 page["loader_#{raid.id}"].replace_html image_tag("loading.gif")
