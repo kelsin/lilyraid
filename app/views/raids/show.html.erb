@@ -101,10 +101,8 @@
                          :locals => {:list => @list}) %>
             </div>
             <div id="item_list">
-              <% render(:layout => "shared/box", :locals => { :title => "Item History" }) do %>
-                <%= render(:partial => "loots/loot",
-                           :collection => @raid.loots) %> <%#Loot.from(@raid)) %>
-              <% end %>
+              <%= render(:partial => "loots/items",
+                         :locals => {:raid => @raid}) %>
             </div>
           </td>
         </tr>

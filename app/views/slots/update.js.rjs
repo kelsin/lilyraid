@@ -21,6 +21,10 @@ if @signup && @slot.signup
                                           :list => @list,
                                           :raid => @raid
                                       })
+        page[:loot_form].replace_html(:partial => "loots/form",
+                                      :locals => { 
+                                          :raid => @raid
+                                      }) if @current_account.can_edit(@raid)
     end
 elsif @from_slot
     page[@from_slot].replace(:partial => "slot", :object => @from_slot)

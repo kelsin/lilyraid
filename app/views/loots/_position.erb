@@ -3,6 +3,9 @@
     <% if @current_account == position.account %><b><% end %>
     <%= position.position %> <%= link_to_function(render(:partial => "shared/character",
                                                          :object => position.account.characters[0])) do |page|
+                                     page.select('table.box td.selected').each do |item|
+                                         item.remove_class_name 'selected'
+                                     end
                                      page[position].toggle_class_name :selected
                                  end %>
     <% if @current_account == position.account %></b><% end %>

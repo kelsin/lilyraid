@@ -161,7 +161,8 @@ class Account < ActiveRecord::Base
             phpbb_host = Preference.get_setting("phpbb_host")
             phpbb_user = Preference.get_setting("phpbb_user")
             phpbb_pass = Preference.get_setting("phpbb_pass")
-            @@mysql = Mysql.new(phpbb_host, phpbb_user, phpbb_pass, phpbb_db)
+            phpbb_port = Preference.get_setting("phpbb_port").to_i
+            @@mysql = Mysql.new(phpbb_host, phpbb_user, phpbb_pass, phpbb_db, phpbb_port)
         end
         
         @@mysql

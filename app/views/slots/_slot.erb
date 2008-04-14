@@ -11,7 +11,7 @@
                                :url => raid_slot_url(slot.raid, slot),
                                :method => :put,
                                :with => "get_selected_url()",
-                               :condition => "$$('td.selected').length > 0",
+                               :condition => "$$('td.slot.selected').length > 0 || $$('td.signup.selected').length > 0",
                                :loading => update_page { |page|
                                    page["slot_#{slot.id}"].replace_html(content_tag("td", "Loading ..."))
                                }) %>

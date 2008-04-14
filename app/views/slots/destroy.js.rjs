@@ -18,5 +18,9 @@ if @raid.uses_loot_system
                                       :list => @list,
                                       :raid => @raid
                                   })
+    page[:loot_form].replace_html(:partial => "loots/form",
+                                  :locals => { 
+                                      :raid => @raid
+                                  }) if @current_account.can_edit(@raid)
 end
 page[@signup].visual_effect(:pulsate, :from => 0.7, :duration => 1, :pulses => 2)
