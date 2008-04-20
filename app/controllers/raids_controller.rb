@@ -1,5 +1,6 @@
 class RaidsController < ApplicationController
-    before_filter(:load_raid, :only => [:show, :edit, :update, :destroy])
+    before_filter(:load_raid, :only => [:edit, :update, :destroy])
+    cache_sweeper :raid_sweeper, :only => [:create, :update, :destroy]
 
     def index
         @old = params[:old]
@@ -22,29 +23,7 @@ class RaidsController < ApplicationController
     end
 
     def show
-        @signups = @raid.signups.select do |signup|
-            signup.character.account == @current_account
-        end
-
-        @list = List.get_list_from_raid("Master", @raid)
-
-        @signup = Signup.new(:raid => @raid)
-        
-        if !@raid.started?
-            @characters = @current_account.active_characters.select do |char|
-                char.can_join(@raid)
-            end
-        end
-
-        if @current_account.admin
-            @admin_signup = Signup.new(:raid => @raid)
-            @admin_characters = Character.find(:all,
-                                               :order => "characters.name",
-                                               :include => [:instances, :raids],
-                                               :conditions => ["inactive = ?", false]).select do |character|
-                character.can_join(@raid)
-            end
-        end
+        @raid = Raid.find(params[:id])
     end
 
     def edit
@@ -106,10 +85,7 @@ class RaidsController < ApplicationController
     end
 
     def new
-        @instances = Instance.find(:all, :order => "name")
         @raid = Raid.new
-        @raid.min_level = @instances[0].min_level
-        @raid.max_level = @instances[0].max_level
         @raid.date = Time.now unless @raid.date
     end
 

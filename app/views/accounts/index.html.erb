@@ -1,17 +1,19 @@
 <% if flash[:notice] %><%= flash[:notice] %><% end %>
+<% cache do %>
 <table class="info">
   <tr>
     <th>Admins</th>
     <td>
       <%= render(:partial => "accounts/characters",
-                 :collection => @admins) %>
+                 :collection => Account.admins) %>
     </td>
   </tr>
   <tr>
     <th>Members</th>
     <td>
       <%= render(:partial => "accounts/characters",
-                 :collection => @members) %>
+                 :collection => Account.members) %>
     </td>
   </tr>
 </table>
+<% end %>

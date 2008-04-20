@@ -1,6 +1,7 @@
 class SignupsController < ApplicationController
     before_filter(:load_raid, :only => [:create, :destroy])
     before_filter(:load_signup, :only => :destroy)
+    cache_sweeper :signup_sweeper, :only => [:create, :update, :destroy]
 
     def create
         @signup = Signup.new(params[:signup])

@@ -1,6 +1,7 @@
 class CharactersController < ApplicationController
     before_filter(:load_account)
     before_filter(:load_character, :only => [:destroy, :edit])
+    cache_sweeper :character_sweeper, :only => [:create, :update, :destroy]
 
     def create
         if @current_account == @account
@@ -9,13 +10,6 @@ class CharactersController < ApplicationController
             @character.save
         end
 
-        @new_character = Character.new(:account => @account)
-        @instances = Instance.find(:all,
-                                   :conditions => ["requires_key = ?", true],
-                                   :order => "name")
-        @cclasses = Cclass.find(:all)
-        @races = Race.find(:all)
-        
         respond_to do |format|
             format.html { redirect_to account_url(@account) }
             format.js
@@ -24,12 +18,6 @@ class CharactersController < ApplicationController
 
     def edit
         if @current_account == @account
-            @instances = Instance.find(:all,
-                                       :conditions => ["requires_key = ?", true],
-                                       :order => "name")
-            @cclasses = Cclass.find(:all)
-            @races = Race.find(:all)
-
             respond_to do |format|
                 format.html
                 format.js

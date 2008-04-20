@@ -22,6 +22,7 @@ class Character < ActiveRecord::Base
     end
 
     def instances=(instance_ids)
+        Attunement.destroy_all(["character_id = ?", self.id])
         instance_ids.each do |id|
             Attunement.new(:character => self,
                            :instance_id => id).save
@@ -31,6 +32,21 @@ class Character < ActiveRecord::Base
 
     def keyed(instance)
         instances.member?(instance)
+    end
+
+    def self.can_join(raid)
+        if raid.instance.requires_key
+            find(:all,
+                 :order => "characters.name",
+                 :include => :instances,
+
+                 :conditions => ["instances.id = ? and characters.level >= ? and characters.level <= ? and characters.inactive = ?", raid.instance.id, raid.min_level, raid.max_level, false]) - raid.characters
+        else
+            find(:all,
+                 :order => "characters.name",
+                 :include => :instances,
+                 :conditions => ["characters.level >= ? and characters.level <= ? and characters.inactive = ?", raid.min_level, raid.max_level, false]) - raid.characters
+        end
     end
 
     def can_join(raid)

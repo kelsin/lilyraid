@@ -6,4 +6,14 @@ class Instance < ActiveRecord::Base
     def name_with_number
         "#{name} - #{max_number} man"
     end
+
+    def self.keyed
+        find(:all,
+             :conditions => ["requires_key = ?", true],
+             :order => "name")
+    end
+
+    def self.all
+        find(:all, :order => "name")
+    end
 end

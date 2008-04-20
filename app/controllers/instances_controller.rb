@@ -3,6 +3,8 @@ class InstancesController < ApplicationController
     before_filter(:load_instances, :only => [:index])
     before_filter(:load_instance, :only => [:edit, :destroy])
 
+    cache_sweeper :instance_sweeper, :only => [:create, :update, :destroy]
+
     def index
         respond_to do |format|
             format.html

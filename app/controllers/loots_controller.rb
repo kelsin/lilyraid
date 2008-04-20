@@ -3,6 +3,8 @@ class LootsController < ApplicationController
     before_filter(:load_list)
     before_filter(:load_character)
 
+    cache_sweeper :loot_sweeper, :only => [:create]
+
     def create
         @loot = Loot.new(params[:loot])
         @loot.raid = @raid

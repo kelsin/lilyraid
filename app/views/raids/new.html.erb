@@ -10,22 +10,25 @@
       <th>Date:</th>
       <td><%= f.calendar_date_select :date, :time => true, :minute_interval => 15 %></td>
     </tr>
-    <tr>
-      <th>Instance:</th>
-      <td><%= f.collection_select(:instance_id, @instances,
-                                  :id, :name_with_number, {},
-                                  { :onchange => remote_function(:url => {
-                                                                     :action => "instance_levels",
-                                                                     :id => "'+this.value+'"
-                                                                 },
-                                                                 :loading => update_page do |page|
-                                                                     page[:level_loading].replace_html(image_tag("loading.gif"))
-                                                                 end)}) %></td>
-    </tr>
-    <tr>
-      <th>Level Requirement:</th>
-      <td><%= f.text_field :min_level, :size => 3 %>-<%= f.text_field :max_level, :size => 3 %> <span id="level_loading"></span></td>
-    </tr>
+    <% cache do %>
+      <% instances = Instance.all %>
+      <tr>
+        <th>Instance:</th>
+        <td><%= f.collection_select(:instance_id, instances,
+                                    :id, :name_with_number, {},
+                                    { :onchange => remote_function(:url => {
+                                                                       :action => "instance_levels",
+                                                                       :id => "'+this.value+'"
+                                                                   },
+                                                                   :loading => update_page do |page|
+                                                                       page[:level_loading].replace_html(image_tag("loading.gif"))
+                                                                   end)}) %></td>
+      </tr>
+      <tr>
+        <th>Level Requirement:</th>
+        <td><%= f.text_field :min_level, :size => 3, :value => instances[0].min_level %>-<%= f.text_field :max_level, :size => 3, :value => instances[0].max_level %> <span id="level_loading"></span></td>
+      </tr>
+    <% end %>
     <% if @current_account.admin %>
       <tr>
         <th>Locked?</th>

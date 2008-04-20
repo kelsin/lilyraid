@@ -1,26 +1,19 @@
 class AccountsController < ApplicationController
-    before_filter(:load_account, :only => [:show, :edit, :create])
-    before_filter(:load_accounts, :only => [:index])
-
-    def index
-    end
+    cache_sweeper :account_sweeper, :only => [:update]
 
     def show
-        if @current_account == @account
-            @character = Character.new(:account => @account)
-            @instances = Instance.find(:all,
-                                       :conditions => ["requires_key = ?", true],
-                                       :order => "name")
-            @cclasses = Cclass.find(:all)
-            @races = Race.find(:all)
-        end
-
-        respond_to do |format|
-            format.html
-        end
+        @account = Account.find(params[:id])
     end
 
     def edit
+        @account = Account.find(params[:id],
+                                :include => { :characters => [:cclass,
+                                                              :race,
+                                                              :raids,
+                                                              :instances,
+                                                              :signups,
+                                                              :account] } )
+
         if @current_account == @account
             respond_to do |format|
                 format.html
@@ -39,10 +32,10 @@ class AccountsController < ApplicationController
     end
 
     def update
-        if @current_account.id == params[:id]
+        if @current_account.id == params[:id].to_i
             @account = Account.update(params[:id], params[:account])
         else
-            load_account
+            @account = Account.find(params[:id])
         end
 
         respond_to do |format|
@@ -53,18 +46,24 @@ class AccountsController < ApplicationController
 
     private
 
-    def load_account
-        @account = Account.find(params[:id],
-                                :include => { :characters => [:cclass,
-                                                              :race,
-                                                              :raids,
-                                                              :instances,
-                                                              :signups,
-                                                              :account] } )
+    def index_cache_path
+        if @current_account.admin?
+            "/admin/accounts"
+        else
+            "/accounts"
+        end
     end
 
-    def load_accounts
-        @admins = Account.admins
-        @members = Account.members
-    end                                 
+    def show_cache_path
+        path = ""
+        if @current_account.admin? 
+            path += "/admin"
+        end
+
+        if @current_account.id == params[:id].to_i
+            path += "/accounts/#{params[:id]}/owner"
+        else
+            path += "/accounts/#{params[:id]}"
+        end
+    end
 end

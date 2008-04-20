@@ -5,10 +5,22 @@ class Raid < ActiveRecord::Base
     has_many(:slots,
              :dependent => :destroy,
              :include => [:signup, :role, :cclass],
-             :order => "slots.id")
+             :order => "slots.id") do
+        def characters
+            find(:all,
+                 :include => { :signup => :character },
+                 :conditions => "signup_id is not null").map do |slot|
+                slot.signup.character
+            end
+        end
+    end
     has_many :signups, :dependent => :destroy
     has_many :characters, :through => :signups, :order => "characters.name"
     has_many :loots
+
+    def self.in_instance(instance)
+        find(:all, :conditions => ["instance_id = ?", instance.id])
+    end
 
     def display_name
         name.blank? ? instance.name : name
@@ -52,6 +64,8 @@ class Raid < ActiveRecord::Base
     end
                 
     def is_open
+        return true
+
         slots.each do |slot|
             if !slot.closed
                 return true

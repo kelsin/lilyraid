@@ -13,7 +13,19 @@ class Account < ActiveRecord::Base
              :conditions => ["characters.inactive = ?", false],
              :include => [{:cclass => :roles},
                           :instances,
-                          :raids])
+                          :raids]) do
+        def can_join(raid)
+            if raid.instance.requires_key
+                find(:all,
+                     :include => :instances,
+                     :conditions => ["instances.id = ? and characters.level >= ? and characters.level <= ?", raid.instance.id, raid.min_level, raid.max_level]) - raid.characters
+            else
+                find(:all,
+                     :conditions => ["characters.level >= ? and characters.level <= ?", raid.min_level, raid.max_level]) - raid.characters
+            end
+        end
+    end
+            
     has_many(:old_signups,
              :class_name => "Signup",
              :include => :raid,
@@ -27,7 +39,7 @@ class Account < ActiveRecord::Base
              :include => :raid,
              :through => :characters) do
         def raid(id)
-            find(:first,
+            find(:all,
                  :include => :raid,
                  :conditions => ["raid_id = ?", id])
         end
@@ -139,11 +151,7 @@ class Account < ActiveRecord::Base
     
     def Account.get_account_from_id(account_id)
         if Account.exists?(account_id)
-            return Account.find(account_id,
-                                :include => [ { :characters => { :signups => :raid } },
-                                              { :signups => :raid },
-                                              :raids ])
-            #{ :characters => { :signups => :raid } },
+            return Account.find(account_id)
         else
             # Create an account for this user
             account = Account.new
