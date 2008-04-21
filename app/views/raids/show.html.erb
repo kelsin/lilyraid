@@ -35,7 +35,7 @@
       </tr>
       <tr>
         <th>Signups:</th>
-        <td><%= @raid.signups.size %> / <%= @raid.instance.max_number %></td>
+        <td><%= @raid.slots.characters.size %> / <%= @raid.instance.max_number %></td>
       </tr>
       <% if !@raid.loot_note.blank? -%>
         <tr>
