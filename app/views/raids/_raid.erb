@@ -13,8 +13,8 @@
     <% if raid.instance.requires_key %><br/>Key Required<% end %>
   </td>
   <td>
-    <% raid.needed.each do |slot, num| %>
-      <%= num %> <%= render(:partial => "shared/slot", :object => slot) %><br/>
+    <% raid.needed.each do |need| %>
+      <%= need[1] %><%= render(:partial => "shared/slot", :object => need[0]) %><br/>
     <% end %>
   </td>
   <td>

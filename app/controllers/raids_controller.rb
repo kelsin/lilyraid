@@ -7,18 +7,12 @@ class RaidsController < ApplicationController
 
         if @old
             @raids = Raid.find(:all,
-                               :include => [:instance, { :slots => [:cclass, :signup, :role] }],
                                :conditions => ["raids.date < ?", Time.now],
                                :order => "raids.date desc")
         else
             @raids = Raid.find(:all,
-                               :include => [:instance, { :slots => [:cclass, :signup, :role] }],
                                :conditions => ["raids.date >= ?", Time.now],
                                :order => "raids.date")
-        end
-
-        respond_to do |format|
-            format.html
         end
     end
 
