@@ -14,7 +14,7 @@ class Raid < ActiveRecord::Base
             end
         end
     end
-    has_many :signups, :dependent => :destroy
+    has_many :signups, :dependent => :destroy, :order => "signups.created_at"
     has_many :characters, :through => :signups, :order => "characters.name"
     has_many :loots
 
