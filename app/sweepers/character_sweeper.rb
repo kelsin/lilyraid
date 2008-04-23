@@ -11,12 +11,7 @@ class CharacterSweeper < ActionController::Caching::Sweeper
 
     def expire_cache(character)
         expire_fragment :controller => "accounts", :action => "index"
-
-        Raid.find(:all).each do |raid|
-            expire_fragment(:controller => "raids",
-                            :action => "show",
-                            :id => raid.id,
-                            :type => "admin_add")
-        end
+        expire_fragment(%r"/raids/.*\?type=admin_add")
+        expire_fragment(%r"/accounts/#{character.account.id}")
     end
 end

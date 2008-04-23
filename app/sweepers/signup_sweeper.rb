@@ -10,32 +10,7 @@ class SignupSweeper < ActionController::Caching::Sweeper
     end
 
     def expire_cache(signup)
-        expire_fragment(:controller => "raids",
-                        :action => "show",
-                        :id => signup.raid_id)
-        expire_fragment(:controller => "raids",
-                        :action => "show",
-                        :id => signup.raid_id,
-                        :account => signup.character.account)
-
-        expire_fragment(:controller => "raids",
-                        :action => "show",
-                        :id => signup.raid.id,
-                        :type => "admin_add")
-        expire_fragment(:controller => "raids",
-                        :action => "show",
-                        :id => signup.raid.id,
-                        :type => "admin_remove")        
-
-        expire_fragment(:controller => "raids",
-                        :action => "show",
-                        :id => signup.raid.id,
-                        :can_edit => true,
-                        :type => "signups")        
-        expire_fragment(:controller => "raids",
-                        :action => "show",
-                        :id => signup.raid.id,
-                        :can_edit => false,
-                        :type => "signups")        
+        expire_fragment(%r"/raids/#{signup.raid.id}")
+        expire_fragment(%r"/accounts/#{signup.character.account.id}")
     end
 end

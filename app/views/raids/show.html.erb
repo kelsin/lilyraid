@@ -51,19 +51,17 @@
       <% end -%>
     <% end %>
     <% if @raid.is_open -%>
-      <% cache(:account => @current_account.id) do %>
-        <tr>
-          <th></th>
-          <td id="signups">
-            <%= render(:partial => "signups/form",
-                       :locals => { :signups => @current_account.signups.raid(@raid.id),
-                           :new_signup => Signup.new(:raid => @raid),
-                           :div => "user_role_choice",
-                           :characters => @current_account.active_characters.can_join(@raid),
-                           :raid => @raid }) %>
-          </td>
-        </tr>
-      <% end %>
+      <tr>
+        <th></th>
+        <td id="signups">
+          <%= render(:partial => "signups/form",
+                     :locals => { :signups => @current_account.signups.raid(@raid.id),
+                         :new_signup => Signup.new(:raid => @raid),
+                         :div => "user_role_choice",
+                         :characters => @current_account.active_characters.can_join(@raid),
+                         :raid => @raid }) %>
+        </td>
+      </tr>
       <% cache(:type => "signups", :can_edit => @current_account.can_edit(@raid)) do %>
         <tr>
           <th></th>

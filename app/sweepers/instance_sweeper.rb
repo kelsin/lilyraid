@@ -11,12 +11,6 @@ class InstanceSweeper < ActionController::Caching::Sweeper
 
     def expire_cache(instance)
         expire_fragment :controller => "raids", :action => "new"
-
-        Raid.in_instance(instance).each do |raid|
-            expire_fragment(:controller => "raids",
-                            :action => "show",
-                            :id => raid.id,
-                            :type => "admin_add")
-        end
+        expire_fragment(%r"/raids/.*\?type=admin_add")
     end
 end
