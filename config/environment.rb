@@ -10,6 +10,8 @@ RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+require 'icalendar-1.0.2/lib/icalendar'
+
 Rails::Initializer.run do |config|
   # Skip frameworks you're not going to use (only works if using vendor/rails).
   # To use Rails without a database, you must remove the Active Record framework

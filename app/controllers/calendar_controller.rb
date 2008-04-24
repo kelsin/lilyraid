@@ -1,12 +1,8 @@
-require 'icalendar'
-
-include Icalendar
-
 class CalendarController < ApplicationController
     skip_before_filter :authorize, :except => :index
 
     def raids
-        cal = Calendar.new
+        cal = Icalendar::Calendar.new
 
         cal.custom_property("METHOD", "PUBLISH")
         cal.custom_property("X-WR-CALNAME", "DotA Raid Calendar")
@@ -36,7 +32,7 @@ class CalendarController < ApplicationController
     end
 
     def account
-        cal = Calendar.new
+        cal = Icalendar::Calendar.new
 
         @account = Account.find(params[:id])
 
