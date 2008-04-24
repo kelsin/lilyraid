@@ -75,17 +75,17 @@ class CalendarController < ApplicationController
     private
 
     def get_tz
-        tz = Timezone.new
+        tz = Icalendar::Timezone.new
         tz.tzid = "America/Los_Angeles"
         tz.custom_property("X-LIC-LOCATION", "America/Los_Angeles")
-        daylight = Daylight.new
+        daylight = Icalendar::Daylight.new
         daylight.tzoffsetfrom = "-0800"
         daylight.tzoffsetto = "-0700"
         daylight.tzname = "PDT"
         daylight.dtstart = "19700308T020000"
         daylight.add_rrule "FREQ=YEARLY;BYMONTH=3;BYDAY=2SU"
         tz.add_component(daylight)
-        stan = Standard.new
+        stan = Icalendar::Standard.new
         stan.tzoffsetfrom = "-0700"
         stan.tzoffsetto = "-0800"
         stan.tzname = "PST"
