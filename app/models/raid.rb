@@ -181,8 +181,4 @@ class Raid < ActiveRecord::Base
     def uid
         "raid_#{self.id}@raids.dota-guild.com"
     end
-
-    def url
-        "http://raids.dota-guild.com/raid/#{self.id}"
-    end
 end

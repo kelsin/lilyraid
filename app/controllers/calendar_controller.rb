@@ -16,13 +16,13 @@ class CalendarController < ApplicationController
             params = { "TZID" => ["America/Los_Angeles"] }
             event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
             event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
-            event.url = "http://raids.dota-guild.com/raids/#{raid.id}"
+            event.url = raid_url(raid)
             event.location = "Bronzebeard World of Warcraft Server"
             event.organizer = raid.account.name
             event.summary = raid.name
-            event.description = raid.notes
+            event.description = raid.note
             event.klass = "PUBLIC"
-            event.uid = "raid_#{raid.id}@raids.dota-guild.com"
+            event.uid = raid.uid
             cal.add_event(event)
         end
 
@@ -56,14 +56,14 @@ class CalendarController < ApplicationController
             params = { "TZID" => ["America/Los_Angeles"] }
             event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
             event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
-            event.url = "http://raids.dota-guild.com/raids/#{raid.id}"
+            event.url = raid_url(raid)
             event.location = "Bronzebeard World of Warcraft Server"
             event.organizer = raid.account.name
             event.summary = raid.name
             event.add_attendee "#{character}#{status}"
-            event.description = raid.notes
+            event.description = raid.note
             event.klass = "PUBLIC"
-            event.uid = "raid_#{raid.id}@raids.dota-guild.com"
+            event.uid = raid.uid
             cal.add_event(event)
         end
 
