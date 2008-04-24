@@ -12,7 +12,7 @@ class CalendarController < ApplicationController
         cal.add_component(get_tz)
 
         Raid.find(:all, :order => :date).each do |raid|
-            event = Event.new
+            event = Icalendar::Event.new
             params = { "TZID" => ["America/Los_Angeles"] }
             event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
             event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
@@ -52,7 +52,7 @@ class CalendarController < ApplicationController
                          " in the waiting list."
                      end
 
-            event = Event.new
+            event = Icalendar::Event.new
             params = { "TZID" => ["America/Los_Angeles"] }
             event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
             event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
