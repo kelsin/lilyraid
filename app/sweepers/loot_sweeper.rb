@@ -12,7 +12,7 @@ class LootSweeper < ActionController::Caching::Sweeper
     def expire_cache(loot)
         expire_fragment(:controller => "raids",
                         :action => "show",
-                        :id => slot.raid.id,
+                        :id => loot.raid.id,
                         :type => "loot")
     end
 end
