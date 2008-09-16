@@ -31,5 +31,12 @@
       <% end %>
     </tr>
   </table>
+  <% if @current_account.characters.size < 1 %>
+    <div class="info">
+      You currently have no characters created! Please head to the
+      <%= link_to("Account", account_url(@current_account)) %>
+      page to create some!
+    </div>
+  <% end %>
   <%= yield %>
 <% end -%>

@@ -33,7 +33,6 @@ h4 { font-size: 16px; }
 
 p {
     width: 600px;
-    margin: 20px;
 }
 
 p.note {
@@ -158,6 +157,10 @@ table.info td, table.info th {
     padding: 5px;
     vertical-align: top;
 }
+
+/* Info div */
+div.info { padding: 0.5em; border: 2px solid #bbb; background-color: #222;
+           margin: 0 0 1em 0; width: 600px; text-align: center; }
 
 /* Box Format */
 table.box {

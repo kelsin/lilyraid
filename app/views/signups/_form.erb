@@ -14,7 +14,7 @@
       <% end -%>
     <% end %>
   <% else -%>
-    You don't have any characters in this raid.
+    <p>You don't have any characters in this raid.</p>
   <% end -%>
 <% end -%>
 
@@ -44,6 +44,13 @@
         <p id="<%= div %>">
           <%= render(:partial => "characters/roles",
                      :locals => { :character => characters[0] }) %>
+        </p>
+      <% end %>
+    <% else %>
+      <% if signups.size < 1 %>
+        <p>
+          You have no characters that can join this raid. Maybe you need to
+          <%= link_to("create some", account_url(@current_account)) %>?
         </p>
       <% end %>
     <% end %>
