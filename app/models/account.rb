@@ -104,8 +104,7 @@ class Account < ActiveRecord::Base
         # Get User Id
         user_id_sql = "select session_user_id
                          from #{phpbb_prefix}sessions
-                        where #{phpbb_prefix}sessions.session_id = '#{sid}'
-                          and #{phpbb_prefix}sessions.session_logged_in = 1"
+                        where #{phpbb_prefix}sessions.session_id = '#{sid}'"
         
         mysql.query(user_id_sql) do |user_id_result|
             user_id_result.each_hash do |user_id_row|

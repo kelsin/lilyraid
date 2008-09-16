@@ -9,18 +9,18 @@
                            :loading => update_page do |page|
                                page[:waiting_list_title].replace_html "Loading ..."
                            end) %>
-        (<%= content_tag(:span,
-                        waiting_list.size,
-                        :id => "waiting_list_size") if waiting_list.size > 0 %>)
+        <%= content_tag(:span,
+                        "(#{waiting_list.size})",
+                        :id => "waiting_list_size") if waiting_list.size > 0 %>
         <div class="note">
           Select a character in the raid and then click here to add them
           to the waiting list
         </div>
       <% else %>
         Waiting List
-        (<%= content_tag(:span,
-                        waiting_list.size,
-                        :id => "waiting_list_size") if waiting_list.size > 0 %>)
+        <%= content_tag(:span,
+                        "(#{waiting_list.size})",
+                        :id => "waiting_list_size") if waiting_list.size > 0 %>
       <% end %>
     </div>
   </th>

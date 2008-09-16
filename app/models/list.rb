@@ -83,8 +83,8 @@ class List < ActiveRecord::Base
 
             self.reload
 
-            loot.list = self.backup("Loot Won")
-            loot.save
+            #loot.list = self.backup("Loot Won")
+            #loot.save
         end
     end
 
@@ -107,22 +107,5 @@ class List < ActiveRecord::Base
 
             self.backup "Added #{account.name} to the end of #{name}"
         end
-    end
-
-    # Copy this list and save a date and note with it
-    def backup(note)
-        backup_list = List.new
-        backup_list.name = self.name
-        backup_list.date = Time.now
-        backup_list.note = note
-        backup_list.save
-
-        list_positions.each do |lp|
-            backup_lp = lp.clone
-            backup_lp.list = backup_list
-            backup_lp.save
-        end
-
-        return backup_list
     end
 end

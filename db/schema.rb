@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
-  add_index "attunements", ["character_id", "instance_id"], :name => "index_attunements_on_character_id_and_instance_id"
-  add_index "attunements", ["instance_id"], :name => "index_attunements_on_instance_id"
   add_index "attunements", ["character_id"], :name => "index_attunements_on_character_id"
+  add_index "attunements", ["instance_id"], :name => "index_attunements_on_instance_id"
+  add_index "attunements", ["character_id", "instance_id"], :name => "index_attunements_on_character_id_and_instance_id"
 
   create_table "cclass_roles", :force => true do |t|
     t.integer  "cclass_id"
@@ -41,9 +41,9 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
-  add_index "cclass_roles", ["cclass_id", "role_id"], :name => "index_cclass_roles_on_cclass_id_and_role_id"
-  add_index "cclass_roles", ["role_id"], :name => "index_cclass_roles_on_role_id"
   add_index "cclass_roles", ["cclass_id"], :name => "index_cclass_roles_on_cclass_id"
+  add_index "cclass_roles", ["role_id"], :name => "index_cclass_roles_on_role_id"
+  add_index "cclass_roles", ["cclass_id", "role_id"], :name => "index_cclass_roles_on_cclass_id_and_role_id"
 
   create_table "cclasses", :force => true do |t|
     t.string   "name"
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(:version => 16) do
   end
 
   create_table "characters", :force => true do |t|
-    t.integer  "account_id",                    :null => false
-    t.integer  "race_id",                       :null => false
-    t.integer  "cclass_id",                     :null => false
+    t.integer  "account_id", :default => 0,     :null => false
+    t.integer  "race_id",    :default => 0,     :null => false
+    t.integer  "cclass_id",  :default => 0,     :null => false
     t.string   "name"
     t.string   "guild"
     t.integer  "level"
@@ -77,44 +77,44 @@ ActiveRecord::Schema.define(:version => 16) do
   end
 
   create_table "list_positions", :force => true do |t|
-    t.integer  "list_id",    :null => false
-    t.integer  "account_id", :null => false
-    t.integer  "position",   :null => false
+    t.integer  "list_id",    :default => 0, :null => false
+    t.integer  "account_id", :default => 0, :null => false
+    t.integer  "position",   :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "list_positions", ["position"], :name => "index_list_positions_on_position"
-  add_index "list_positions", ["account_id"], :name => "index_list_positions_on_account_id"
   add_index "list_positions", ["list_id"], :name => "index_list_positions_on_list_id"
+  add_index "list_positions", ["account_id"], :name => "index_list_positions_on_account_id"
+  add_index "list_positions", ["position"], :name => "index_list_positions_on_position"
 
   create_table "lists", :force => true do |t|
-    t.string   "name",       :null => false
+    t.string   "name",       :default => "", :null => false
     t.datetime "date"
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "lists", ["date"], :name => "index_lists_on_date"
   add_index "lists", ["name"], :name => "index_lists_on_name"
+  add_index "lists", ["date"], :name => "index_lists_on_date"
 
   create_table "loots", :force => true do |t|
-    t.integer  "character_id", :null => false
-    t.integer  "raid_id",      :null => false
-    t.integer  "list_id",      :null => false
+    t.integer  "character_id", :default => 0, :null => false
+    t.integer  "raid_id",      :default => 0, :null => false
+    t.integer  "list_id",      :default => 0, :null => false
     t.string   "item_url"
     t.string   "item_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "loots", ["list_id"], :name => "index_loots_on_list_id"
-  add_index "loots", ["raid_id"], :name => "index_loots_on_raid_id"
   add_index "loots", ["character_id"], :name => "index_loots_on_character_id"
+  add_index "loots", ["raid_id"], :name => "index_loots_on_raid_id"
+  add_index "loots", ["list_id"], :name => "index_loots_on_list_id"
 
   create_table "preferences", :force => true do |t|
-    t.string   "key",        :null => false
+    t.string   "key",        :default => "", :null => false
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -137,17 +137,17 @@ ActiveRecord::Schema.define(:version => 16) do
     t.text     "loot_note"
     t.boolean  "uses_loot_system", :default => false, :null => false
     t.boolean  "locked",           :default => false, :null => false
-    t.integer  "instance_id",                         :null => false
-    t.integer  "account_id",                          :null => false
+    t.integer  "instance_id",      :default => 0,     :null => false
+    t.integer  "account_id",       :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "raids", ["date"], :name => "index_raids_on_date"
   add_index "raids", ["account_id"], :name => "index_raids_on_account_id"
+  add_index "raids", ["date"], :name => "index_raids_on_date"
 
   create_table "roles", :force => true do |t|
-    t.string   "name",       :null => false
+    t.string   "name",       :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -159,25 +159,25 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
-  add_index "signup_roles", ["signup_id", "role_id"], :name => "index_signup_roles_on_signup_id_and_role_id"
-  add_index "signup_roles", ["role_id"], :name => "index_signup_roles_on_role_id"
   add_index "signup_roles", ["signup_id"], :name => "index_signup_roles_on_signup_id"
+  add_index "signup_roles", ["role_id"], :name => "index_signup_roles_on_role_id"
+  add_index "signup_roles", ["signup_id", "role_id"], :name => "index_signup_roles_on_signup_id_and_role_id"
 
   create_table "signups", :force => true do |t|
-    t.integer  "raid_id",      :null => false
-    t.integer  "character_id", :null => false
+    t.integer  "raid_id",      :default => 0, :null => false
+    t.integer  "character_id", :default => 0, :null => false
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "signups", ["raid_id", "character_id"], :name => "index_signups_on_raid_id_and_character_id"
-  add_index "signups", ["created_at"], :name => "index_signups_on_created_at"
-  add_index "signups", ["character_id"], :name => "index_signups_on_character_id"
   add_index "signups", ["raid_id"], :name => "index_signups_on_raid_id"
+  add_index "signups", ["character_id"], :name => "index_signups_on_character_id"
+  add_index "signups", ["created_at"], :name => "index_signups_on_created_at"
+  add_index "signups", ["raid_id", "character_id"], :name => "index_signups_on_raid_id_and_character_id"
 
   create_table "slots", :force => true do |t|
-    t.integer  "raid_id",                      :null => false
+    t.integer  "raid_id",    :default => 0,    :null => false
     t.integer  "signup_id"
     t.integer  "role_id"
     t.integer  "cclass_id"
@@ -186,8 +186,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
-  add_index "slots", ["role_id", "cclass_id"], :name => "index_slots_on_role_id_and_cclass_id"
-  add_index "slots", ["signup_id"], :name => "index_slots_on_signup_id"
   add_index "slots", ["raid_id"], :name => "index_slots_on_raid_id"
+  add_index "slots", ["signup_id"], :name => "index_slots_on_signup_id"
+  add_index "slots", ["role_id", "cclass_id"], :name => "index_slots_on_role_id_and_cclass_id"
 
 end

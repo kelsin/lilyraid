@@ -4,18 +4,16 @@
   uses the ical (*.ics) format. This includes Google Calendar, Apple's iCal,
   Evolution (Linux), Mozilla Sunbird and others.</p>
 
-<p>The main url to use in your calendar program
-is: <a href="http://raids.dota-guild.com/calendar/raids">http://raids.dota-guild.com/calendar/raids</a>. This
-provides a main calendar which shows all raids that are scheduled by the site.</p>
+<h3><a href="/calendar/raids">Main Raid Calendar</a></h3>
+
+<p>This provides a main calendar which shows all raids that are scheduled by the
+site.</p>
+
+<h3><a href="/calendar/account/<%= @current_account.id %>">Per Account Calendar</a></h3>
 
 <p>You can also access a calendar which only displays the calendar for a certain
 account. This allows you to see only the raids that your account is signed up
-for. A link to this
-calendar <a href="http://raids.dota-guild.com/calendar/account/<%= @current_account.id
-%>">here</a>. Notice that these are public (since all signups are public) so if
-you want the calendar for a different account you just have to replace the
-number at the end with the account id that you would like. This is the same
-number that's at the top of the main account pages which you can find using the
-member list.</p>
-
-<iframe src="http://www.google.com/calendar/embed?showTabs=0&amp;showCalendars=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=cc2drqklfr3db4e1joidp9mbrgnqb880%40import.calendar.google.com&amp;color=%2329527A&amp;ctz=America%2FLos_Angeles" style=" border-width:0 " width="800" height="600" frameborder="0" scrolling="no"></iframe>
+for. Notice that these are public (since all signups are public) so if you want
+the calendar for a different account you just have to replace the number at the
+end with the account id that you would like. This is the same number that's at
+the top of the main account pages which you can find using the member list.</p>

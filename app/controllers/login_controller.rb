@@ -2,11 +2,11 @@ class LoginController < ApplicationController
     skip_before_filter :authorize
 
     def index
-        # We don't, so we need to check for a sid param
-        session_id = params[:sid]
+        # Check for cookie
+        session_id = cookies[Preference.get_setting("phpbb_cookie")]
 
         if session_id
-            # We are logged into php2bb, let's get their info
+            # Wep are logged into php2bb, let's get their info
             session[:account_id] = Account.get_account_id_from_sid(session_id)
             
             if session[:account_id]

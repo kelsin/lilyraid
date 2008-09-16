@@ -1,6 +1,5 @@
 class LootsController < ApplicationController
     before_filter(:load_raid)
-    before_filter(:load_list)
     before_filter(:load_character)
 
     cache_sweeper :loot_sweeper, :only => [:create]
@@ -10,11 +9,11 @@ class LootsController < ApplicationController
         @loot.raid = @raid
         @loot.save
 
-        @list.new_loot(@raid, @loot)
+        # @list.new_loot(@raid, @loot)
 
         @raid.reload
 
-        @list = List.get_list_from_raid("Master", @raid)
+        # @list = List.get_list_from_raid("Master", @raid)
 
         respond_to do |format|
             format.html { redirect_to raid_url(@raid) }
@@ -24,10 +23,6 @@ class LootsController < ApplicationController
 
     private
 
-    def load_list
-        @list = List.get_list("Master")
-    end
-       
     def load_character
         @character = Character.find(params[:loot][:character_id])
     end

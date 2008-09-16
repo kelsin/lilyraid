@@ -7,11 +7,11 @@ class RaidsController < ApplicationController
 
         if @old
             @raids = Raid.find(:all,
-                               :conditions => ["raids.date < ?", Time.now],
+                               :conditions => ["raids.date < ?", Time.now + 4.hours],
                                :order => "raids.date desc")
         else
             @raids = Raid.find(:all,
-                               :conditions => ["raids.date >= ?", Time.now],
+                               :conditions => ["raids.date >= ?", Time.now + 4.hours],
                                :order => "raids.date")
         end
     end
