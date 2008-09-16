@@ -6,7 +6,7 @@ class LoginController < ApplicationController
         session_id = cookies[Preference.get_setting("phpbb_cookie")]
 
         if session_id
-            # Wep are logged into php2bb, let's get their info
+            # We are logged into phpbb, let's get their info
             session[:account_id] = Account.get_account_id_from_sid(session_id)
             
             if session[:account_id] and session[:account_id] != 1
@@ -17,6 +17,9 @@ class LoginController < ApplicationController
                 flash[:notice] = "Login Failed"
                 logout
             end
+	else
+	    flash[:notice] = "Login Failed"
+	    logout
         end
     end
 
