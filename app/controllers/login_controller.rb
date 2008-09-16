@@ -9,17 +9,15 @@ class LoginController < ApplicationController
             # We are logged into phpbb, let's get their info
             session[:account_id] = Account.get_account_id_from_sid(session_id)
             
-            if session[:account_id] and session[:account_id] != 1
+            if session[:account_id] and session[:account_id].to_i != 1
                 Account.get_account_from_id(session[:account_id]).update_info
                 
                 redirect_to(:controller => 'raids', :action=> 'index')
             else
-                flash[:notice] = "Login Failed"
-                logout
+	        reset_session
             end
 	else
-	    flash[:notice] = "Login Failed"
-	    logout
+	    reset_session
         end
     end
 

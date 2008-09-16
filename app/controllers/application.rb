@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
     def authorize
         # Check to see if we have an account_id in memory
-        if session[:account_id]
+        if session[:account_id] and session[:account_id].to_i != 1
             # Get Account info
             @current_account = Account.get_account_from_id(session[:account_id])
         else
