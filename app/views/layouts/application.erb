@@ -31,7 +31,7 @@
       <% end %>
     </tr>
   </table>
-  <% if @current_account.characters.size < 1 %>
+  <% if @current_account and @current_account.characters.size < 1 %>
     <div class="info">
       You currently have no characters created! Please head to the
       <%= link_to("Account", account_url(@current_account)) %>
