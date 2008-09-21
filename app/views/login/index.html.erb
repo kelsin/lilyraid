@@ -1,10 +1,13 @@
-<p>Please travel to <%= link_to "the forum", "http://forum.cakeordeath-guild.com" %>
-and log in. Once logged into the forums you will be able to access the raid signup.</p> 
+<p>Please travel to <%= link_to "the forum", Preference.get_setting("forum") %>
+and log in or just fill out your forum username and password below.</p>
 
 <!--
 <form method="POST" action="<%=@login_post_url%>">
-Username: <input type="text" name="username" value="" /><br />
-Password: <input type="password" name="password" value="" /><br />
-<input type="submit" name="submit" value="Login" />
+  <table>
+    <tr><td><label for="username">Username</label>:</td><td><input type="text" name="username" value="" /></td></tr>
+    <tr><td><label for="password">Password</label>:</td><td><input type="password" name="password" value="" /></td></tr>
+    <tr><td></td><td><input type="submit" name="submit" value="Login" /></td></tr>
+  </table>
+  <input type="hidden" name="<%= request_forgery_protection_token.to_s %>" value="<%= form_authenticity_token %>" />
 </form>
 -->

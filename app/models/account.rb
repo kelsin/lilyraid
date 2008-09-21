@@ -84,8 +84,10 @@ class Account < ActiveRecord::Base
     end
     
     def Account.get_account_id_from_info(username, password)
+        phpbb_prefix = Preference.get_setting("phpbb_prefix") || ""
+
         user_id_sql = "select user_id
-                         from users
+                         from #{phpbb_prefix}users
                         where username = '#{username}'
                           and user_password = MD5('#{password}')"
         
