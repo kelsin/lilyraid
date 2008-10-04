@@ -100,7 +100,7 @@ div.info {
 }
 
 table.dota td, table.dota th { text-align: left; vertical-align: top; padding: 7px 5px 7px 5px; }
-table.dota tr.odd { background-color: #222; }
+table.dota tr.odd { background-color: #111; }
 
 table.menu {
     border-spacing: 10px;
