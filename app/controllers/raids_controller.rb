@@ -1,5 +1,5 @@
 class RaidsController < ApplicationController
-    before_filter(:load_raid, :only => [:edit, :update, :destroy])
+    before_filter(:load_raid, :only => [:edit, :update, :destroy, :show, :finalize])
     cache_sweeper :raid_sweeper, :only => [:create, :update, :destroy]
 
     def index
@@ -17,7 +17,17 @@ class RaidsController < ApplicationController
     end
 
     def show
-        @raid = Raid.find(params[:id])
+    end
+
+    def finalize
+        if @current_account == @raid.account or @current_account.admin
+            @raid.finalized = !@raid.finalized
+            @raid.save
+        end
+
+        respond_to do |format|
+            format.html { redirect_to raid_url(@raid) }
+        end
     end
 
     def edit

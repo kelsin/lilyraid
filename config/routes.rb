@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
         accounts.resources :characters, :member => { 'roles' => :get }
     end
 
-    map.resources :raids do |raids|
+    map.resources :raids, :member => { 'finalize' => :post } do |raids|
         raids.resources :signups, :loots
         raids.resources :slots, :collection => { 'wait_list' => :put }
     end

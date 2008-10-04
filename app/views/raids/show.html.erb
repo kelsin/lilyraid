@@ -9,6 +9,21 @@
       <th></th>
       <td><h3><%= @raid.display_name %></h3></td>
     </tr>
+    <tr>
+      <th></th>
+      <td>
+        <strong>
+          <%- if @raid.finalized -%>
+            Raid is finalized, if you are currently seated plan on showing up!
+          <%- else -%>
+            Raid is not final yet, seating can be changed at any moment!
+            <%- if @current_account.can_edit(@raid) -%>
+              <%= link_to "Finalize", finalize_raid_url(@raid), :method => :post, :confirm => "Are you sure you want to finalize this raids seating?" %>
+            <%- end -%>
+          <%- end -%>
+        </strong>
+      </td>
+    </tr>
     <% if @current_account.can_edit(@raid) -%>
       <tr>
         <th></th>
