@@ -15,10 +15,13 @@
         <strong>
           <%- if @raid.finalized -%>
             Raid is finalized, if you are currently seated plan on showing up!
+            <%- if @current_account.can_edit(@raid) -%>
+              <%= link_to "Un-Finalize", finalize_raid_url(@raid), :method => :post, :confirm => "Are you sure you want to un-finalize this raid's seating?" %>
+            <%- end -%>
           <%- else -%>
             Raid is not final yet, seating can be changed at any moment!
             <%- if @current_account.can_edit(@raid) -%>
-              <%= link_to "Finalize", finalize_raid_url(@raid), :method => :post, :confirm => "Are you sure you want to finalize this raids seating?" %>
+              <%= link_to "Finalize", finalize_raid_url(@raid), :method => :post, :confirm => "Are you sure you want to finalize this raid's seating?" %>
             <%- end -%>
           <%- end -%>
         </strong>
