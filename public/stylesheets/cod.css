@@ -99,18 +99,8 @@ div.info {
     padding-bottom: 20px;
 }
 
-table.dota td {
-    text-align: center;
-    padding: 7px 5px 7px 0px;
-}
-
-table.dota tr.odd {
-    background-color: #222;
-}
-
-table.dota td.raidname, table.dota th.raidname {
-    text-align: left;
-}
+table.dota td, table.dota th { text-align: left; vertical-align: top; padding: 7px 5px 7px 5px; }
+table.dota tr.odd { background-color: #222; }
 
 table.menu {
     border-spacing: 10px;
