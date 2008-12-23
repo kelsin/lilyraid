@@ -5,7 +5,8 @@
         <td>
             <%= link_to(render(:partial => "shared/character",
                                :object => character),
-                        "#{account_url(account)}##{dom_id(character)}") %>&nbsp;<%= character.level %>
+                        "#{account_url(account)}##{dom_id(character)}") %>
+	    <%= character.level %>
         </td>
     <% end %>
 </tr>
