@@ -12,8 +12,8 @@ class Character < ActiveRecord::Base
     has_many :loots, :dependent => :nullify
 
     validates_inclusion_of(:level,
-                           :in => 1..70,
-                           :message => "Valid levels are 1 through 70")
+                           :in => 1..80,
+                           :message => "Valid levels are 1 through 80")
 
     before_destroy :check_raids
 
