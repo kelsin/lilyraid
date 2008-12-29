@@ -177,7 +177,6 @@ table.box td {
     padding: 5px;
     vertical-align: top;
     text-align: center;
-    white-space: nowrap;
 }
 
 table.box td.closed {
