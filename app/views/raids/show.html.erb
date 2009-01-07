@@ -121,15 +121,13 @@
               <% if @raid.uses_loot_system %>
                 <div id="loot_list">
                   <%= render(:partial => "loots/list",
-                             :locals => {:list => List.get_list_from_raid("Master", @raid)}) %>
+                             :locals => {:list => List.get_list_from_raid(Preference.get_setting('guild'), @raid)}) %>
                 </div>
               <% end %>
-              <% if @raid.loots.size > 0 %>
-                <div id="item_list">
-                  <%= render(:partial => "loots/items",
-                             :locals => {:raid => @raid}) %>
-                </div>
-              <% end %>
+              <div id="item_list">
+                <%= render(:partial => "loots/items",
+                           :locals => {:raid => @raid}) %>
+              </div>
             </td>
           </tr>
         <% end %>
