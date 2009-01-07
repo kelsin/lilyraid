@@ -17,6 +17,7 @@ class RaidsController < ApplicationController
     end
 
     def show
+        @list = List.get_list(Preference.get_setting('guild'))
     end
 
     def finalize

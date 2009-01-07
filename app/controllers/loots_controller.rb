@@ -9,11 +9,12 @@ class LootsController < ApplicationController
         @loot.raid = @raid
         @loot.save
 
-        # @list.new_loot(@raid, @loot)
+        @list = List.get_list(Preference.get_setting('guild'))
+        @list.new_loot(@raid, @loot)
 
         @raid.reload
 
-        # @list = List.get_list_from_raid("Master", @raid)
+        @list = List.get_list_from_raid(Preference.get_setting('guild'), @raid)
 
         respond_to do |format|
             format.html { redirect_to raid_url(@raid) }

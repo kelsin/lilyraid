@@ -96,7 +96,7 @@
             <div id="waiting_list">
               <%= render(:partial => "signups/waiting_list",
                          :layout => "shared/box",
-                         :locals => { 
+                         :locals => {
                              :title => nil,
                              :waiting_list => @raid.waiting_list_by_account,
                              :raid => @raid
@@ -146,6 +146,21 @@
             </td>
           </tr>
         <% end %>
+        <tr>
+          <th></th>
+          <td id="add_to_list">
+            <% render(:layout => "shared/box",
+                      :locals => { :title => "Add To Loot List" }) do %>
+              <% @raid.characters.each do |char| 
+                 if !@list.find(char.account) %>
+              <tr><td><%= link_to(render(:partial => "shared/character", :object => char),
+                                         add_to_list_account_url(char.account, :raid => @raid.id),
+                                         :method => :post) %></td></tr>
+              <% end
+                 end %>
+            <% end %>
+          </td>
+        </tr>
       <% end %>
       <% if @current_account.admin -%>
         <% cache(:type => "admin_add") do %>

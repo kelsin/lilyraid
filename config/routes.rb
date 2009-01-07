@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
 
     map.resources :lists
 
-    map.resources :accounts do |accounts|
+    map.resources :accounts, :member => { 'add_to_list' => :post }  do |accounts|
         accounts.resources :characters, :member => { 'roles' => :get }
     end
 

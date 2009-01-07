@@ -1,8 +1,18 @@
 class AccountsController < ApplicationController
     cache_sweeper :account_sweeper, :only => [:update]
+    cache_sweeper :loot_sweeper, :only => [:add_to_list]
 
     def show
         @account = Account.find(params[:id])
+    end
+
+    def add_to_list
+        @list = List.get_list(Preference.get_setting('guild'))
+
+        @account = Account.find(params[:id])
+        @list.add_to_end(@account)
+
+        redirect_to raid_url(params[:raid])
     end
 
     def edit
