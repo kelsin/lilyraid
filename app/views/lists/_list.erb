@@ -1,5 +1,5 @@
 <% render(:layout => "shared/box",
-          :locals => { :title => "Master Loot List" }) do %>
+          :locals => { :title => "#{list.name} Loot List" }) do %>
   <% if list && list.list_positions.length > 0 %>
     <%= render(:partial => "lists/position",
                :collection => list.list_positions) %>

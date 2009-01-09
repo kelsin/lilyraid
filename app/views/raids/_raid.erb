@@ -4,7 +4,7 @@
   <td><%= render(:partial => "raids/signup",
                  :collection => raid.signups_from(@current_account),
                  :spacer_template => "raids/signup_spacer") %></td>
-  <td><%= raid.date.to_s(:raid) %></td>
+  <td><%= raid.date ? raid.date.to_s(:raid) : "" %></td>
   <td>Level
     <% if raid.min_level == raid.max_level -%>
       <%= raid.min_level %>

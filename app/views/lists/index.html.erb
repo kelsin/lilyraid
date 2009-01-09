@@ -4,12 +4,5 @@
   <%= render(:partial => "lists/list",
              :locals => {:list => @list}) %>
 </div>
-<div id="history" style="clear: both;">
-  <% render(:layout => "shared/box",
-            :locals => { :title => "History" }) do %>
-    <%= render(:partial => "lists/history",
-               :collection => @list.history) %>
-  <% end %>
-</div>
 
 
