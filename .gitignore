@@ -1,0 +1,5 @@
+tmp/*
+logs/*
+config/database.yml
+public/stylesheets/raid.css
+
