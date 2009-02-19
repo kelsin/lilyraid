@@ -14,11 +14,13 @@ class CalendarController < ApplicationController
         Raid.find(:all, :order => :date).each do |raid|
             event = Icalendar::Event.new
             params = { "TZID" => ["America/Los_Angeles"] }
-            event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
-            event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
+            if raid.date
+                event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
+                event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
+            end
             event.url = raid_url(raid)
             event.location = "Bronzebeard World of Warcraft Server"
-            event.organizer = raid.account.name
+            event.organizer = raid.account.name if raid.account
             event.summary = raid.name
             event.description = raid.note
             event.klass = "PUBLIC"
@@ -54,11 +56,13 @@ class CalendarController < ApplicationController
 
             event = Icalendar::Event.new
             params = { "TZID" => ["America/Los_Angeles"] }
-            event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
-            event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
+            if raid.date
+                event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
+                event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
+            end
             event.url = raid_url(raid)
             event.location = "Bronzebeard World of Warcraft Server"
-            event.organizer = raid.account.name
+            event.organizer = raid.account.name if raid.account
             event.summary = raid.name
             event.add_attendee "#{character}#{status}"
             event.description = raid.note
