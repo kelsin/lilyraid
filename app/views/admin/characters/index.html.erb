@@ -1,0 +1,28 @@
+<h3>Add New Character</h3>
+<% form_for @account do |a| %>
+  <p><%= a.label :name, "Account Name" %> <%= a.text_field :name %></p>
+  <% fields_for @character do |c| %>
+    <p><%= c.label :name, "Character Name" %> <%= c.text_field :name %></p>
+    <p>
+      <%= c.label :cclass %>
+      <%= c.collection_select :cclass_id, Cclass.find(:all, :order => :name), :id, :name %>
+    </p>
+    <p>
+      <%= c.label :race %>
+      <%= c.collection_select :race_id, Race.find(:all, :order => :name), :id, :name %>
+    </p>
+    <p>
+      <%= c.label :level %>
+      <%= c.text_field :level, :size => 4 %>
+    </p>
+    <p>
+      <%= c.label :guild %>
+      <%= c.text_field :guild %>
+    </p>
+  <% end %>
+<% end %>
+<h3>Rename Account</h3>
+<% form_tag rename_admin_accounts_url do %>
+  Rename <%= collection_select :account, :id, Account.find(:all, :order => :name), :id, :name %> to <%= text_field :account, :name %>
+  <%= submit_tag "Rename" %>
+<% end %>
