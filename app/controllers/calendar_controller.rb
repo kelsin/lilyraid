@@ -13,9 +13,8 @@ class CalendarController < ApplicationController
 
         Raid.find(:all, :order => :date).each do |raid|
             event = Icalendar::Event.new
-            params = { "TZID" => ["America/Los_Angeles"] }
             if raid.date
-                event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
+                event.dtstart raid.date.strftime("%Y%m%dT%H%M%S")
                 event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
             end
             event.url = raid_url(raid)
@@ -55,9 +54,8 @@ class CalendarController < ApplicationController
                      end
 
             event = Icalendar::Event.new
-            params = { "TZID" => ["America/Los_Angeles"] }
             if raid.date
-                event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
+                event.dtstart raid.date.strftime("%Y%m%dT%H%M%S")
                 event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
             end
             event.url = raid_url(raid)
