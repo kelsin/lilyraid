@@ -6,7 +6,7 @@ class CalendarController < ApplicationController
 
         cal.custom_property("METHOD", "PUBLISH")
         cal.custom_property("X-WR-CALNAME", Preference.get_setting("guild") + " Raid Calendar")
-        cal.custom_property("X-WR-CALDESC", "Raid schedule for the " Preference.get_setting("guild") " Warcraft Guild")
+        cal.custom_property("X-WR-CALDESC", "Raid schedule for the " + Preference.get_setting("guild") + " Warcraft Guild")
         cal.custom_property("X-WR-TIMEZONE", "America/Los_Angeles")
 
         cal.add_component(get_tz)
