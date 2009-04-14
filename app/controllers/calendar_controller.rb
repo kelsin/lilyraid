@@ -5,8 +5,8 @@ class CalendarController < ApplicationController
         cal = Icalendar::Calendar.new
 
         cal.custom_property("METHOD", "PUBLISH")
-        cal.custom_property("X-WR-CALNAME", "CoD Raid Calendar")
-        cal.custom_property("X-WR-CALDESC", "Raid schedule for the Cake or Death Warcraft Guild")
+        cal.custom_property("X-WR-CALNAME", Preference.get_setting("guild") + " Raid Calendar")
+        cal.custom_property("X-WR-CALDESC", "Raid schedule for the " Preference.get_setting("guild") " Warcraft Guild")
         cal.custom_property("X-WR-TIMEZONE", "America/Los_Angeles")
 
         cal.add_component(get_tz)
@@ -39,9 +39,9 @@ class CalendarController < ApplicationController
         @account = Account.find(params[:id])
 
         cal.custom_property("METHOD", "PUBLISH")
-        cal.custom_property("X-WR-CALNAME", "CoD Raid Calendar for #{@account.name}")
+        cal.custom_property("X-WR-CALNAME", Preference.get_setting("guild") + " Raid Calendar for #{@account.name}")
         cal.custom_property("X-WR-TIMEZONE", "America/Los_Angeles")
-        cal.custom_property("X-WR-CALDESC", "Raid schedule for #{@account.name} of the Cake or Death Warcraft Guild")
+        cal.custom_property("X-WR-CALDESC", "Raid schedule for #{@account.name} of the " + Preference.get_setting("guild") + " Warcraft Guild")
 
         cal.add_component(get_tz)
         
