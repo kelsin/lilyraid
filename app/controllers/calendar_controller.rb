@@ -21,7 +21,9 @@ class CalendarController < ApplicationController
         event.location = "Bronzebeard World of Warcraft Server"
         event.organizer = raid.account.name if raid.account
         event.summary = raid.name
-        event.description = raid.note
+        raid.characters.each do |char|
+          event.add_attendee "#{char.name}"
+        end
         event.klass = "PUBLIC"
         event.uid = raid.uid
         cal.add_event(event)
@@ -45,30 +47,23 @@ class CalendarController < ApplicationController
 
     cal.add_component(get_tz)
     
-    @account.all_raid_signups.each do |raid|
-      character = raid.find_signup(@account).character.name
-
-      status = if raid.find_character(character)
-                 " in the raid."
-               else
-                 " in the waiting list."
-               end
-
-      event = Icalendar::Event.new
-      params = { "TZID" => ["America/Los_Angeles"] }
+    @account.all_raid_signups.each do |raid| 
       if raid.date
+        event = Icalendar::Event.new
+        params = { "TZID" => ["America/Los_Angeles"] }
         event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
         event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
-      end
-      event.url = raid_url(raid)
-      event.location = "Bronzebeard World of Warcraft Server"
-      event.organizer = raid.account.name if raid.account
-      event.summary = raid.name
-      event.add_attendee "#{character}#{status}"
-      event.description = raid.note
-      event.klass = "PUBLIC"
+        event.url = raid_url(raid)
+        event.location = "Bronzebeard World of Warcraft Server"
+        event.organizer = raid.account.name if raid.account
+        event.summary = raid.name
+        raid.characters.each do |char|
+          event.add_attendee "#{char.name}"
+        end
+        event.klass = "PUBLIC"
       event.uid = raid.uid
       cal.add_event(event)
+      end
     end
 
     send_data(cal.to_ical,
