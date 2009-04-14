@@ -21,6 +21,7 @@ class CalendarController < ApplicationController
         event.location = "Bronzebeard World of Warcraft Server"
         event.organizer = raid.account.name if raid.account
         event.summary = raid.name
+        event.description = raid.note
         raid.slots.map(&:signup).compact.map(&:character).each do |char|
           event.add_attendee "#{char.name}"
         end
@@ -57,6 +58,7 @@ class CalendarController < ApplicationController
         event.location = "Bronzebeard World of Warcraft Server"
         event.organizer = raid.account.name if raid.account
         event.summary = raid.name
+        event.description = raid.note
         raid.slots.map(&:signup).compact.map(&:character).each do |char|
           event.add_attendee "#{char.name}"
         end
