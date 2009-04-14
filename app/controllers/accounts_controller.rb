@@ -24,7 +24,7 @@ class AccountsController < ApplicationController
                                                               :signups,
                                                               :account] } )
 
-        if @current_account == @account
+        if @current_account == @account || @current_account.admin
             respond_to do |format|
                 format.html
                 format.js

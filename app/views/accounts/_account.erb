@@ -3,15 +3,20 @@
     <tr>
       <th></th>
       <td><h3><%= account.name %></h3></td></tr>
-    <% if @current_account == account %>
+    <% if @current_account == account || @current_account.admin%>
       <tr>
         <th></th>
-        <td id="editlink"><%= link_to_remote "Edit",
-                              :url => edit_account_url(account),
-                              :method => :get,
-                              :loading => update_page { |page|
-                                  page[:editlink].replace_html "Loading..."
-                              } %></td>
+        <td id="editlink">
+          <%= link_to_remote "Edit",
+                             :url => edit_account_url(account),
+                             :method => :get,
+                             :loading => update_page { |page|
+                                 page[:editlink].replace_html "Loading..."
+                             } %>
+          <% if @current_account.admin && account.can_delete %>
+            <%= link_to "Delete", admin_account_url(account), :method => :delete, :confirm => "Are you sure you want to delete this account?" %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
     <% if !account.lj_account.blank? -%>

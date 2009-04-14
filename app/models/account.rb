@@ -53,6 +53,8 @@ class Account < ActiveRecord::Base
             :order => 'date',
             :conditions => 'date >= NOW()')
 
+    before_destroy :can_delete
+
     @@mysql = nil
     
     def characters_that_can_join(raid)
@@ -63,6 +65,12 @@ class Account < ActiveRecord::Base
 
     def can_edit(raid)
         self.admin or self == raid.account
+    end
+
+    def can_delete
+      characters.select do |c|
+        !c.can_delete
+      end.empty?
     end
 
     def lj_link

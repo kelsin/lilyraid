@@ -15,7 +15,7 @@ class Character < ActiveRecord::Base
                            :in => 1..80,
                            :message => "Valid levels are 1 through 80")
 
-    before_destroy :check_raids
+    before_destroy :can_delete
 
     def attuned(instance)
         instances.member?(instance)
@@ -63,9 +63,7 @@ class Character < ActiveRecord::Base
         "#{name} (#{account.name})"
     end
 
-    private
-
-    def check_raids
+    def can_delete
         raids.empty?
     end
 end
