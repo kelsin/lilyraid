@@ -60,7 +60,7 @@ class Character < ActiveRecord::Base
     end
 
     def name_with_account
-        "#{name} (#{account.name})"
+        "#{name} (#{account.name if account})"
     end
 
     def can_delete
