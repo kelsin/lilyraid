@@ -10,7 +10,7 @@ development:
   database: cod_raids_dev 
   username: kelsin
   password: kelsey
-  host: mysql.cakeordeath-guild.com
+  host: 127.0.0.1
 
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
