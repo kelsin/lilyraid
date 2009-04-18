@@ -1,9 +1,8 @@
-<%= calendar_date_select_includes "silver" %>
 <% form_for(@raid) do |f| %>
   <table class="info">
     <tr><th>Name:</th><td><%= f.text_field :name %></td></tr>
     <tr><th>Instance:</th><td><%= @raid.instance.name %></td></tr>
-    <tr><th>Date:</th><td><%= f.calendar_date_select :date, :time => true %></td></tr>
+    <tr><th>Date:</th><td></td></tr>
     <tr>
       <th>Level Requirement:</th>
       <td>

@@ -1,4 +1,3 @@
-<%= calendar_date_select_includes "silver" %>
 <%= error_messages_for(:raid) %>
 <% form_for(@raid) do |f| %>
   <table class="info">
@@ -8,7 +7,7 @@
     </tr>
     <tr>
       <th>Date:</th>
-      <td><%= f.calendar_date_select :date, :time => true, :minute_interval => 15 %></td>
+      <td></td>
     </tr>
     <% instances = Instance.all %>
     <tr>

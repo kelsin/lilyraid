@@ -6,15 +6,9 @@
       <div>
         <% if @current_account.can_edit(slot.raid) -%>
           <nobr>
-            <%= link_to_remote(content_tag("b", render(:partial => "shared/slot",
+            <%= link_to_function(content_tag("b", render(:partial => "shared/slot",
                                                        :object => slot)),
-                               :url => raid_slot_url(slot.raid, slot),
-                               :method => :put,
-                               :with => "get_selected_url()",
-                               :condition => "$$('td.slot.selected').length > 0 || $$('td.signup.selected').length > 0",
-                               :loading => update_page { |page|
-                                   page["slot_#{slot.id}"].replace_html(content_tag("td", "Loading ..."))
-                               }) %>
+                                 "assign_slot(#{slot.id})") %>
           </nobr>
           <div class="note">
             Select a character in the waiting list and then click here to add
@@ -39,14 +33,7 @@
           <% if @current_account.can_edit(slot.raid) %>
             <%= link_to_function(render(:partial => "shared/character",
                                         :object => slot.signup.character),
-                                 nil) do |page|
-                    page.select('table.box td.selected').each do |item|
-                        item.remove_class_name 'selected'
-                    end
-
-                    page["td_slot_#{slot.id}"].toggle_class_name 'selected'
-                    page.assign("slot", slot.id)
-                end %>
+                                 "select_slot(#{slot.id})") %>
             <%= "*" if slot.signup.has_other_signups %>
             <%= slot.signup.character.level %>
           <% else %>

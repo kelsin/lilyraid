@@ -1,43 +1,27 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-function choose_char(select) {
-    var selects = $$('select.char_select');
-    for(var i=0; i < selects.length; i++) {
-        if(selects[i] != select && selects[i].value == select.value) {
-            selects[i].value = "";
-        }
-    }
-}
+$(document).ready(function() {
+    var assign_type = null;
+    var assign_id = null;
+});
 
-function get_selected_slot() {
-    var id = $('td.slot.selected')[0].id;
+function select_slot(id) {
+    $("td.selected:not(#td_slot_" + id + ")").removeClass("selected");
 
-    return '' + id.replace(/^td_slot_/,'');
-}
-
-function get_selected_url() {
-    var id = $$('td.selected')[0].id;
-
-    if(id.match(/signup_/)) {
-        return 'from_signup_id=' + id.replace(/^signup_/,'');
-    } else if(id.match(/slot_/)) {
-        return 'from_slot_id=' + id.replace(/^td_slot_/,'');
+    if($("td#td_slot_" + id).hasClass("selected")) {
+        $("td#td_slot_" + id).removeClass("selected");
+        assign_type = null;
+        assign_id = null;
     } else {
-        return '';
+        $("td#td_slot_" + id).addClass("selected");
+        assign_type = 'slot';
+        assign_id = id;
     }
 }
 
-function list_display(cclass_name, checked) {
-    eles = $$('tr.' + cclass_name);
-    for(var i=0; i < eles.length; i++) {
-        ele = eles[i];
-        if (checked) {
-            ele.show();
-        } else {
-            ele.hide();
-        }
+function assign_slot(id) {
+    if(assign_type && assign_id) {
+        alert('Assigning');
     }
 }
-
-
