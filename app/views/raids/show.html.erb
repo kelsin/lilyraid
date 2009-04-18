@@ -121,7 +121,7 @@
               <% if @raid.uses_loot_system %>
                 <div id="loot_list">
                   <%= render(:partial => "loots/list",
-                             :locals => {:list => List.get_list_from_raid(Preference.get_setting('guild'), @raid)}) %>
+                             :locals => {:list => List.get_list_from_raid(CONFIG[:guild], @raid)}) %>
                 </div>
               <% end %>
               <div id="item_list">

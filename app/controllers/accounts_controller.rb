@@ -7,7 +7,7 @@ class AccountsController < ApplicationController
     end
 
     def add_to_list
-        @list = List.get_list(Preference.get_setting('guild'))
+        @list = List.get_list(CONFIG[:guild])
 
         @account = Account.find(params[:id])
         @list.add_to_end(@account)

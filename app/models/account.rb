@@ -92,7 +92,7 @@ class Account < ActiveRecord::Base
     end
     
     def Account.get_account_id_from_info(username, password)
-        phpbb_prefix = Preference.get_setting("phpbb_prefix") || ""
+        phpbb_prefix = CONFIG[:phpbb_prefix] || ""
 
         user_id_sql = "select user_id
                          from #{phpbb_prefix}users
@@ -109,7 +109,7 @@ class Account < ActiveRecord::Base
     end
     
     def Account.get_account_id_from_sid(sid)
-        phpbb_prefix = Preference.get_setting("phpbb_prefix") || ""
+        phpbb_prefix = CONFIG[:phpbb_prefix] || ""
         
         # Get User Id
         user_id_sql = "select session_user_id
@@ -126,8 +126,8 @@ class Account < ActiveRecord::Base
     end
 
     def update_info
-        phpbb_prefix = Preference.get_setting("phpbb_prefix") || ""
-        admin_group_id = Preference.get_setting("phpbb_admin_group")
+        phpbb_prefix = CONFIG[:phpbb_prefix] || ""
+        admin_group_id = CONFIG[:phpbb_admin_group]
 
         user_info_sql = "select username,
                                 user_email
@@ -174,11 +174,11 @@ class Account < ActiveRecord::Base
     
     def Account.mysql
         unless @@mysql
-            phpbb_db = Preference.get_setting("phpbb_db")
-            phpbb_host = Preference.get_setting("phpbb_host")
-            phpbb_user = Preference.get_setting("phpbb_user")
-            phpbb_pass = Preference.get_setting("phpbb_pass")
-            phpbb_port = Preference.get_setting("phpbb_port").to_i
+            phpbb_db = CONFIG[:phpbb_db]
+            phpbb_host = CONFIG[:phpbb_host]
+            phpbb_user = CONFIG[:phpbb_user]
+            phpbb_pass = CONFIG[:phpbb_pass]
+            phpbb_port = CONFIG[:phpbb_port].to_i
             @@mysql = Mysql.new(phpbb_host, phpbb_user, phpbb_pass, phpbb_db, phpbb_port)
         end
         
