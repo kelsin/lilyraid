@@ -1,13 +1,11 @@
 <% if flash[:notice] %><%= flash[:notice] %><% end %>
-<% cache do %>
-    <% render(:layout => "shared/box",
-              :locals => { :title => "Officers" }) do %>
-        <%= render(:partial => "accounts/characters",
-                   :collection => Account.admins) %>
-    <% end %>
-    <% render(:layout => "shared/box",
-              :locals => { :title => "Members" }) do %>
-        <%= render(:partial => "accounts/characters",
-                   :collection => Account.members) %>
-    <% end %>
+<% render(:layout => "shared/box",
+          :locals => { :title => "Officers" }) do %>
+    <%= render(:partial => "accounts/characters",
+               :collection => Account.admins) %>
+<% end %>
+<% render(:layout => "shared/box",
+          :locals => { :title => "Members" }) do %>
+    <%= render(:partial => "accounts/characters",
+               :collection => Account.members) %>
 <% end %>

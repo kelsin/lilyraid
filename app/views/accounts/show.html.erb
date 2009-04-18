@@ -4,15 +4,12 @@
            :object => @account) %>
 
 <div id="characters">
-  <% cache(:admin => @current_account.admin?,
-           :owner => @current_account == @account) do %>
-    <%= render(:partial => "characters/character",
-               :collection => if @current_account == @account 
-                                  @account.characters 
-                              else 
-                                  @account.active_characters
-                              end) %>
-  <% end %>
+  <%= render(:partial => "characters/character",
+             :collection => if @current_account == @account 
+                                @account.characters 
+                            else 
+                                @account.active_characters
+                            end) %>
 </div>
 
 <%= render(:partial => "characters/form",

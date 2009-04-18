@@ -33,39 +33,37 @@
         <td><%= link_to("Edit", edit_raid_url(@raid)) %></td>
       </tr>
     <% end -%>
-    <% cache do %>
+    <tr>
+      <th>Created By:</th>
+      <td><%= @raid.account.name %></td>
+    </tr>
+    <tr>
+      <th>Date:</th>
+      <td><%= @raid.date.to_s(:raid) %></td>
+    </tr>
+    <tr>
+      <th>Levels:</th>
+      <td>
+        <%= @raid.min_level %>
+        <% if @raid.max_level != @raid.min_level %> to <%= @raid.max_level %><% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>Signups:</th>
+      <td><%= @raid.slots.characters.size %> / <%= @raid.instance.max_number %></td>
+    </tr>
+    <% if !@raid.loot_note.blank? -%>
       <tr>
-        <th>Created By:</th>
-        <td><%= @raid.account.name %></td>
+        <th>Loot rules:</th>
+        <td><%= @raid.loot_note %></td>
       </tr>
+    <% end -%>
+    <% if !@raid.note.blank? -%>
       <tr>
-        <th>Date:</th>
-        <td><%= @raid.date.to_s(:raid) %></td>
+        <th>Note:</th>
+        <td><%= @raid.note %></td>
       </tr>
-      <tr>
-        <th>Levels:</th>
-        <td>
-          <%= @raid.min_level %>
-          <% if @raid.max_level != @raid.min_level %> to <%= @raid.max_level %><% end %>
-        </td>
-      </tr>
-      <tr>
-        <th>Signups:</th>
-        <td><%= @raid.slots.characters.size %> / <%= @raid.instance.max_number %></td>
-      </tr>
-      <% if !@raid.loot_note.blank? -%>
-        <tr>
-          <th>Loot rules:</th>
-          <td><%= @raid.loot_note %></td>
-        </tr>
-      <% end -%>
-      <% if !@raid.note.blank? -%>
-        <tr>
-          <th>Note:</th>
-          <td><%= @raid.note %></td>
-        </tr>
-      <% end -%>
-    <% end %>
+    <% end -%>
     <% if @raid.is_open -%>
       <tr>
         <th></th>
@@ -78,72 +76,66 @@
                          :raid => @raid }) %>
         </td>
       </tr>
-      <% cache(:type => "signups", :can_edit => @current_account.can_edit(@raid)) do %>
-        <tr>
-          <th></th>
-          <td id="slots">
-            <% @raid.each_group do |group| -%>
-              <% render(:layout => "shared/box",
-                        :locals => { :title => "Group #{cycle(*(1..8).to_a)}" }) do %>
-                <%= render(:partial => "slots/slot", :collection => group) %>
-              <% end %>
-            <% end -%>
-          </td>
-        </tr>
-        <tr>
-          <th></th>
-          <td id="signups">
-            <div id="waiting_list">
-              <%= render(:partial => "signups/waiting_list",
-                         :layout => "shared/box",
-                         :locals => {
-                             :title => nil,
-                             :waiting_list => @raid.waiting_list_by_account,
-                             :raid => @raid
-                         }) %>
-            </div>
-            <div id="needed">
-              <%= render(:partial => "signups/needed",
-                         :layout => "shared/box",
-                         :locals => {
-                             :needed => @raid.needed,
-                             :title => "Needed"
-                         }) %>
-            </div>
-          </td>
-        </tr>
-      <% end %>
+      <tr>
+        <th></th>
+        <td id="slots">
+          <% @raid.each_group do |group| -%>
+            <% render(:layout => "shared/box",
+                      :locals => { :title => "Group #{cycle(*(1..8).to_a)}" }) do %>
+              <%= render(:partial => "slots/slot", :collection => group) %>
+            <% end %>
+          <% end -%>
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td id="signups">
+          <div id="waiting_list">
+            <%= render(:partial => "signups/waiting_list",
+                       :layout => "shared/box",
+                       :locals => {
+                           :title => nil,
+                           :waiting_list => @raid.waiting_list_by_account,
+                           :raid => @raid
+                       }) %>
+          </div>
+          <div id="needed">
+            <%= render(:partial => "signups/needed",
+                       :layout => "shared/box",
+                       :locals => {
+                           :needed => @raid.needed,
+                           :title => "Needed"
+                       }) %>
+          </div>
+        </td>
+      </tr>
       <% if @raid.uses_loot_system or @raid.loots.size > 0 %>
-        <% cache(:type => "loot") do %>
-          <tr>
-            <th></th>
-            <td>
-              <% if @raid.uses_loot_system %>
-                <div id="loot_list">
-                  <%= render(:partial => "loots/list",
-                             :locals => {:list => List.get_list_from_raid(CONFIG[:guild], @raid)}) %>
-                </div>
-              <% end %>
-              <div id="item_list">
-                <%= render(:partial => "loots/items",
-                           :locals => {:raid => @raid}) %>
+        <tr>
+          <th></th>
+          <td>
+            <% if @raid.uses_loot_system %>
+              <div id="loot_list">
+                <%= render(:partial => "loots/list",
+                           :locals => {:list => List.get_list_from_raid(CONFIG[:guild], @raid)}) %>
               </div>
-            </td>
-          </tr>
-        <% end %>
+            <% end %>
+            <div id="item_list">
+              <%= render(:partial => "loots/items",
+                         :locals => {:raid => @raid}) %>
+            </div>
+          </td>
+        </tr>
       <% end %>
       <% if @current_account.admin? %>
-        <% cache(:type => "new_loot") do %>
-          <tr>
-            <th></th>
-            <td>
-              <div id="loot_form">
-                <%= render(:partial => "loots/form",
-                           :locals => { :raid => @raid }) if @current_account.can_edit(@raid) %>
-              </div>
-            </td>
-          </tr>
-        <% end %>
+        <tr>
+          <th></th>
+          <td>
+            <div id="loot_form">
+              <%= render(:partial => "loots/form",
+                         :locals => { :raid => @raid }) if @current_account.can_edit(@raid) %>
+            </div>
+          </td>
+        </tr>
         <tr>
           <th></th>
           <td id="add_to_list">
@@ -161,55 +153,51 @@
         </tr>
       <% end %>
       <% if @current_account.admin -%>
-        <% cache(:type => "admin_add") do %>
-          <% admin_characters = Character.can_join(@raid) %>
-          <% if admin_characters.length > 0 -%>
-            <tr>
-              <th></th>
-              <td><h2>Add a Character</h2></td>
-            </tr>
-            <tr>
-              <th></th>
-              <td>
-                <%= render(:partial => "signups/form",
-                           :locals => { :new_signup => Signup.new(:raid => @raid),
-                               :signups => nil,
-                               :div => "admin_role_choice",
-                               :characters => admin_characters,
-                               :raid => @raid }) %>
-              </td>
-            </tr>
-          <% end -%>
-        <% end %>
-        <% cache(:type => "admin_remove") do %>
-          <% if @raid.signups.size > 0 %>
-            <tr>
-              <th></th>
-              <td><h2>Remove a Character</h2></td>
-            </tr>
-            <tr>
-              <th></th>
-              <td>
-                <% render(:layout => "shared/box", 
-                          :locals => { :title => "Signups" }) do %>
-                  <% @raid.signups.each do |signup| %>
-                    <tr>
-                      <td>
-                        <%= render(:partial => "shared/character", :object => signup.character) %>
-                        (<%= signup.character.account.name %>)
-                      </td>
-                      <td>
-                        <%= link_to("Remove",
-                                    raid_signup_url(@raid, signup),
-                                    :method => :delete,
-                                    :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?") %>
-                      </td>
-                    </tr>
-                  <% end %>
+        <% admin_characters = Character.can_join(@raid) %>
+        <% if admin_characters.length > 0 -%>
+          <tr>
+            <th></th>
+            <td><h2>Add a Character</h2></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td>
+              <%= render(:partial => "signups/form",
+                         :locals => { :new_signup => Signup.new(:raid => @raid),
+                             :signups => nil,
+                             :div => "admin_role_choice",
+                             :characters => admin_characters,
+                             :raid => @raid }) %>
+            </td>
+          </tr>
+        <% end -%>
+        <% if @raid.signups.size > 0 %>
+          <tr>
+            <th></th>
+            <td><h2>Remove a Character</h2></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td>
+              <% render(:layout => "shared/box", 
+                        :locals => { :title => "Signups" }) do %>
+                <% @raid.signups.each do |signup| %>
+                  <tr>
+                    <td>
+                      <%= render(:partial => "shared/character", :object => signup.character) %>
+                      (<%= signup.character.account.name %>)
+                    </td>
+                    <td>
+                      <%= link_to("Remove",
+                                  raid_signup_url(@raid, signup),
+                                  :method => :delete,
+                                  :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?") %>
+                    </td>
+                  </tr>
                 <% end %>
-              </td>
-            </tr>
-          <% end %>
+              <% end %>
+            </td>
+          </tr>
         <% end %>
       <% end -%>
     <% else -%>
