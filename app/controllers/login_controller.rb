@@ -3,7 +3,7 @@ class LoginController < ApplicationController
 
     def index
         # Check for cookie
-        session_id = cookies[Preference.get_setting("phpbb_cookie")]
+        session_id = cookies[CONFIG[:phpbb_cookie]]
 
         if session_id
             # We are logged into phpbb, let's get their info
