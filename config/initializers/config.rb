@@ -1,2 +1,2 @@
-CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml") || {}
-CONFIG = (CONFIG['default'] || {}).symbolize_keys.merge((CONFIG[RAILS_ENV] || {}).symbolize_keys)
+yaml_config = YAML.load_file("#{RAILS_ROOT}/config/config.yml") || {}
+CONFIG = (yaml_config['default'] || {}).symbolize_keys.merge((yaml_config[RAILS_ENV] || {}).symbolize_keys)
