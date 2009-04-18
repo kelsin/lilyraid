@@ -3,7 +3,6 @@
 <% end %>
 
 <div id="raid">
-  <%= calendar_date_select_includes "silver" %>
   <table class="info">
     <tr>
       <th></th>
@@ -142,7 +141,7 @@
             <% render(:layout => "shared/box",
                       :locals => { :title => "Add To Loot List" }) do %>
               <% @raid.characters.each do |char| 
-                 if !@list.find(char.account) %>
+                 if !@list.nil? && !@list.find(char.account) %>
               <tr><td><%= link_to(render(:partial => "shared/character", :object => char),
                                          add_to_list_account_url(char.account, :raid => @raid.id),
                                          :method => :post) %></td></tr>

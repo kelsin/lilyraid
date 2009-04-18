@@ -3,7 +3,7 @@
     <div>
       <% if @current_account.can_edit(raid) %>
         <%= link_to_remote("Waiting List",
-                           :url => raid_slot_url(raid, "'+slot+'"),
+                           :url => "/raids/#{raid.id}/slots/'+slot+'",
                            :method => :delete,
                            :condition => "$$('td.slot.selected').length > 0",
                            :loading => update_page do |page|
