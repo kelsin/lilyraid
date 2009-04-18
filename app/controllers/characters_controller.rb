@@ -1,7 +1,6 @@
 class CharactersController < ApplicationController
     before_filter(:load_account)
     before_filter(:load_character, :only => [:destroy, :edit])
-    cache_sweeper :character_sweeper, :only => [:create, :update, :destroy]
 
     def create
         if @current_account == @account

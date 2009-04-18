@@ -1,6 +1,5 @@
 class RaidsController < ApplicationController
     before_filter(:load_raid, :only => [:edit, :update, :destroy, :show, :finalize])
-    cache_sweeper :raid_sweeper, :only => [:create, :update, :destroy]
 
     def index
         @old = params[:old]

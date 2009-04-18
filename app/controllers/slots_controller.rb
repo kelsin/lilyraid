@@ -2,7 +2,6 @@ class SlotsController < ApplicationController
     before_filter(:load_raid)
     before_filter(:load_slots, :only => [:index])
     before_filter(:load_slot, :only => [:edit, :destroy, :update])
-    cache_sweeper :slot_sweeper, :only => [:create, :update, :destroy]
 
     def index
         respond_to do |format|
