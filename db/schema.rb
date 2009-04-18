@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 18) do
+ActiveRecord::Schema.define(:version => 19) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -112,15 +112,6 @@ ActiveRecord::Schema.define(:version => 18) do
   add_index "loots", ["character_id"], :name => "index_loots_on_character_id"
   add_index "loots", ["raid_id"], :name => "index_loots_on_raid_id"
   add_index "loots", ["list_id"], :name => "index_loots_on_list_id"
-
-  create_table "preferences", :force => true do |t|
-    t.string   "key",        :null => false
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "preferences", ["key"], :name => "index_preferences_on_key"
 
   create_table "races", :force => true do |t|
     t.string   "name"
