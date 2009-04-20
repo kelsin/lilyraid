@@ -1,36 +1,28 @@
-<% inside_layout('master') do -%>
-  <table class="menu">
-    <tr>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title><%= @title || CONFIG[:guild] + " Raid Signups" || "World of Warcraft Raid Signup" %></title>
+    <%= stylesheet_link_tag RAILS_ENV, 'jquery' %>
+    <%= javascript_include_tag('jquery', 'jquery-ui', 'application') %>
+    <%= javascript_include_tag('http://www.wowhead.com/widgets/power.js') %>
+  </head>
+  <body>
+    <h1><%= CONFIG[:guild] %>: Raid Signups</h1>
+    <h2>A world of warcraft raiding guild</h2>
+    <div id="error" style="display: none"></div>
+    <ul id="menu">
       <% if @current_account %>
-        <td>
-          <%= link_to("Home", raids_url) %>
-        </td>
-        <td>
-          <%= link_to("New Raid", new_raid_url) %>
-        </td>
-        <td>
-          <%= link_to("Account", account_url(@current_account)) %>
-        </td>
-        <td>
-          <%= link_to("Member List", accounts_url) %>
-        </td>
-        <td>
-          <%= link_to("Loot", lists_url) %>
-        </td>
-        <td>
-          <%= link_to("Calendars", :controller => "calendar", :action => "index") %>
-        </td>
-        <% if @current_account.admin %>
-          <td>
-            <%= link_to("Admin", admin_accounts_url) %>
-          </td>
-        <% end %>
-	<td>
-	  <%= link_to("Forums", "http://forum.cakeordeath-guild.com") %>
-	</td>
+        <li><%= link_to("Home", raids_url) %></li>
+        <li><%= link_to("New Raid", new_raid_url) %></li>
+        <li><%= link_to("Account", account_url(@current_account)) %></li>
+        <li><%= link_to("Member List", accounts_url) %></li>
+        <li><%= link_to("Loot", lists_url) %></li>
+        <li><%= link_to("Calendars", :controller => "calendar", :action => "index") %></li>
+        <% if @current_account.admin %><li><%= link_to("Admin", admin_accounts_url) %></li><% end %>
+        <li><%= link_to("Forums", "http://forum.cakeordeath-guild.com") %></li>
       <% end %>
-    </tr>
-  </table>
+    </ul>
   <% if @current_account and @current_account.characters.size < 1 %>
     <div class="info">
       You currently have no characters created! Please head to the
@@ -39,4 +31,5 @@
     </div>
   <% end %>
   <%= yield %>
-<% end -%>
+  </body>
+</html>

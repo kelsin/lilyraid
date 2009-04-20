@@ -24,15 +24,13 @@ class AccountsController < ApplicationController
     if @current_account == @account || @current_account.admin
       respond_to do |format|
         format.html
-        format.js
+        format.js { render :template => false }
       end
     else
       respond_to do |format|
         format.html { redirect_to account_url(@account) }
         format.js do
-          render :update do |page|
-            page.redirect_to(account_url(@account))
-          end
+          render :js => "window.location = '#{account_url(@account)}';"
         end
       end
     end

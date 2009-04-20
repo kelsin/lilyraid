@@ -5,17 +5,15 @@
                  :collection => raid.signups_from(@current_account),
                  :spacer_template => "raids/signup_spacer") %></td>
   <td><%= raid.date ? raid.date.to_s(:raid) : "" %></td>
-  <td>Level
-    <% if raid.min_level == raid.max_level -%>
-      <%= raid.min_level %>
-    <% else -%>
-      <%= raid.min_level %>-<%= raid.max_level %>
-    <% end -%>
-    <% if raid.instance.requires_key %><br/>Key Required<% end %>
-  </td>
   <td>
-    <% raid.needed.each do |need| %>
-      <%= need[1] %><%= render(:partial => "shared/slot", :object => need[0]) %><br/>
+    <% if raid.needed.count > 0 %>
+      <ul>
+        <% raid.needed.each do |role, count| %>
+          <li><%= pluralize(count, role || "Open") %></li>
+        <% end %>
+      <ul>
+    <% else %>
+      Nothing
     <% end %>
   </td>
   <td>

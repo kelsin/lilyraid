@@ -4,7 +4,6 @@
 
 <% if slot.signup.has_other_signups -%>
   <br /><br />
-  <b>-- Other Signups --</b><br /><br />
   <%= render(:partial => "signups/note",
              :collection => slot.signup.other_signups,
              :spacer_template => "slots/spacer") %>

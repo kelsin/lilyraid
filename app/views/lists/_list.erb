@@ -1,11 +1,18 @@
-<% render(:layout => "shared/box",
-          :locals => { :title => "#{list.name} Loot List" }) do %>
-  <% if list && list.list_positions.length > 0 %>
-    <%= render(:partial => "lists/position",
-               :collection => list.list_positions) %>
-  <% else %>
-    <tr>
-      <td class="closed">Empty</td>
-    </tr>
-  <% end %>
-<% end %>
+<div class="raid">
+  <h3><%= list.name %></h3>
+  <dl>
+    <% list.list_positions.each do |lp| %>
+      <dt>
+        <%= link_to(lp.account.name,
+                    account_url(lp.account)) %>
+        <%= lp.position %>
+      </dt>
+      <% lp.account.characters.each do |character| %>
+        <dd>
+          <%= link_to(render(:partial => "shared/character", :object => character),
+                      "#{account_url(lp.account)}#character_#{character.id}") %>
+        </dd>
+      <% end %>
+    <% end %>
+  </dl>
+</div>

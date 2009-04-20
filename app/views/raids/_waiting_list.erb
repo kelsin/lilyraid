@@ -1,0 +1,17 @@
+<dt>Waiting List</dt>
+<% waiting_list.each do |signup| %>
+  <% content_tag_for(:dd, signup, :class => signup.classes(false)) do %>
+    <%= render(:partial => "shared/character", :object => signup.character) %>
+    <%= "*" if signup.has_other_signups %>
+    <div class="note">
+      <%= render(:partial => "signups/note", :object => signup) %>
+    </div>
+  <% end %>
+<% end %>
+<% if waiting_list.waiting_list.select do |signup|
+     signup.character.account.characters.seated_in(signup.raid).count < 1
+   end.count > 0 %>
+  <dd class="empty seated">Empty</dd>
+<% else %>
+  <dd class="empty">Empty</dd>
+<% end %>

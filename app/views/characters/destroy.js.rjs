@@ -1,1 +1,0 @@
-page[@character].fade if @character

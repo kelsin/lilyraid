@@ -16,7 +16,9 @@ class RaidsController < ApplicationController
     end
 
     def show
-        @list = List.get_list(CONFIG[:guild])
+      if @raid.uses_loot_system
+        @list = List.first
+      end
     end
 
     def finalize

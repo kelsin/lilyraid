@@ -7,12 +7,12 @@ class LootsController < ApplicationController
         @loot.raid = @raid
         @loot.save
 
-        @list = List.get_list(CONFIG[:guild])
+        @list = List.first
         @list.new_loot(@raid, @loot)
 
         @raid.reload
 
-        @list = List.get_list_from_raid(CONIFG[:guild]), @raid)
+        @list = List.first
 
         respond_to do |format|
             format.html { redirect_to raid_url(@raid) }

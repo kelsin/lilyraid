@@ -1,0 +1,7 @@
+$('#character_<%= @character.id %>').replaceWith("<%= escape_javascript(render(:partial => "characters/form",
+  :locals => {
+    :character => @character,
+    :instances => @instances,
+    :races => @races,
+    :cclasses => @cclasses
+  })) %>");

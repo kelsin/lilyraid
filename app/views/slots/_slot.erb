@@ -1,5 +1,5 @@
 <% content_tag_for(:tr, slot) do %>
-  <% if slot == nil || slot.closed -%>
+  <% if slot == nil -%>
     <td class="closed">Closed</td>
   <% elsif slot.signup == nil -%>
     <% content_tag_for(:td, slot, :td) do %>

@@ -62,6 +62,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.root :controller => 'raids'
 
+  map.connect 'roles/:id', :controller => 'characters', :action => 'roles'
+
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

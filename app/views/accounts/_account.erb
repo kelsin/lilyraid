@@ -1,38 +1,33 @@
-<% div_for(account) do %>
-  <table class="info">
-    <tr>
-      <th></th>
-      <td><h3><%= account.name %></h3></td></tr>
-    <% if @current_account == account || @current_account.admin%>
-      <tr>
-        <th></th>
-        <td id="editlink">
-          <%= link_to_remote "Edit",
-                             :url => edit_account_url(account),
-                             :method => :get,
-                             :loading => update_page { |page|
-                                 page[:editlink].replace_html "Loading..."
-                             } %>
-          <% if @current_account.admin && account.can_delete %>
-            <%= link_to "Delete", admin_account_url(account), :method => :delete, :confirm => "Are you sure you want to delete this account?" %>
-          <% end %>
-        </td>
-      </tr>
+<% div_for(account, :class => "raid") do %>
+  <h3><%= account.name %></h3>
+  <% if @current_account == account || @current_account.admin%>
+    <p id="editlink">
+      <%= link_to("Edit",
+                  edit_account_url(account),
+                  :onclick => "$.get('#{edit_account_url(account)}', {}, null, 'script'); return false;") %>
+    </p>
+    <% if @current_account.admin && account.can_delete %>
+      <p>
+        <%= link_to "Delete", admin_account_url(account), :method => :delete, :confirm => "Are you sure you want to delete this account?" %>
+      </p>
     <% end %>
+  <% end %>
+  <dl>
     <% if !account.lj_account.blank? -%>
-      <tr>
-        <th>LJ:</th>
-        <td><%= link_to account.lj_account, account.lj_link %></td>
-      </tr>
+      <dt>LJ</dt>
+      <dd><%= link_to account.lj_account, account.lj_link, :class => "lj" %></dd>
     <% end -%>
     <% if !account.age.blank? %>
-      <tr><th>Age:</th><td><%= account.age %></td></tr>
+      <dt>Age:</dt>
+      <dd><%= account.age %></dd>
     <% end %>
     <% if !account.location.blank? %>
-      <tr><th>Location:</th><td><%= account.location %></td></tr>
+      <dt>Location:</dt>
+      <dd><%= account.location %></dd>
     <% end %>
     <% if !account.bio.blank? %>
-      <tr><th>Bio:</th><td style="width: 600px;"><%= account.bio %></td></tr>
+      <dt>Bio:</dt>
+      <dd><%= account.bio %></dd>
     <% end %>
-  </table>
+  </dl>
 <% end %>

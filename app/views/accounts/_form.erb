@@ -1,37 +1,24 @@
-<% div_for(account) do %>
+<% div_for(account, :class => "raid") do %>
+  <h3><%= @account.name %></h3>
   <% form_remote_for(account) do |f| %>
-    <table class="info">
-      <tr>
-        <th></th>
-        <td><h3><%= @account.name %></h3></td>
-      </tr>
-      <tr>
-        <th>LJ:</th>
-        <td>
-          <%= f.text_field :lj_account %><br />
-          <p class="note">
-            This is just your livejournal username. For example, if your journal
-            exists at "ayashi.livejournal.com", you should only enter "ayashi"
-            here.
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <th>Age:</th>
-        <td><%= f.text_field :age %></td>
-      </tr>
-      <tr>
-        <th>Location:</th>
-        <td><%= f.text_field :location %></td>
-      </tr>
-      <tr>
-        <th>Bio:</th>
-        <td><%= f.text_area :bio, :rows => 8 %></td>
-      </tr>
-      <tr>
-        <th></th>
-        <td><%= submit_tag "Save" %></td>
-      </tr>
-    </table>
+    <dl>
+      <dt>LJ:</dt>
+      <dd>
+        <%= f.text_field :lj_account %><br />
+        <p class="note">
+          This is just your livejournal username. For example, if your journal
+          exists at "ayashi.livejournal.com", you should only enter "ayashi"
+          here.
+        </p>
+      </dd>
+      <dt>Age:</dt>
+      <dd><%= f.text_field :age %></dd>
+      <dt>Location:</dt>
+      <dd><%= f.text_field :location %></dd>
+      <dt>Bio:</dt>
+      <dd><%= f.text_area :bio, :rows => 8 %></dd>
+      <dt></dt>
+      <dd><%= submit_tag "Save" %></dd>
+    </dl>
   <% end %>
 <% end %>

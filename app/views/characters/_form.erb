@@ -1,65 +1,35 @@
-<% div_for(character) do %>
+<% div_for(character, :class => "raid") do %>
   <% remote_form_for([character.account, character],
                      :loading => update_page do |page|
                          page["#{dom_id(character)}_submit"].value = "Saving"
                          page["#{dom_id(character)}_submit"].disable
                      end) do |f| %>
-    <table class="info">
+    <%= "<h3>New Character</h3>" if character.new_record? %>
+    <dl>
+      <dt>Name:</dt>
+      <dd><%= f.text_field :name %></dd>
+      <dt>Level:</dt>
+      <dd><%= f.text_field :level, :size => 5 %></dd>
+      <dt>Guild:</dt>
+      <dd><%= f.text_field :guild  %></dd>
       <% if character.new_record? %>
-        <tr>
-          <th></th>
-          <td><h2>New Character</h2>
-        </tr>
-      <% end %>
-      <tr>
-        <th>Name:</th>
-        <td><%= f.text_field :name %></td>
-      </tr>
-      <tr>
-        <th>Level:</th>
-        <td><%= f.text_field :level, :size => 5 %></td>
-      </tr>
-      <tr>
-        <th>Guild:</th>
-        <td><%= f.text_field :guild  %></td>
-      </tr>
-      <% if character.new_record? %>
-        <tr>
-          <th>Race:</th>
-          <td><%= f.collection_select(:race_id, Race.find(:all), :id, :name) %></td>
-        </tr>
-        <tr>
-          <th>Class:</th>
-          <td><%= f.collection_select(:cclass_id, Cclass.find(:all), :id, :name) %></td>
-        </tr>
+        <dt>Race:</dt>
+        <dd><%= f.collection_select(:race_id, Race.find(:all), :id, :name) %></dd>
+        <dt>Class:</dt>
+        <dd><%= f.collection_select(:cclass_id, Cclass.find(:all), :id, :name) %></dd>
       <% else %>
-        <tr>
-          <th>Inactive:</th>
-          <td>
-            <%= f.check_box :inactive %>
-            <p class="note">
-              If you mark a character inactive they won't show up on the public
-              member list, and won't be available when signing up for raids. You
-              can mark them active again at any time.
-            </p>
-        <tr>
-          <th>Keyed:</th>
-          <td>
-            <% Instance.keyed.each do |instance| %>
-              <%= check_box_tag("character[instances][]",
-                                instance.id,
-                                character.keyed(instance)) %>
-              <nobr><%= instance.name %></nobr><br />
-            <% end %>
-          </td>
-        </tr>
+        <dt>Inactive:</dt>
+        <dd>
+          <%= f.check_box :inactive %>
+          <p class="note">
+            If you mark a character inactive they won't show up on the public
+            member list, and won't be available when signing up for raids. You
+            can mark them active again at any time.
+          </p>
+        </dd>
       <% end %>
-      <tr>
-        <th></th>
-        <td>
-          <%= submit_tag "Save", :id => "#{dom_id(character)}_submit" %>
-        </td>
-      </tr>
-    </table>
+      <dt></dt>
+      <dd><%= submit_tag "Save", :id => "#{dom_id(character)}_submit" %></dd>
+    </dl>
   <% end %>
 <% end %>

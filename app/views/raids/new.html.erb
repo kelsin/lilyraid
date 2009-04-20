@@ -1,48 +1,35 @@
 <%= error_messages_for(:raid) %>
-<% form_for(@raid) do |f| %>
-  <table class="info">
-    <tr>
-      <th>Name:</th>
-      <td><%= f.text_field :name, :size => 30 %></td>
-    </tr>
-    <tr>
-      <th>Date:</th>
-      <td></td>
-    </tr>
-    <% instances = Instance.all %>
-    <tr>
-      <th>Instance:</th>
-      <td><%= f.collection_select(:instance_id, instances,
+<% div_for(@raid) do %>
+  <h3>New Raid</h3>
+  <% form_for(@raid) do |f| %>
+    <dl>
+      <dt>Name:</dt>
+      <dd><%= f.text_field :name, :size => 30 %></dd>
+      <dt>Date:</dt>
+      <dd><%= f.text_field :date, :size => 10 %> @ <input type="text" value="5" size="2"> : <input type="text" value="30" size="2"></dd>
+      <% instances = Instance.all %>
+      <dt>Instance:</dt>
+      <dd><%= f.collection_select(:instance_id, instances,
                                   :id, :name_with_number, {},
                                   { :onchange => remote_function(:url => {
-                                                                     :action => "instance_levels",
-                                                                     :id => "'+this.value+'"
+                                                                   :action => "instance_levels",
+                                                                   :id => "'+this.value+'"
                                                                  },
                                                                  :loading => update_page do |page|
                                                                      page[:level_loading].replace_html(image_tag("loading.gif"))
-                                                                 end)}) %></td>
-    </tr>
-    <tr>
-      <th>Level Requirement:</th>
-      <td><%= f.text_field :min_level, :size => 3, :value => instances[0].min_level %>-<%= f.text_field :max_level, :size => 3, :value => instances[0].max_level %> <span id="level_loading"></span></td>
-    </tr>
-    <% if @current_account.admin %>
-      <tr>
-        <th>Locked?</th>
-        <td><%= f.check_box :locked %></td>
-      </tr>
-      <tr>
-        <th>Uses Loot System?</th>
-        <td><%= f.check_box :uses_loot_system %></td>
-      </tr>
-    <% end %>
-    <tr>
-      <th>Creator:</th>
-      <td><%= @current_account.name %><% if @current_account.admin %> (Admin)<% end %></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><%= submit_tag %></td>
-    </tr>
-  </table>
+                                                                 end)}) %></dd>
+      <% if @current_account.admin %>
+        <dt>Uses Loot System?</dt>
+        <dd><%= f.check_box :uses_loot_system %></dd>
+      <% end %>
+      <dt>Creator:</dt>
+      <dd><%= @current_account.name %><% if @current_account.admin %> (Admin)<% end %></dd>
+      <dt></dt>
+      <dd><%= submit_tag %></dd>
+    </dl>
+  <% end %>
+<% end %>
+
+<% javascript_tag do %>
+$('#raid_date').datepicker();
 <% end %>

@@ -1,0 +1,42 @@
+// Deal with slots
+<% if @signup %>
+    $('#signup_<%= @signup.id %>').slideUp();
+
+    // Handle any other signups
+    <% @signup.other_signups.each do |signup| %>
+      $('#signup_<%= signup.id %>').slideUp();
+    <% end %>
+<% else %>
+    $('#slot_<%= @from_slot.id %>').replaceWith("<%= escape_javascript(render(:partial => "raids/slot", :object => @from_slot)) %>");
+    make_slot('#slot_<%= @from_slot.id %>', '<%= @from_slot.accepts %>');
+<% end %>
+
+// Target Slot
+$('#slot_<%= @slot.id %>').replaceWith("<%= escape_javascript(render(:partial => "raids/slot", :object => @slot)) %>");
+make_signup('#slot_<%= @slot.id %>');
+
+// Needed List
+$('#needed_list').html("<%= escape_javascript(render(:partial => "raids/needed", :object => @raid.needed)) %>");
+
+// Loot List
+<% if @signup %>
+    if($('#add_to_loot_list #character_<%= @signup.character.id %>').size() > 0) {
+        $('#add_to_loot_list').fadeIn();
+    }
+    if($('#loot_list #character_<%= @signup.character.id %>').size() > 0) {
+        $('#loot_list dd.empty:visible').slideUp();
+    }
+    if($('#waiting_list dd:visible:not(.account_<%= @signup.character.account.id %>)').size() < 1) {
+        $('#waiting_list dd.empty').slideDown();
+    }
+    $('#character_<%= @signup.character.id %>').slideDown();
+    
+<% else %>
+    $('dl#add_to_loot_list dd.account_<%= @slot.signup.character.account.id %>').slideUp();
+    $('dl#loot_list dd.account_<%= @slot.signup.character.account.id %>').slideUp();
+
+    $('#character_<%= @slot.signup.character.id %>').slideDown();
+<% end %>
+
+// New Loot
+$('#new_loot').html("<%= escape_javascript(render(:partial => "raids/new_loot", :locals => { :raid => @raid })) %>");

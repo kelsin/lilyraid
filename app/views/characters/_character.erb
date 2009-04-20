@@ -1,74 +1,41 @@
-<% div_for(character) do %>
-  <table class="info">
-    <tr>
-      <th></th>
-      <td>
-        <h4><%= character.name %></h4>
-        <%= "Inactive" if character.inactive %>
-      </td>
-    </tr>
-    <% if @current_account == character.account %>
-      <tr>
-        <th></th>
-        <td>
-          <span id="<%=dom_id(character)%>_edit_link">
-            <%= link_to_remote("Edit",
-                               :url => edit_account_character_url(character.account, character),
-                               :method => :get,
-                               :loading => update_page do |page|
-                                   page["#{dom_id(character)}_edit_link"].replace_html "Loading ..."
-                               end) %>
-          </span>
-          <% if character.raids.empty? %>
-            | <span id="<%=dom_id(character)%>_delete_link">
-              <%= link_to_remote("Delete",
-                                 :url => account_character_url(character.account, character),
-                                 :method => :delete,
-                                 :confirm => "Are you sure you want to remove #{character.name}?",
-                                 :loading => update_page do |page|
-                                     page["#{dom_id(character)}_delete_link"].replace_html "Deleting ..."
-                                 end) %>
-            </span>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-    <tr>
-      <th>Level:</th>
-      <td><%= character.level %></td>
-    </tr>
-    <tr>
-      <th>Race:</th>
-      <td><%= character.race.name %></td>
-    </tr>
-    <tr>
-      <th>Class:</th>
-      <td><%= render(:partial => "shared/cclass", :object => character.cclass) %></td>
-    </tr>
+<% div_for(character, :class => "raid") do %>
+  <h4><%= character.name %></h4>
+  <% if @current_account == character.account %>
+    <p id="<%=dom_id(character)%>_edit_link">
+      <%= link_to("Edit", edit_account_character_url(character.account, character),
+                  :onclick => "$.get('#{edit_account_character_url(character.account, character)}', {}, null, 'script'); return false;") %>
+      <% if character.raids.empty? %>
+        | <span id="<%=dom_id(character)%>_delete_link">
+          <%= link_to("Delete", account_character_url(character.account, character),
+                      :onclick => "if(confirm('Are you sure you want to remove #{character.name}?')) { $.delete_('#{account_character_url(character.account, character)}', {}, null, 'script'); } return false;") %>
+        </span>
+      <% end %>
+      <%= "| Inactive" if character.inactive %>
+    </p>
+  <% end %>
+  <dl>
+    <dt>Level:</dt>
+    <dd><%= character.level %></dd>
+    <dt>Race:</dt>
+    <dd><%= character.race.name %></dd>
+    <dt>Class:</dt>
+    <dd><%= render(:partial => "shared/cclass", :object => character.cclass) %></dd>
     <% if !character.guild.blank? %>
-      <tr>
-        <th>Guild:</th>
-        <td><%= character.guild %></td>
-      </tr>
-    <% end %>
-    <% if !character.instances.empty? %>
-      <tr>
-        <th>Keyed:</th>
-        <td>
-          <%= character.instances.map { |instance| instance.name }.join(", ") %>
-        </td>
-      </tr>
+      <dt>Guild:</dt>
+      <dd><%= character.guild %></dd>
     <% end %>
     <% if character.loots.size > 0 %>
-      <tr>
-        <th>Loot:</th>
-        <td>
+      <dt>Loot:</dt>
+      <dd>
+        <ul>
           <% character.loots.each do |loot| -%>
-            <a class="loot" href="<%= loot.item_url %>"><%= loot.item_name %></a>
-            from <%= link_to(loot.raid.name, raid_url(loot.raid)) %><br />
+            <li>
+              <a class="loot" href="<%= loot.item_url %>"><%= loot.item_name %></a>
+              <%= link_to(loot.raid.name, raid_url(loot.raid)) %>
+            </li>
           <% end -%>
-        </td>
-      </tr>
+        </ul>
+      </dd>
     <% end %>
-  </table>
+  </dl>
 <% end %>

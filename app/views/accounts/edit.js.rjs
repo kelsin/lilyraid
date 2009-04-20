@@ -1,2 +1,0 @@
-page[@account].replace(:partial => "accounts/form",
-                       :locals => { :account => @account })

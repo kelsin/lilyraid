@@ -14,7 +14,7 @@ class Raid < ActiveRecord::Base
             end
         end
     end
-    has_many :signups, :dependent => :destroy, :order => "signups.created_at"
+    has_many :signups, :dependent => :destroy
     has_many :characters, :through => :signups, :order => "characters.name"
     has_many :loots
 
@@ -28,6 +28,10 @@ class Raid < ActiveRecord::Base
 
     def started?
         Time.now > self.date
+    end
+
+    def needed
+      slots.empty.count(:include => :role, :group => "roles.name")
     end
 
     def confirmed_characters
@@ -144,10 +148,8 @@ class Raid < ActiveRecord::Base
         end
     end
 
-    def each_group
-        slots.each_slice(5) do |group|
-            yield group
-        end
+    def groups
+      slots.each_slice(5)
     end
 
     def can_be_deleted?
@@ -157,24 +159,6 @@ class Raid < ActiveRecord::Base
     def after_create        
         instance.max_number.times do |num|
             Slot.new(:raid => self).save
-        end
-    end
-
-    def needed
-        needed = {}
-
-        slots.each do |slot|
-            if !slot.signup and !slot.closed
-                if needed[slot]
-                    needed[slot] = needed[slot] + 1
-                else
-                    needed[slot] = 1
-                end
-            end
-        end
-
-        return needed.sort do |a, b|
-            a[0] <=> b[0]
         end
     end
 
