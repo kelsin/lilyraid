@@ -64,7 +64,7 @@
         </ul>
       </dd>
     <% end %>
-    <% if @current_account.characters.count > 0 %>
+    <% if @current_account.characters.not_in_raid(@raid).count > 0 %>
       <dt>Signup:</dt>
       <dd id="new_signup">
         <% if @raid.started? %>
