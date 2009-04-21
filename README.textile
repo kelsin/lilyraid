@@ -3,18 +3,21 @@ h1. Lilyraid
 This project is a Ruby on Rails app that allows you to schedule World of
 Warcraft raids.
 
-h2. Requirements:
+h2. Requirements
 
-# Ability to run a Ruby on Rails app on your webserver.
-# Ruby on Rails supported database.
-# Phpbb3 board for authentication with an accessible cookie and database (This will not be a requirement soon).
+* Ability to run a Ruby on Rails app on your webserver.
+* Ruby on Rails supported database.
+* Phpbb3 board for authentication with an accessible cookie and database (This will not be a requirement soon).
 
 h2. Installation
 
 # Install Rails.
 # Checkout this project into a folder accessible by your Rails app server of choice.
 ## I currently use Passenger (mod-rails).
-# Run @rake db:migrate@ and @rake gems:install@ (As sudo if needed).
-# Create a database.yml and config.yml files with your proper settings.
+# Run @rake db:migrate@ and @rake gems:install@ (With sudo if needed).
+# Setup config files
+## In this repo I have two extra "production" environments: @cod@ and @dota@
+## Create a database.yml file with settings for all environments.
+## Create a config.yml file with settings for all environments.
 # Setup your app server to server your rails project.
 # Profit.
