@@ -17,7 +17,7 @@ h2. Installation
 # Run @rake db:migrate@ and @rake gems:install@ (With sudo if needed).
 # Setup config files
 ## In this repo I have two extra "production" environments: @cod@ and @dota@
-## Create a database.yml file with settings for all environments.
+## Create a database.yml file with settings for all environments you're going to use.
 ## Create a config.yml file with settings for all environments.
-# Setup your app server to server your rails project.
+# Setup your app server to serve your rails project.
 # Profit.
