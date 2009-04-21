@@ -10,5 +10,6 @@ class FixUtcTimes < ActiveRecord::Migration
     Raid.all.each do |raid|
       raid.date = raid.date - 7.hours
       raid.save
+    end
   end
 end
