@@ -4,11 +4,13 @@ This project is a Ruby on Rails app that allows you to schedule World of
 Warcraft raids.
 
 h2. Requirements:
+
 # Ability to run a Ruby on Rails app on your webserver.
 # Ruby on Rails supported database.
 # Phpbb3 board for authentication with an accessible cookie and database (This will not be a requirement soon).
 
 h2. Installation
+
 # Install Rails.
 # Checkout this project into a folder accessible by your Rails app server of choice.
 ## I currently use Passenger (mod-rails).
