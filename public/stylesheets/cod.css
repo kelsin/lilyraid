@@ -97,6 +97,8 @@ dl.list dd:hover div.note span { font-size: 1.3em; }
 div#error { position: absolute; padding: 10px; font-weight: bold;
             border: 1px solid #a00; background-color: #000; top: 250px: left: 20px; }
 
+div#footer { font-size: 0.8em; line-height: 1.4em; width: 40em; margin-top: 3em; padding: 0.5em; }
+
 /* Links */
 a:link, a:visited, a:active { color: #99f; text-decoration: none; }
 a:hover { color: white; }
