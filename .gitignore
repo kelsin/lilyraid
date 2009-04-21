@@ -3,4 +3,9 @@ log/*.log
 doc/api
 doc/app
 public/stylesheets/raid.css
+config/database.yml
+config/config.yml
+Capfile
+config/deploy.rb
+config/deploy/*
 
