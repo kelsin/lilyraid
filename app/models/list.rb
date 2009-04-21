@@ -109,6 +109,8 @@ class List < ActiveRecord::Base
       self.list_positions = ListPosition.find(:all, :conditions => ["list_id = ?", self.id])
 
       #self.backup "Added #{account.name} to the end of #{name}"
+
+      lp
     end
   end
 end

@@ -1,15 +1,6 @@
 <dt><%= List.first.name %></dt>
 <% List.first.list_positions.in_raid(raid).each do |position| %>
-  <% position.account.characters.each do |character| %>
-    <% content_tag_for(:dd, character, :class => "account_#{position.account.id} " + (character.signups.in_raid(raid).first.slot ? "seated" : "")) do %>
-      <%= position.position %>
-      <%= render(:partial => "shared/character",
-                 :object => character) %>
-      <div class="note">
-        <%= render(:partial => "signups/note", :object => character.signups.in_raid(raid).first) %>
-      </div>
-    <% end %>
-  <% end %>
+  <%= render :partial => "position", :locals => { :position => position, :raid => raid } %>
 <% end %>
 <% if List.first.list_positions.seated_in(raid).count > 0 %>
   <dd class="empty">Empty</dd>

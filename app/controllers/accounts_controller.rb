@@ -4,12 +4,17 @@ class AccountsController < ApplicationController
   end
 
   def add_to_list
-    @list = List.get_list(CONFIG[:guild])
+    @list = List.first
 
     @account = Account.find(params[:id])
-    @list.add_to_end(@account)
+    @lp = @list.add_to_end(@account)
 
-    redirect_to raid_url(params[:raid])
+    @raid = Raid.find(params[:raid_id])
+
+    respond_to do |format|
+      format.html { redirect_to @raid }
+      format.js { render :template => false }
+    end
   end
 
   def edit
