@@ -116,7 +116,7 @@
               <% content_tag_for(:dd, signup.character, :class => signup.classes) do %>
                 <%= link_to(render(:partial => "shared/character", :object => signup.character),
                             add_to_list_account_url(signup.character.account),
-                            :onclick => "if(confirm('Are you sure you want to add #{signup.character.account.name} to the loot list?')) { $.post('#{add_to_list_account_url(signup.character.account)}', { raid_id: '#{@raid.id}' }, null, 'script'); } return false;" %>
+                            :onclick => "if(confirm('Are you sure you want to add #{signup.character.account.name} to the loot list?')) { $.post('#{add_to_list_account_url(signup.character.account)}', { raid_id: '#{@raid.id}', authenticity_token: AUTH_TOKEN }, null, 'script'); } return false;") %>
                 <div class="note">
                   <%= render(:partial => "signups/note", :object => signup) %>
                 </div>

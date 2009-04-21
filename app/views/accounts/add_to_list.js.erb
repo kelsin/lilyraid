@@ -1,8 +1,14 @@
 // Remove Add to List item
-$('#add_to_loot_list dd.account_<%= @account %>').fadeOut(1000, function () {
+$('#add_to_loot_list dd.account_<%= @account.id %>').fadeOut(1000, function () {
     $(this).remove();
 });
 
+if($('#add_to_loot_list dd:visible:not(.account_<%= @account.id %>)').size() < 1) {
+    $('#add_to_loot_list').fadeOut();
+}
+
+
 // Add new loot list item
-$('#loot_list').html('<%= escape_javascript(render(:partial => "raids/position", :locals => { :position => @lp, :raid => @raid })) %>');
+$('#loot_list').append('<%= escape_javascript(render(:partial => "raids/position", :locals => { :position => @lp, :raid => @raid, :hide => true })) %>');
+$('#loot_list dd.account_<%= @account.id %>').slideDown();
 
