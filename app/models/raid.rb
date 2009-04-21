@@ -27,7 +27,7 @@ class Raid < ActiveRecord::Base
     end
 
     def started?
-        Time.now > self.date
+        (Time.now - 7.hours) > self.date
     end
 
     def needed
