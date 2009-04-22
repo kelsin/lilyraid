@@ -5,8 +5,7 @@
     <dl>
       <dt>Name:</dt>
       <dd><%= f.text_field :name, :size => 30 %></dd>
-      <dt>Date:</dt>
-      <dd><%= f.text_field :date, :size => 10 %> @ <input type="text" value="5" size="2"> : <input type="text" value="30" size="2"></dd>
+      <dt>Date:</dt><dd><%= text_field_tag "caldate", @raid.caldate, :size => 10 %> @ <%= text_field_tag "caltime", @raid.caltime, :size => 8 %></dd>
       <% instances = Instance.all %>
       <dt>Instance:</dt>
       <dd><%= f.collection_select(:instance_id, instances,
@@ -31,5 +30,6 @@
 <% end %>
 
 <% javascript_tag do %>
-$('#raid_date').datepicker();
+$('#caldate').datepicker();
+$('#caltime').timepickr({ convention: 12, val: '<%= @raid.caltime %>', rangeMin: ['00', '30'], suffix: ['pm', 'am']});
 <% end %>

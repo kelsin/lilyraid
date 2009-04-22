@@ -3,8 +3,8 @@
 <html>
   <head>
     <title><%= @title || CONFIG[:guild] + " Raid Signups" || "World of Warcraft Raid Signup" %></title>
-    <%= stylesheet_link_tag RAILS_ENV, 'jquery' %>
-    <%= javascript_include_tag('jquery', 'jquery-ui', 'application') %>
+    <%= stylesheet_link_tag RAILS_ENV, 'jquery', 'jquery.timepickr' %>
+    <%= javascript_include_tag('jquery', 'jquery-ui', 'application', 'jquery.timepickr.min') %>
     <%= javascript_include_tag('http://www.wowhead.com/widgets/power.js') %>
   </head>
   <body>

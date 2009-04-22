@@ -4,7 +4,7 @@
     <dl>
       <dt>Name:</dt><dd><%= f.text_field :name %></dd>
       <dt>Instance:</dt><dd><%= @raid.instance.name %></dd>
-      <dt>Date:</dt><dd></dd>
+      <dt>Date:</dt><dd><%= text_field_tag "caldate", @raid.caldate, :size => 10 %> @ <%= text_field_tag "caltime", @raid.caltime, :size => 8 %></dd>
       <dt>Level Requirement:</dt>
       <dd>
         <%= f.text_field :min_level, :size => 3 %>-<%= f.text_field :max_level, :size => 3 %>
@@ -46,4 +46,9 @@
       <dd><%= submit_tag "Save" %></dd>
     </dl>
   <% end %>
+<% end %>
+
+<% javascript_tag do %>
+$('#caldate').datepicker();
+$('#caltime').timepickr({ convention: 12, val: '<%= @raid.caltime %>', rangeMin: ['00', '30'], suffix: ['pm', 'am']});
 <% end %>
