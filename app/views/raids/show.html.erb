@@ -78,7 +78,8 @@
                                       :onchange => "character_roles(this, '#new_signup_roles');") %>
               <%= f.text_field(:note,
                                :onfocus => "field_focus(this);",
-                               :onblur => "field_blur(this);") %>
+                               :onblur => "field_blur(this);",
+                               :class => "dim") %>
               <%= submit_tag "Sign up" %>
             </div>
             <div id="new_signup_roles">
@@ -147,7 +148,8 @@
                                       :onchange => "character_roles(this, '#admin_new_signup_roles');") %>
               <%= f.text_field(:note,
                                :onfocus => "field_focus(this);",
-                               :onblur => "field_blur(this);") %>
+                               :onblur => "field_blur(this);",
+                               :class => 'dim') %>
               <%= submit_tag "Sign up" %>
             </div>
             <div id="admin_new_signup_roles">

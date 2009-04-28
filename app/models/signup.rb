@@ -36,6 +36,8 @@ class Signup < ActiveRecord::Base
                                     and lp.list_id = ?)", List.first.id]
   }
 
+  before_save :remove_default_note
+
   def classes(others = true)
     c = Array.new
     c.push("signup")
@@ -85,6 +87,12 @@ class Signup < ActiveRecord::Base
 
   def role_ids=(roles)
     @roles = roles
+  end
+
+  def remove_default_note
+    if self.note == "Note"
+      self.note = ""
+    end
   end
 
   def after_create

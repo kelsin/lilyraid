@@ -28,14 +28,14 @@ jQuery.extend({
 function field_focus(ele) {
     if(ele.value == ele.defaultValue) {
         ele.value = '';
-        $(ele).css('color', '#000');
+        $(ele).removeClass('dim');
     }
 }
 
 function field_blur(ele) {
     if(ele.value == '') {
         ele.value = ele.defaultValue;
-        $(ele).css('color', '#bbb');
+        $(ele).addClass('dim');
     }
 }
 
