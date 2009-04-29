@@ -89,94 +89,107 @@
         <% end %>
       </dd>
     <% end %>
-    <dt>Slots:</dt> 
-    <dd id="slots">
-      <%= render :partial => "group", :collection => @raid.groups %>
-    </dd>
-    <dt>Signups:</dt>
-    <dd id="signups">
-      <dl class="list" id="waiting_list">
-        <%= render :partial => "waiting_list", :object => @raid.signups %>
-      </dl>
-      <dl class="list" id="needed_list">
-        <%= render :partial => "needed", :object => @raid.needed %>
-      </dl>
-    </dd>
-    <% if @raid.uses_loot_system or @raid.loots.count > 0 %>
-      <dt>Loot:</dt>
-      <dd id="loot">
-        <% if @raid.uses_loot_system %>
-          <dl class="list" id="loot_list">
-            <%= render :partial => "positions", :locals => { :raid => @raid } %>
-          </dl>
-        <% end %>
-        <% if @current_account.admin? %>
-          <dl class="list" id="add_to_loot_list" <%= "style=\"display: none;\"" unless @raid.signups.not_in_loot_list.seated.count > 0 %>>
-            <dt>Add to Loot List</dt>
-            <% @raid.signups.not_in_loot_list.each do |signup| %>
-              <% content_tag_for(:dd, signup.character, :class => signup.classes) do %>
-                <%= link_to(render(:partial => "shared/character", :object => signup.character),
-                            add_to_list_account_url(signup.character.account),
-                            :onclick => "if(confirm('Are you sure you want to add #{signup.character.account.name} to the loot list?')) { $.post('#{add_to_list_account_url(signup.character.account)}', { raid_id: '#{@raid.id}', authenticity_token: AUTH_TOKEN }, null, 'script'); } return false;") %>
-                <div class="note">
-                  <%= render(:partial => "signups/note", :object => signup) %>
-                </div>
-              <% end %>
-            <% end %>
-          </dl>
-        <% end %>
-        <dl class="list" id="item_list">
-          <%= render(:partial => "loots", :object => @raid.loots) %>
+    <% if @current_account.can_edit(@raid) || @raid.finalized? %>
+      <dt>Slots:</dt> 
+      <dd id="slots">
+        <%= render :partial => "group", :collection => @raid.groups %>
+      </dd>
+      <dt>Signups:</dt>
+      <dd id="signups">
+        <dl class="list" id="waiting_list">
+          <%= render :partial => "waiting_list", :object => @raid.signups %>
+        </dl>
+        <dl class="list" id="needed_list">
+          <%= render :partial => "needed", :object => @raid.needed %>
         </dl>
       </dd>
-    <% end %>
-    <% if @current_account.can_edit(@raid) %>
-      <% if @raid.uses_loot_system and @raid.signups.seated.count > 0 %>
-        <dt>New Loot:</dt>
-        <dd id="new_loot">
-          <%= render :partial => "new_loot", :locals => { :raid => @raid } %>
-        </dd>
-      <% end %>
-      <% if Character.not_in_raid(@raid).count > 0 %>
-        <dt>Add Signup:</dt>
-        <dd id="admin_new_signup">
-          <% form_for([@raid, Signup.new(:note => "Note")]) do |f| %>
-            <div>
-              <%= f.collection_select(:character_id,
-                                      Character.not_in_raid(@raid),
-                                      :id, :name_with_level, {},
-                                      :onchange => "character_roles(this, '#admin_new_signup_roles');") %>
-              <%= f.text_field(:note,
-                               :onfocus => "field_focus(this);",
-                               :onblur => "field_blur(this);",
-                               :class => 'dim') %>
-              <%= submit_tag "Sign up" %>
-            </div>
-            <div id="admin_new_signup_roles">
-              <%= render(:partial => "characters/roles",
-                         :locals => { :character => Character.not_in_raid(@raid).first }) %>
-            </div>
+      <% if @raid.uses_loot_system or @raid.loots.count > 0 %>
+        <dt>Loot:</dt>
+        <dd id="loot">
+          <% if @raid.uses_loot_system %>
+            <dl class="list" id="loot_list">
+              <%= render :partial => "positions", :locals => { :raid => @raid } %>
+            </dl>
           <% end %>
+          <% if @current_account.admin? %>
+            <dl class="list" id="add_to_loot_list" <%= "style=\"display: none;\"" unless @raid.signups.not_in_loot_list.seated.count > 0 %>>
+              <dt>Add to Loot List</dt>
+              <% @raid.signups.not_in_loot_list.each do |signup| %>
+                <% content_tag_for(:dd, signup.character, :class => signup.classes) do %>
+                  <%= link_to(render(:partial => "shared/character", :object => signup.character),
+                              add_to_list_account_url(signup.character.account),
+                              :onclick => "if(confirm('Are you sure you want to add #{signup.character.account.name} to the loot list?')) { $.post('#{add_to_list_account_url(signup.character.account)}', { raid_id: '#{@raid.id}', authenticity_token: AUTH_TOKEN }, null, 'script'); } return false;") %>
+                  <div class="note">
+                    <%= render(:partial => "signups/note", :object => signup) %>
+                  </div>
+                <% end %>
+              <% end %>
+            </dl>
+          <% end %>
+          <dl class="list" id="item_list">
+            <%= render(:partial => "loots", :object => @raid.loots) %>
+          </dl>
         </dd>
       <% end %>
-      <% if @raid.signups.count > 0 %>
-        <dt>Remove Signup:</dt>
-        <dd id="remove_signup">
-          <ul>
-            <% @raid.signups.each do |signup| %>
-              <li>
-                <%= signup.character.name %>
-                <%= link_to("Remove",
-                            raid_signup_url(@raid, signup),
-                            :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?",
-                            :class => "tiny",
-                            :method => :delete) %>
-              </li>
+      <% if @current_account.can_edit(@raid) %>
+        <% if @raid.uses_loot_system and @raid.signups.seated.count > 0 %>
+          <dt>New Loot:</dt>
+          <dd id="new_loot">
+            <%= render :partial => "new_loot", :locals => { :raid => @raid } %>
+          </dd>
+        <% end %>
+        <% if Character.not_in_raid(@raid).count > 0 %>
+          <dt>Add Signup:</dt>
+          <dd id="admin_new_signup">
+            <% form_for([@raid, Signup.new(:note => "Note")]) do |f| %>
+              <div>
+                <%= f.collection_select(:character_id,
+                                        Character.not_in_raid(@raid),
+                                        :id, :name_with_level, {},
+                                        :onchange => "character_roles(this, '#admin_new_signup_roles');") %>
+                <%= f.text_field(:note,
+                                 :onfocus => "field_focus(this);",
+                                 :onblur => "field_blur(this);",
+                                 :class => 'dim') %>
+                <%= submit_tag "Sign up" %>
+              </div>
+              <div id="admin_new_signup_roles">
+                <%= render(:partial => "characters/roles",
+                           :locals => { :character => Character.not_in_raid(@raid).first }) %>
+              </div>
             <% end %>
-          </ul>
-        </dd>
+          </dd>
+        <% end %>
+        <% if @raid.signups.count > 0 %>
+          <dt>Remove Signup:</dt>
+          <dd id="remove_signup">
+            <ul>
+              <% @raid.signups.each do |signup| %>
+                <li>
+                  <%= signup.character.name %>
+                  <%= link_to("Remove",
+                              raid_signup_url(@raid, signup),
+                              :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?",
+                              :class => "tiny",
+                              :method => :delete) %>
+                </li>
+              <% end %>
+            </ul>
+          </dd>
+        <% end %>
       <% end %>
-    <% end %>
+    <% else %>
+      <dt></dt>
+      <dd>
+        <p>This raid is not yet finalized. You can edit your signups above but
+          until the raid is finalize you can not see the current signup
+          list.</p>
+        <p>Please use the note field to indicate any special requests. "Only if
+        there is room", "Prefer Healing" and the like.</p>
+        <p>We will try to get raids finalize at least 48 hours before they
+          start. Sooner if plenty of people sign up in time.</p>
+      </dd>
+      <% end %>
   </dl>
 <%- end # div_for @raid -%>
 

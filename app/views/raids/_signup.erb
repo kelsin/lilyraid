@@ -1,5 +1,5 @@
 <%= render(:partial => "shared/character",
            :object => signup.character) %>
-<% if signup.in_raid_slot? -%>
+<% if signup.in_raid_slot? and signup.raid.finalized? -%>
   <b>(Seated)</b>
 <% end -%>
