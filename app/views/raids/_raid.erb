@@ -6,7 +6,7 @@
                  :spacer_template => "raids/signup_spacer") %></td>
   <td><%= raid.date ? raid.date.to_s(:raid) : "" %></td>
   <td>
-    <% if raid.needed.count > 0 %>
+    <% if (raid.finalized or @current_account.can_edit(raid)) and raid.needed.count > 0 %>
       <ul>
         <% raid.needed.each do |role, count| %>
           <li><%= pluralize(count, role || "Open") %></li>
