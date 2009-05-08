@@ -3,9 +3,6 @@ class Character < ActiveRecord::Base
   belongs_to :race
   belongs_to :cclass
 
-  has_many :attunements, :dependent => :destroy
-  has_many :instances, :through => :attunements, :order => "instances.name"
-
   has_many :signups, :dependent => :nullify
   has_many :raids, :through => :signups
 
