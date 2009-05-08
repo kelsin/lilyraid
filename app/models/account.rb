@@ -94,20 +94,7 @@ class Account < ActiveRecord::Base
   end
   
   def Account.get_account_id_from_info(username, password)
-    phpbb_prefix = CONFIG[:phpbb_prefix] || ""
-
-    user_id_sql = "select user_id
-                         from #{phpbb_prefix}users
-                        where username = '#{username}'
-                          and user_password = MD5('#{password}')"
-    
-    mysql.query(user_id_sql) do |user_id_result|
-      user_id_result.each_hash do |user_id_row|
-        return user_id_row["user_id"]
-      end
-    end
-    
-    return nil
+    find(:first, :conditions => ['name = ? and password = md5(?)', username, password])
   end
   
   def Account.get_account_id_from_sid(sid)

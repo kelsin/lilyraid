@@ -1,13 +1,25 @@
-<p>Please travel to <%= link_to "the forum", CONFIG[:forum] %>
-and log in or just fill out your forum username and password below.</p>
+<div class="raid">
+  <% if CONFIG[:auth] == 'login' %>
+    <h3>Login</h3>
 
-<!--
-<form method="POST" action="<%=@login_post_url%>">
-  <table>
-    <tr><td><label for="username">Username</label>:</td><td><input type="text" name="username" value="" /></td></tr>
-    <tr><td><label for="password">Password</label>:</td><td><input type="password" name="password" value="" /></td></tr>
-    <tr><td></td><td><input type="submit" name="submit" value="Login" /></td></tr>
-  </table>
-  <input type="hidden" name="<%= request_forgery_protection_token.to_s %>" value="<%= form_authenticity_token %>" />
-</form>
--->
+    <% form_tag :action => 'create' do %>
+      <dl>
+        <% if flash[:notice] %>
+          <dt></dt><dd><%= flash[:notice] %></dd>
+        <% end %>
+        <dt>Name:</dt>
+        <dd><%= text_field_tag :username %></dd>
+        <dt>Password:</dt>
+        <dd><%= password_field_tag :password %></dd>
+        <dt></dt><dd><%= submit_tag 'Login' %></dd>
+      </dl>
+    <% end %>
+  <% else %>
+    <% if CONFIG[:forum] %>
+      <p>Please log in to <%= link_to "the forum", CONFIG[:forum] %> in order to access the raid site.</p>
+    <% else %>
+      <p>Please login to the forum in order to access the raid site.</p>
+    <% end %>
+  <% end %>
+</div>
+
