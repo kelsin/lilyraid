@@ -6,17 +6,15 @@
       <dt>Name:</dt>
       <dd><%= f.text_field :name, :size => 30 %></dd>
       <dt>Date:</dt><dd><%= text_field_tag "caldate", @raid.caldate, :size => 10 %> @ <%= text_field_tag "caltime", @raid.caltime, :size => 8 %></dd>
-      <% instances = Instance.all %>
       <dt>Instance:</dt>
-      <dd><%= f.collection_select(:instance_id, instances,
-                                  :id, :name_with_number, {},
-                                  { :onchange => remote_function(:url => {
-                                                                   :action => "instance_levels",
-                                                                   :id => "'+this.value+'"
-                                                                 },
-                                                                 :loading => update_page do |page|
-                                                                     page[:level_loading].replace_html(image_tag("loading.gif"))
-                                                                 end)}) %></dd>
+      <dd>
+        <ul>
+          <% f.fields_for :locations do |l| %>
+            <li><%= l.collection_select(:instance_id, Instance.active,
+                                        :id, :name) %></li>
+          <% end %>
+        </ul>
+      </dd>
       <% if @current_account.admin %>
         <dt>Uses Loot System?</dt>
         <dd><%= f.check_box :uses_loot_system %></dd>

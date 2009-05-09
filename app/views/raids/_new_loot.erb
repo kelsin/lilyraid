@@ -5,6 +5,9 @@
                             raid.characters.in_loot_list.seated_in(raid),
                             :id, :name_with_account) %>
   </div>
+  <div><%= f.collection_select(:location_id,
+                               raid.locations,
+                               :id, :name) %></div>
   <div><%= f.text_field :item_url, :onfocus => "field_focus(this);", :onblur => "field_blur(this);" %></div>
   <div><%= f.text_field :item_name, :onfocus => "field_focus(this);", :onblur => "field_blur(this);" %></div>
   <div><%= submit_tag("Save", :id => "loot_submit") %></div>

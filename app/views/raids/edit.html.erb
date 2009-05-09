@@ -3,7 +3,14 @@
   <% form_for(@raid) do |f| %>
     <dl>
       <dt>Name:</dt><dd><%= f.text_field :name %></dd>
-      <dt>Instance:</dt><dd><%= @raid.instance.name %></dd>
+      <dt>Instances:</dt>
+      <dd>
+        <ul>
+          <% @raid.instances.each do |instance| %>
+            <li><%= instance.name %></li>
+          <% end %>
+        </ul>
+      </dd>
       <dt>Date:</dt><dd><%= text_field_tag "caldate", @raid.caldate, :size => 10 %> @ <%= text_field_tag "caltime", @raid.caltime, :size => 8 %></dd>
       <dt>Level Requirement:</dt>
       <dd>
@@ -24,7 +31,7 @@
             <dt>Group <%= cycle(*(1..8).to_a) %></dt>
             <% group.each do |slot| -%>
               <dd>
-                <% fields_for("slot[]", slot) do |s| -%>
+                <% f.fields_for :slots, slot do |s| -%>
                   <%= s.collection_select(:role_id, @roles, :id, :name, :include_blank => "Any") %>
                   <%= s.collection_select(:cclass_id, @cclasses, :id, :name, :include_blank => "Any") %><br />
                 <% end -%>

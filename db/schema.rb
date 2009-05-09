@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090508230940) do
+ActiveRecord::Schema.define(:version => 20090509000215) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -23,17 +23,6 @@ ActiveRecord::Schema.define(:version => 20090508230940) do
     t.datetime "updated_at"
     t.string   "password",   :limit => 32
   end
-
-  create_table "attunements", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "instance_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "attunements", ["character_id", "instance_id"], :name => "index_attunements_on_character_id_and_instance_id"
-  add_index "attunements", ["character_id"], :name => "index_attunements_on_character_id"
-  add_index "attunements", ["instance_id"], :name => "index_attunements_on_instance_id"
 
   create_table "cclass_roles", :force => true do |t|
     t.integer  "cclass_id"
@@ -69,12 +58,9 @@ ActiveRecord::Schema.define(:version => 20090508230940) do
 
   create_table "instances", :force => true do |t|
     t.string   "name"
-    t.boolean  "requires_key", :default => false, :null => false
-    t.integer  "max_number"
-    t.integer  "min_level"
-    t.integer  "max_level"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "active",     :default => true, :null => false
   end
 
   create_table "list_positions", :force => true do |t|
@@ -100,19 +86,25 @@ ActiveRecord::Schema.define(:version => 20090508230940) do
   add_index "lists", ["date"], :name => "index_lists_on_date"
   add_index "lists", ["name"], :name => "index_lists_on_name"
 
+  create_table "locations", :force => true do |t|
+    t.integer  "instance_id"
+    t.integer  "raid_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "loots", :force => true do |t|
     t.integer  "character_id", :default => 0, :null => false
-    t.integer  "raid_id",      :default => 0, :null => false
     t.integer  "list_id",      :default => 0, :null => false
     t.string   "item_url"
     t.string   "item_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "location_id"
   end
 
   add_index "loots", ["character_id"], :name => "index_loots_on_character_id"
   add_index "loots", ["list_id"], :name => "index_loots_on_list_id"
-  add_index "loots", ["raid_id"], :name => "index_loots_on_raid_id"
 
   create_table "races", :force => true do |t|
     t.string   "name"
@@ -129,7 +121,6 @@ ActiveRecord::Schema.define(:version => 20090508230940) do
     t.text     "loot_note"
     t.boolean  "uses_loot_system", :default => false, :null => false
     t.boolean  "locked",           :default => false, :null => false
-    t.integer  "instance_id",      :default => 0,     :null => false
     t.integer  "account_id",       :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"

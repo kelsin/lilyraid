@@ -54,10 +54,6 @@ class RaidsController < ApplicationController
       @raid.date = Time.parse("#{params[:caldate]} #{params[:caltime]}")
       @raid.save
 
-      # Update Slots
-
-      Slot.update(params[:slot].keys, params[:slot].values)
-
       respond_to do |format|
         format.html { redirect_to raid_url(@raid) }
       end
@@ -95,6 +91,7 @@ class RaidsController < ApplicationController
   def new
     @raid = Raid.new
     @raid.date = Date.tomorrow + 18.hours unless @raid.date
+    @raid.locations.build
   end
 
   def create

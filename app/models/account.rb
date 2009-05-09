@@ -2,32 +2,9 @@ require 'mysql'
 
 class Account < ActiveRecord::Base
   has_many :list_positions
-  
-  has_many(:characters,
-           :dependent => :nullify,
-           :order => "characters.name",
-           :include => [{:cclass => :roles},
-                        :instances,
-                        :raids])
-  has_many(:active_characters,
-           :class_name => "Character",
-           :order => "characters.name",
-           :conditions => ["characters.inactive = ?", false],
-           :include => [{:cclass => :roles},
-                        :instances,
-                        :raids]) do
-    def can_join(raid)
-      if raid.instance.requires_key
-        find(:all,
-             :include => :instances,
-             :conditions => ["instances.id = ? and characters.level >= ? and characters.level <= ?", raid.instance.id, raid.min_level, raid.max_level]) - raid.characters
-      else
-        find(:all,
-             :conditions => ["characters.level >= ? and characters.level <= ?", raid.min_level, raid.max_level]) - raid.characters
-      end
-    end
-  end
-  
+
+  has_many :characters, :dependent => :nullify
+
   has_many(:old_signups,
            :class_name => "Signup",
            :include => :raid,
