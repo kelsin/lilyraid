@@ -3,7 +3,7 @@
 <%- end -%>
 
 <%- div_for(@raid) do -%>
-  <h3><%= @raid.display_name %></h3>
+  <h3><%= @raid.name %></h3>
   <%- if @current_account.can_edit(@raid) -%>
     <p><%= link_to("Edit Raid Info", edit_raid_url(@raid)) -%></p>
   <%- end -%>

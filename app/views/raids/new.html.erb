@@ -6,6 +6,11 @@
       <dt>Name:</dt>
       <dd><%= f.text_field :name, :size => 30 %></dd>
       <dt>Date:</dt><dd><%= text_field_tag "caldate", @raid.caldate, :size => 10 %> @ <%= text_field_tag "caltime", @raid.caltime, :size => 8 %></dd>
+      <dt>Slots:</dt>
+      <dd>
+        <%= f.collection_select(:template_id, ::Template.all,
+                                :id, :name) %>
+      </dd>
       <dt>Instance:</dt>
       <dd>
         <ul>

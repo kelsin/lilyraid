@@ -1,0 +1,21 @@
+<div class="raid">
+  <% if @templates.size > 0 %>
+    <h3>Templates</h3>
+    <dl>
+      <%= render @templates %>
+    </dl>
+  <% end %>
+  <h3>New Template</h3>
+  <% form_for [:admin, @new_template] do |f| %>
+    <dl>
+      <dt>Name</dt>
+      <dd><%= f.text_field :name %></dd>
+      <dt>Number of Slots</dt>
+      <dd>
+        <%= text_field_tag :slots, 10, :size => 3 %>
+      </dd>
+      <dt></dt>
+      <dd><%= submit_tag 'Create' %></dd>
+    </dl>
+  <% end %>
+</div>

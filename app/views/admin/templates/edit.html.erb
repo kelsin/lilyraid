@@ -1,0 +1,29 @@
+<div class="raid">
+  <h3>Edit Template</h3>
+  <% form_for [:admin, @raid_template] do |f| %>
+    <dl>
+      <dt>Name</dt>
+      <dd><%= f.text_field :name %></dd>
+      <dt>Slots</dt>
+      <dd>
+        <% @raid_template.groups.each do |group| -%>
+          <dl id="edit_slots" class="list">
+            <dt>Group <%= cycle(*(1..8).to_a) %></dt>
+            <% group.each do |slot| -%>
+              <dd>
+                <% f.fields_for :slots, slot do |s| %>
+                  <%= s.collection_select(:role_id, Role.all, :id, :name, :include_blank => "Any") %>
+                  <%= s.collection_select(:cclass_id, Cclass.all, :id, :name, :include_blank => "Any") %><br />
+                <% end %>
+              </dd>
+            <% end %>
+          </dl>
+        <% end %>
+      </dd>
+      <dt></dt>
+      <dd><%= submit_tag 'Save' %></dd>
+    </dl>
+  <% end %>
+</div>
+
+              

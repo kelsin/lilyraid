@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090509000215) do
+ActiveRecord::Schema.define(:version => 20090509042041) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20090509000215) do
   end
 
   create_table "raids", :force => true do |t|
-    t.string   "name"
+    t.string   "name",                                :null => false
     t.datetime "date",                                :null => false
     t.integer  "min_level"
     t.integer  "max_level"
@@ -161,16 +161,23 @@ ActiveRecord::Schema.define(:version => 20090509000215) do
   add_index "signups", ["raid_id"], :name => "index_signups_on_raid_id"
 
   create_table "slots", :force => true do |t|
-    t.integer  "raid_id",    :default => 0, :null => false
+    t.integer  "raid_id"
     t.integer  "signup_id"
     t.integer  "role_id"
     t.integer  "cclass_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "template_id"
   end
 
   add_index "slots", ["raid_id"], :name => "index_slots_on_raid_id"
   add_index "slots", ["role_id", "cclass_id"], :name => "index_slots_on_role_id_and_cclass_id"
   add_index "slots", ["signup_id"], :name => "index_slots_on_signup_id"
+
+  create_table "templates", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

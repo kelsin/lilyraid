@@ -1,5 +1,5 @@
 <tr id="raid_<%= raid.id %>" class="<%= cycle("even", "odd") %>">
-  <td class="raidname"><b><%= link_to(raid.display_name, raid_url(raid.id)) %></b></td>
+  <td class="raidname"><b><%= link_to(raid.name, raid_url(raid.id)) %></b></td>
   <td><% if raid.finalized %>Yes<% else %>No<% end %></td>
   <td><%= render(:partial => "raids/signup",
                  :collection => raid.signups_from(@current_account),
@@ -19,7 +19,7 @@
       <span id="loader_<%= raid.id %>">
         <%= link_to_remote "Delete",
             :url => raid_url(raid),
-            :confirm=>"Are you sure you want to delete #{raid.display_name}?",
+            :confirm=>"Are you sure you want to delete #{raid.name}?",
             :method => :delete, 
             :loading => update_page{|page| 
                 page["loader_#{raid.id}"].replace_html image_tag("loading.gif")

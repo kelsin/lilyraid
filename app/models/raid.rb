@@ -16,12 +16,11 @@ class Raid < ActiveRecord::Base
   has_many :signups, :dependent => :destroy
   has_many :characters, :through => :signups
 
+  # Validation
+  validates_presence_of :name
+
   def self.in_instance(instance)
     find(:all, :conditions => ["instance_id = ?", instance.id])
-  end
-
-  def display_name
-    name.blank? ? instance.name : name
   end
 
   def started?
@@ -154,8 +153,17 @@ class Raid < ActiveRecord::Base
     loots.size == 0
   end
 
-  def after_create
-    # Create the slots for this raid
+  # Used for templates
+  def template_id=(template_id)
+    # Apply a raid template to this raid
+    template = Template.find(template_id)
+    template.slots.each do |slot|
+      slots.build(slot.attributes).template = nil
+    end
+  end
+
+  def template_id
+    nil
   end
 
   def uid

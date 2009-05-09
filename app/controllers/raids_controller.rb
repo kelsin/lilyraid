@@ -104,8 +104,6 @@ class RaidsController < ApplicationController
       flash[:notice] = 'Raid saved!'
       redirect_to raid_url(@raid)
     else
-      @instances = Instance.find(:all, :order => "name")
-      @raid_templates = RaidTemplate.find(:all)
       render :action => 'new'
     end
   end

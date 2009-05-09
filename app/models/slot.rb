@@ -1,5 +1,7 @@
 class Slot < ActiveRecord::Base
   belongs_to :raid
+  belongs_to :template
+
   belongs_to :signup
 
   belongs_to :role
