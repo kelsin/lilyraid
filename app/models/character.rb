@@ -33,8 +33,7 @@ class Character < ActiveRecord::Base
       :conditions => ["not exists (select 1
                                      from signups
                                     where raid_id = ?
-                                      and character_id = characters.id)", raid.id],
-      :order => "level desc, name"
+                                      and character_id = characters.id)", raid.id]
     }
   }
 
