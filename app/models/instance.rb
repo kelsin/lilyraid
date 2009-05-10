@@ -6,5 +6,5 @@ class Instance < ActiveRecord::Base
   named_scope :active, { :conditions => { :active => true } }
   named_scope :inactive, { :conditions => { :active => false } }
 
-  default_scope :order => 'name'
+  default_scope :order => 'instances.name'
 end

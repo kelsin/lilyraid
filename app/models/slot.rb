@@ -15,7 +15,7 @@ class Slot < ActiveRecord::Base
     :conditions => "signup_id is not null"
   }
 
-  default_scope :order => 'id'
+  default_scope :order => 'slots.id'
 
   def eql?(o)
     o.is_a?(Slot) && self.role_id == o.role_id && self.cclass_id == o.cclass_id

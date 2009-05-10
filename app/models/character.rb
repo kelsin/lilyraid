@@ -51,7 +51,7 @@ class Character < ActiveRecord::Base
                                     and lp.list_id = ?)", List.first.id]
   }
 
-  default_scope :order => 'level desc, name'
+  default_scope :order => 'characters.level desc, characters.name'
 
   def attuned(instance)
     instances.member?(instance)
