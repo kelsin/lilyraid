@@ -3,18 +3,27 @@
   <% form_for(@raid) do |f| %>
     <dl>
       <dt>Name:</dt><dd><%= f.text_field :name %></dd>
+      <dt>Date:</dt>
+      <dd>
+        <%= text_field_tag "caldate", @raid.caldate, :size => 10 %>
+        @
+        <%= text_field_tag "caltime", @raid.caltime, :size => 8 %>
+      </dd>
       <dt>Instances:</dt>
       <dd>
-        <ul>
-          <% @raid.instances.each do |instance| %>
-            <li><%= instance.name %></li>
+        <ul id="locations">
+          <% f.fields_for :locations do |l| %>
+            <li>
+              <%= l.collection_select(:instance_id,
+                                      l.object.new_record? ? (Instance.active - @raid.instances) : Instance.active,
+                  :id, :name, :include_blank => l.object.new_record?) %>
+              <% unless l.object.new_record? %>
+                <%= l.check_box '_delete' %>
+                <%= l.label '_delete', 'Remove' %>
+              <% end %>
+            </li>
           <% end %>
         </ul>
-      </dd>
-      <dt>Date:</dt><dd><%= text_field_tag "caldate", @raid.caldate, :size => 10 %> @ <%= text_field_tag "caltime", @raid.caltime, :size => 8 %></dd>
-      <dt>Level Requirement:</dt>
-      <dd>
-        <%= f.text_field :min_level, :size => 3 %>-<%= f.text_field :max_level, :size => 3 %>
       </dd>
       <dt>Loot:</dt>
       <dd><%= f.text_area :loot_note, :rows => 5, :cols => 40 %></dd>

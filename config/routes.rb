@@ -40,6 +40,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :raids, :member => { 'finalize' => :post } do |raids|
     raids.resources :signups, :loots
     raids.resources :slots, :collection => { 'wait_list' => :put }
+    raids.resources :locations
   end
 
   map.namespace :admin do |admin|

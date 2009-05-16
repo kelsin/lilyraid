@@ -1,2 +1,1 @@
-page[@raid].fade
-
+page.visual_effect(:fade, dom_id(@raid))

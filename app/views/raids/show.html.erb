@@ -34,15 +34,18 @@
     <dd><%= @raid.account.name %></dd>
     <dt>Date:</dt>
     <dd><%= @raid.date.to_s(:raid) %></dd>
-    <dt>Levels:</dt>
-    <dd>
-      <%= @raid.min_level %>
-      <%= " to #{@raid.max_level}" if @raid.max_level != @raid.min_level %>
-    </dd>
     <%- if !@raid.loot_note.blank? -%>
       <dt>Loot rules:</dt>
       <dd><%= @raid.loot_note %></dd>
     <%- end -%>
+    <dt>Instances:</dt>
+    <dd>
+      <ul>
+        <% @raid.instances.each do |instance| %>
+          <li><%= instance.name %></li>
+        <% end %>
+      </ul>
+    </dd>
     <%- if !@raid.note.blank? -%>
       <dt>Note:</dt>
       <dd><%= @raid.note %></dd>

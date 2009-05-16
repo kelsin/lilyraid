@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090509042041) do
+ActiveRecord::Schema.define(:version => 20090516203910) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(:version => 20090509042041) do
     t.datetime "updated_at"
   end
 
+  add_index "locations", ["raid_id", "instance_id"], :name => "locations_by_raid_and_instance", :unique => true
+
   create_table "loots", :force => true do |t|
     t.integer  "character_id", :default => 0, :null => false
     t.integer  "list_id",      :default => 0, :null => false
@@ -115,8 +117,6 @@ ActiveRecord::Schema.define(:version => 20090509042041) do
   create_table "raids", :force => true do |t|
     t.string   "name",                                :null => false
     t.datetime "date",                                :null => false
-    t.integer  "min_level"
-    t.integer  "max_level"
     t.text     "note"
     t.text     "loot_note"
     t.boolean  "uses_loot_system", :default => false, :null => false

@@ -36,15 +36,10 @@ class RaidsController < ApplicationController
     if @current_account == @raid.account or @current_account.admin
       @roles = Role.find(:all)
       @cclasses = Cclass.find(:all)
-      
-      respond_to do |format|
-        format.html
-      end
+
+      @raid.locations.build
     else
-      flash[:error] = "You are not authorized to edit this account"
-      respond_to do |format|
-        format.html { redirect_to raid_url(@raid) }
-      end
+      redirect_to raid_url(@raid)
     end
   end
 
@@ -52,14 +47,17 @@ class RaidsController < ApplicationController
     if @current_account.can_edit(@raid)
       @raid.update_attributes(params[:raid])
       @raid.date = Time.parse("#{params[:caldate]} #{params[:caltime]}")
-      @raid.save
 
-      respond_to do |format|
-        format.html { redirect_to raid_url(@raid) }
+      if @raid.save
+        redirect_to raid_url(@raid)
+      else
+        flash[:error] = "Error saving raid"
+        render :action => :edit
       end
+    else
+      redirect_to raid_url(@raid)
     end
   end
-
 
   def destroy
     if @current_account.can_edit(@raid)
