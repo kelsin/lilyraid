@@ -132,7 +132,7 @@
         </dd>
       <% end %>
       <% if @current_account.can_edit(@raid) %>
-        <% if @raid.uses_loot_system and @raid.signups.seated.count > 0 %>
+        <% if @raid.uses_loot_system %>
           <dt>New Loot:</dt>
           <dd id="new_loot">
             <%= render :partial => "new_loot", :locals => { :raid => @raid } %>

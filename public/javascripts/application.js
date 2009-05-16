@@ -88,6 +88,9 @@ function validate_loot() {
     if($('#loot_item_name').attr('value') == 'Name' || $('#loot_item_url').attr('value') == 'URL') {
         alert('Please fill out the loot form before submitting');
         return false;
+    } else if($('#loot_character_id').attr('value') == '') {
+        alert('A character must be seated and selected before you can assign loot');
+        return false;
     } else {
         return confirm('Are you sure you wish to assign loot?');
     }
