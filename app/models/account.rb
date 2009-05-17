@@ -58,7 +58,7 @@ class Account < ActiveRecord::Base
 
   def self.admins
     find(:all,
-         :include => { :active_characters => [:account, :cclass, :race] },
+         :include => { :characters => [:account, :cclass, :race] },
          :conditions => ["accounts.admin = ?", true],
          :order => "accounts.name, characters.level desc, characters.name")
   end
