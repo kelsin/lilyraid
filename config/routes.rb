@@ -38,16 +38,13 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :raids, :member => { 'finalize' => :post } do |raids|
-    raids.resources :signups, :loots
+    raids.resources :signups, :loots, :locations
     raids.resources :slots, :collection => { 'wait_list' => :put }
-    raids.resources :locations
   end
 
   map.namespace :admin do |admin|
-    admin.resources :characters
+    admin.resources :characters, :templates, :instances
     admin.resources :accounts, :collection => { 'rename' => :post }
-    admin.resources :templates
-    admin.resources :instances
   end
   
   map.login('login',
