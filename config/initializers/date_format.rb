@@ -1,1 +1,1 @@
-Time::DATE_FORMATS[:raid]="%B %d at %I:%M%p (%A)"
+Time::DATE_FORMATS[:raid]="%A %B %d at %I:%M%p"
