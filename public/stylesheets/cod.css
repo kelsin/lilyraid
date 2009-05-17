@@ -104,7 +104,7 @@ a:link, a:visited, a:active { color: #99f; text-decoration: none; }
 a:hover { color: white; }
 a.loot:link, a.loot:visited, a.loot:active, a.loot:hover { color: #a335ee; }
 
-div.raid dl dd a.tiny { line-height: 1em; font-size: 0.7em; }
+div.raid dl dd .tiny { line-height: 1em; font-size: 0.7em; }
 
 /* forms */
 div.raid input.dim[type=text] { color: #bbb; }

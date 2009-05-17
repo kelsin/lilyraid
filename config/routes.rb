@@ -47,6 +47,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :characters
     admin.resources :accounts, :collection => { 'rename' => :post }
     admin.resources :templates
+    admin.resources :instances
   end
   
   map.login('login',

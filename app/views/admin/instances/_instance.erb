@@ -1,0 +1,8 @@
+<li>
+  <%= link_to instance.name, admin_instance_url(instance), :method => :put %>
+  <% if instance.raids.size > 0 %>
+    <span class="tiny">- <%= pluralize instance.raids.size, "raid" %></span>
+  <% else %>
+    <%= link_to "Remove", admin_instance_url(instance), :method => :delete, :class => "tiny" %>
+  <% end %>
+</li>

@@ -1,0 +1,32 @@
+<div class="raid">
+  <% if @active.size > 0 || @inactive.size > 0 %>
+    <h3>Instances</h3>
+    <dl>
+      <% if @active.size > 0 %>
+        <dt>Active</dt>
+        <dd>
+          <ul>
+            <%= render @active %>
+          </ul>
+        </dd>
+      <% end %>
+      <% if @inactive.size > 0 %>
+        <dt>Inactive</dt>
+        <dd>
+          <ul>
+            <%= render @inactive %>
+          </ul>
+        </dd>
+      <% end %>
+    </dl>
+  <% end %>
+  <h3>New Instance</h3>
+  <% form_for [:admin, @new_instance] do |f| %>
+    <dl>
+      <dt>Name</dt>
+      <dd><%= f.text_field :name %></dd>
+      <dt></dt>
+      <dd><%= submit_tag 'Create' %></dd>
+    </dl>
+  <% end %>
+</div>
