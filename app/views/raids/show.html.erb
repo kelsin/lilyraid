@@ -140,6 +140,16 @@
           <dd id="new_loot">
             <%= render :partial => "new_loot", :locals => { :raid => @raid } %>
           </dd>
+          <% @raid.locations.each do |location| %>
+            <dt><%= location.instance.name %> Loot</dt>
+            <dd>
+              <%= select_tag("instance_loot",
+                             "<option value=\"\"></option>" + options_for_select(location.instance.loots.all(:order => "loots.item_name").map { |loot|
+                                 [loot.item_name, loot.item_url]
+                             }.uniq),
+                             :onchange => "fill_loot($(this).find(':selected').text(), this.value);") %>
+            </dd>
+          <% end %>
         <% end %>
         <% if Character.not_in_raid(@raid).count > 0 %>
           <dt>Add Signup:</dt>

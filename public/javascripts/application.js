@@ -39,6 +39,18 @@ function field_blur(ele) {
     }
 }
 
+function fill_loot(item_name, item_url) {
+    $('#loot_item_name').attr('value', item_name);
+    $('#loot_item_url').attr('value', item_url);
+
+    if(item_name == '') {
+        field_blur($('#loot_item_name').get(0));
+        field_blur($('#loot_item_url').get(0));
+    } else {
+        $('#loot_item_name, #loot_item_url').removeClass('dim');
+    }
+}        
+
 // Seating
 function make_signup(ele) {
     $(ele).draggable({ helper: 'clone',
