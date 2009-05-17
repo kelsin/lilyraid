@@ -41,8 +41,8 @@
     <dt>Instances:</dt>
     <dd>
       <ul>
-        <% @raid.instances.each do |instance| %>
-          <li><%= instance.name %></li>
+        <% @raid.locations.each do |location| %>
+          <li><%= location.instance.name %></li>
         <% end %>
       </ul>
     </dd>
