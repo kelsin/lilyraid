@@ -158,7 +158,7 @@
               <div>
                 <%= f.collection_select(:character_id,
                                         Character.not_in_raid(@raid),
-                                        :id, :name_with_level, {},
+                                        :id, :name_with_level_and_account, {},
                                         :onchange => "character_roles(this, '#admin_new_signup_roles');") %>
                 <%= f.text_field(:note,
                                  :onfocus => "field_focus(this);",

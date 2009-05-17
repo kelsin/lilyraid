@@ -98,6 +98,10 @@ class Character < ActiveRecord::Base
     "#{name} (#{level})"
   end
 
+  def name_with_level_and_account
+    "#{name} (#{level}-#{account.name})"
+  end
+
   def name_with_account
     "#{name} (#{account.name if account})"
   end
