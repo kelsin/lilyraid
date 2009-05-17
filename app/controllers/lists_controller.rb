@@ -1,13 +1,13 @@
 class ListsController < ApplicationController
-    before_filter(:load_list, :only => [:show])
+  before_filter(:load_list, :only => [:show])
 
-    def index
-      @list = List.first
-    end
+  def index
+    @list = List.first
+  end
 
-    private
+  private
 
-    def load_list
-        @list = List.find(params[:id])
-    end
+  def load_list
+    @list = List.find(params[:id])
+  end
 end

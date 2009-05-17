@@ -15,4 +15,18 @@ class ListPosition < ActiveRecord::Base
       :conditions => ["signups.raid_id = ? and slots.id is not null", raid.id]
     }
   }
+
+  def after_destroy
+    new_position = self.position
+
+    self.list.list_positions.find(:all,
+                                  :order => :position,
+                                  :conditions => ["position > ?",
+                                                  self.position]).each do |lp|
+      temp = lp.position
+      lp.position = new_position
+      lp.save
+      new_position = temp
+    end
+  end
 end

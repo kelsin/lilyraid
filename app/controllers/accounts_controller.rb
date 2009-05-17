@@ -17,6 +17,16 @@ class AccountsController < ApplicationController
     end
   end
 
+  def remove_from_list
+    @list = List.first
+    @account = Account.find(params[:id])
+
+    lp = @list.find(@account)
+    lp.destroy
+
+    redirect_to lists_url
+  end
+
   def edit
     @account = Account.find(params[:id],
                             :include => { :characters => [:cclass,

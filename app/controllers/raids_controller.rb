@@ -76,16 +76,6 @@ class RaidsController < ApplicationController
     end        
   end
 
-  def instance_levels
-    instance = Instance.find(params[:id])
-    
-    render :update do |page|
-      page[:raid_min_level].value = instance.min_level
-      page[:raid_max_level].value = instance.max_level
-      page[:level_loading].replace_html ""
-    end
-  end
-
   def new
     @raid = Raid.new
     @raid.date = Date.tomorrow + 18.hours unless @raid.date
