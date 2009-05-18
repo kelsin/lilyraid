@@ -7,7 +7,7 @@ h2. Requirements
 
 * Ability to run a Ruby on Rails app on your webserver.
 * Ruby on Rails supported database.
-* Phpbb3 board for authentication with an accessible cookie and database (This will not be a requirement soon).
+* Phpbb3 board for authentication with an accessible cookie and database (Optional)
 
 h2. Installation
 
@@ -21,3 +21,8 @@ h2. Installation
 ## Create a config.yml file with settings for all environments.
 # Setup your app server to serve your rails project.
 # Profit.
+
+h2. Troubleshooting
+
+If you need any help feel free to message me on github!
+
