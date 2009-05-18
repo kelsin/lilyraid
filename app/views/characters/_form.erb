@@ -1,9 +1,6 @@
 <% div_for(character, :class => "raid") do %>
   <% remote_form_for([character.account, character],
-                     :loading => update_page do |page|
-                         page["#{dom_id(character)}_submit"].value = "Saving"
-                         page["#{dom_id(character)}_submit"].disable
-                     end) do |f| %>
+                     :loading => "$('##{dom_id(character)}_submit').attr('value', 'Saving'); $('##{dom_id(character)}_submit').disable();") do |f| %>
     <%= "<h3>New Character</h3>" if character.new_record? %>
     <dl>
       <dt>Name:</dt>

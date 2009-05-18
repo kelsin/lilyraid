@@ -69,7 +69,7 @@
         </ul>
       </dd>
     <% end %>
-    <% if @current_account.characters.not_in_raid(@raid).count > 0 %>
+    <% if @current_account.characters.active.not_in_raid(@raid).count > 0 %>
       <dt>Signup:</dt>
       <dd id="new_signup">
         <% if @raid.started? %>
@@ -78,7 +78,7 @@
           <% form_for([@raid, Signup.new(:note => "Note")]) do |f| %>
             <div>
               <%= f.collection_select(:character_id,
-                                      @current_account.characters.not_in_raid(@raid),
+                                      @current_account.characters.active.not_in_raid(@raid),
                                       :id, :name_with_level, {},
                                       :onchange => "character_roles(this, '#new_signup_roles');") %>
               <%= f.text_field(:note,
