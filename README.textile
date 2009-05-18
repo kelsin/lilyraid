@@ -24,5 +24,7 @@ h2. Installation
 
 h2. Troubleshooting
 
-If you need any help feel free to message me on github!
-
+If you need any help feel free to message me on github! If you find a bug or
+have a feature request you can create a ticket on my "lighthouse
+page":http://valefor.lighthouseapp.com/projects/29579-lilyraid/overview page as
+well.
