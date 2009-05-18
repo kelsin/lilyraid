@@ -71,7 +71,9 @@ class Account < ActiveRecord::Base
   end
   
   def Account.get_account_id_from_info(username, password)
-    find(:first, :conditions => ['name = ? and password = md5(?)', username, password]).id
+    account = find(:first,
+                   :conditions => ['name = ? and password = md5(?)', username, password])
+    account ? account.id : nil
   end
   
   def Account.get_account_id_from_sid(sid)

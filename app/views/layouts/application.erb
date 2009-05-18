@@ -24,7 +24,15 @@
           <li><%= link_to("Templates", admin_templates_url) %></li>
           <li><%= link_to("Instances", admin_instances_url) %></li>
         <% end %>
-        <li><%= link_to("Forums", "http://forum.cakeordeath-guild.com") %></li>
+        <% if CONFIG[:auth] == 'login' %>
+          <li><%= link_to("Logout", logout_url) %></li>
+        <% end %>
+        <% if CONFIG[:forum] %>
+          <li><%= link_to("Forums", CONFIG[:forum]) %></li>
+        <% end %>
+        <% if CONFIG[:website] %>
+          <li><%= link_to("Website", CONFIG[:website]) %></li>
+        <% end %>
       <% end %>
     </ul>
     <% if @current_account and @current_account.characters.size < 1 %>
