@@ -5,7 +5,10 @@
     <dt>Character</dt>
     <dd><%= render :partial => "shared/character", :object => @loot.character %></dd>
     <dt>Item Name</dt>
-    <dd><%= f.text_field :item_name %></dd>
+    <dd>
+      <%= f.text_field :item_name %>
+      <%= link_to "Swap", "#", :onclick => "swap_loot(); return false;" %>
+    </dd>
     <dt>Item Url</dt>
     <dd><%= f.text_field :item_url %></dd>
     <dt>Instance</dt>

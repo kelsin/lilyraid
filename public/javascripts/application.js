@@ -49,7 +49,13 @@ function fill_loot(item_name, item_url) {
     } else {
         $('#loot_item_name, #loot_item_url').removeClass('dim');
     }
-}        
+}
+
+function swap_loot() {
+    var temp = $('#loot_item_url').attr('value');
+    $('#loot_item_url').attr('value', $('#loot_item_name').attr('value'));
+    $('#loot_item_name').attr('value', temp);
+}
 
 // Seating
 function make_signup(ele) {
