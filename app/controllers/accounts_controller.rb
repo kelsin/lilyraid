@@ -32,7 +32,6 @@ class AccountsController < ApplicationController
                             :include => { :characters => [:cclass,
                                                           :race,
                                                           :raids,
-                                                          :instances,
                                                           :signups,
                                                           :account] } )
 
