@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(:version => 20090517035127) do
     t.integer  "age"
     t.string   "location"
     t.string   "email"
-    t.boolean  "admin",                    :default => false, :null => false
     t.text     "bio"
+    t.boolean  "admin",                    :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password",   :limit => 32
@@ -44,11 +44,11 @@ ActiveRecord::Schema.define(:version => 20090517035127) do
 
   create_table "characters", :force => true do |t|
     t.integer  "account_id", :default => 0,     :null => false
+    t.string   "name"
+    t.integer  "level"
     t.integer  "race_id",    :default => 0,     :null => false
     t.integer  "cclass_id",  :default => 0,     :null => false
-    t.string   "name"
     t.string   "guild"
-    t.integer  "level"
     t.boolean  "inactive",   :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -117,11 +117,11 @@ ActiveRecord::Schema.define(:version => 20090517035127) do
   create_table "raids", :force => true do |t|
     t.string   "name",                                :null => false
     t.datetime "date",                                :null => false
-    t.text     "note"
     t.text     "loot_note"
-    t.boolean  "uses_loot_system", :default => false, :null => false
+    t.text     "note"
     t.boolean  "locked",           :default => false, :null => false
     t.integer  "account_id",       :default => 0,     :null => false
+    t.boolean  "uses_loot_system", :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "finalized",        :default => false, :null => false
@@ -162,9 +162,9 @@ ActiveRecord::Schema.define(:version => 20090517035127) do
 
   create_table "slots", :force => true do |t|
     t.integer  "raid_id"
+    t.integer  "cclass_id"
     t.integer  "signup_id"
     t.integer  "role_id"
-    t.integer  "cclass_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "template_id"
@@ -179,5 +179,56 @@ ActiveRecord::Schema.define(:version => 20090517035127) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "users", :primary_key => "user_id", :force => true do |t|
+    t.boolean "user_active",                                                        :default => true
+    t.string  "username",              :limit => 25,                                :default => "",          :null => false
+    t.string  "user_password",         :limit => 32,                                :default => "",          :null => false
+    t.integer "user_session_time",                                                  :default => 0,           :null => false
+    t.integer "user_session_page",     :limit => 2,                                 :default => 0,           :null => false
+    t.integer "user_lastvisit",                                                     :default => 0,           :null => false
+    t.integer "user_regdate",                                                       :default => 0,           :null => false
+    t.integer "user_level",            :limit => 1,                                 :default => 0
+    t.integer "user_posts",            :limit => 3,                                 :default => 0,           :null => false
+    t.decimal "user_timezone",                        :precision => 5, :scale => 2, :default => 0.0,         :null => false
+    t.integer "user_style",            :limit => 1
+    t.string  "user_lang"
+    t.string  "user_dateformat",       :limit => 14,                                :default => "d M Y H:i", :null => false
+    t.integer "user_new_privmsg",      :limit => 2,                                 :default => 0,           :null => false
+    t.integer "user_unread_privmsg",   :limit => 2,                                 :default => 0,           :null => false
+    t.integer "user_last_privmsg",                                                  :default => 0,           :null => false
+    t.integer "user_login_tries",      :limit => 2,                                 :default => 0,           :null => false
+    t.integer "user_last_login_try",                                                :default => 0,           :null => false
+    t.integer "user_emailtime"
+    t.boolean "user_viewemail"
+    t.boolean "user_attachsig"
+    t.boolean "user_allowhtml",                                                     :default => true
+    t.boolean "user_allowbbcode",                                                   :default => true
+    t.boolean "user_allowsmile",                                                    :default => true
+    t.boolean "user_allowavatar",                                                   :default => true,        :null => false
+    t.boolean "user_allow_pm",                                                      :default => true,        :null => false
+    t.boolean "user_allow_viewonline",                                              :default => true,        :null => false
+    t.boolean "user_notify",                                                        :default => true,        :null => false
+    t.boolean "user_notify_pm",                                                     :default => false,       :null => false
+    t.boolean "user_popup_pm",                                                      :default => false,       :null => false
+    t.integer "user_rank",                                                          :default => 0
+    t.string  "user_avatar",           :limit => 100
+    t.integer "user_avatar_type",      :limit => 1,                                 :default => 0,           :null => false
+    t.string  "user_email"
+    t.string  "user_icq",              :limit => 15
+    t.string  "user_website",          :limit => 100
+    t.string  "user_from",             :limit => 100
+    t.text    "user_sig"
+    t.string  "user_sig_bbcode_uid",   :limit => 10
+    t.string  "user_aim"
+    t.string  "user_yim"
+    t.string  "user_msnm"
+    t.string  "user_occ",              :limit => 100
+    t.string  "user_interests"
+    t.string  "user_actkey",           :limit => 32
+    t.string  "user_newpasswd",        :limit => 32
+  end
+
+  add_index "users", ["user_session_time"], :name => "user_session_time"
 
 end
