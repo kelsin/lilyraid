@@ -1,8 +1,10 @@
 require 'mysql'
+require 'digest/md5'
 
 class Account < ActiveRecord::Base
-  has_many :list_positions
+  attr_accessor :password, :password_confirmation
 
+  has_many :list_positions
   has_many :characters, :dependent => :destroy
 
   has_many(:old_signups,
@@ -35,7 +37,11 @@ class Account < ActiveRecord::Base
   before_destroy :can_delete
 
   @@mysql = nil
-  
+
+  def validate
+    errors.add('password', 'Password and confirmation do not match') unless password_confirmation == password
+  end
+
   def characters_that_can_join(raid)
     characters.select do |character|
       character.can_join(raid)
@@ -75,7 +81,7 @@ class Account < ActiveRecord::Base
                    :conditions => ['name = ? and password = md5(?)', username, password])
     account ? account.id : nil
   end
-  
+
   def Account.get_account_id_from_sid(sid)
     phpbb_prefix = CONFIG[:phpbb_prefix] || ""
     
@@ -151,5 +157,11 @@ class Account < ActiveRecord::Base
     end
     
     @@mysql
+  end
+
+  def before_save
+    if CONFIG[:auth] == 'login' && password
+      self[:password] = Digest::MD5.hexdigest(password)
+    end
   end
 end
