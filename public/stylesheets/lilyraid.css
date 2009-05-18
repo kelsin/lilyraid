@@ -1,0 +1,117 @@
+* { padding: 0px; margin: 0px; }
+
+.fieldWithErrors { padding: 2px; background-color: red; display: inline; }
+
+body { background-color: #000; color: #fff; padding-left: 20px; padding-bottom: 100px;
+       font-family: helvetica, arial, sans serif; font-size: 13px; }
+
+/* Headers */
+h1 { text-indent: -9999px; background-image: url('/images/cod-logo.png'); width: 416px; height: 175px; background-repeat: none; }
+
+h2 { font-size: 24px; }
+
+h3 { font-size: 2em; }
+div.raid h3 { margin-left: 5em; }
+
+h4 { font-size: 1.5em; }
+div.raid h4 { margin-top: 0.5em; margin-left: 6.7em; }
+
+/* p */
+div.raid p { margin: 0.5em 0 0 10em; width: 40em; }
+div.raid dl dd p { margin: 0 0 0.5em 0; }
+
+p.note {
+    font-size: .8em;
+    color: #dddddd;
+    margin: 0px;
+    width: auto;
+}
+
+/* Table */
+table th { text-align: left; padding: 0.5em 1em 0.5em 0.5em; }
+table td { padding: 0.5em 1em 0.5em 0.5em; vertical-align: top; }
+
+table tr.even td { background-color: #111; }
+
+/* Lists */
+div.raid dl { position: relative; overflow: hidden; margin: 1em 0; }
+div.raid dt { float: left; clear: left;
+              margin-bottom: 1em; font-weight: bold; line-height: 1em;
+              width: 9em; text-align: right; padding-right: 1em; }
+div.raid dd { float: left; clear: right;
+              margin-bottom: 1em; margin-right: 1em; line-height: 1em;
+              max-width: 40em; }
+div.raid dd#slots { max-width: 70em; }
+div.raid dd#loot { max-width: 70em; }
+div.raid dd#signups { max-width: 70em; }
+
+div.raid dd ul { list-style: none; }
+div.raid dd ul li { margin-top: 0.5em; }
+div.raid dd ul li:first-child { margin-top: 0; }
+
+table td ul { list-style: none; }
+
+div.raid dl.list { background-color: #111; border: 1px solid #000; overflow: visible;
+                             padding: 0.5em; float: left; margin: 0 1em 0 0; }
+div.raid dl.list dt { color: #ffd302; font-weight: bold;
+                                padding: 0; margin: 0.2em 0 0.7em 0; text-align: center;
+                                vertical-align: top; width: auto; 
+                                float: none; }
+div.raid dl.list dd { background-color: #222;
+                      border: 1px solid #000;
+                      padding: 0.5em; margin: 0.3em 0 0 0; text-align: center;
+                      vertical-align: top; width: 8em;
+                      float: none; position: relative; }
+div.raid dl#item_list dd { width: 30em; text-align: left; }
+div.raid dl#edit_slots dd { width: 15em; text-align: left; }
+div.raid dl.list dd.empty { color: #333; font-style: italic; }
+div.raid dl#waiting_list dd.seated { display: none; }
+div.raid dl#loot_list dd, div.raid dl#add_to_loot_list dd { display: none; }
+div.raid dl#loot_list dd.seated, div.raid dl#add_to_loot_list dd.seated { display: block; }
+div.raid dl#loot_list.list dd, div.raid dl#needed_list.list dd { text-align: left; }
+
+div.raid dd#slots dd.signup, div.raid dl#waiting_list dd.signup { cursor: pointer; }
+div.raid dl.list dd.hovering, div.raid dl#waiting_list.hovering { border: 1px solid #f00; }
+
+/* Main Menu List */
+ul#menu { clear: both; overflow: auto; margin: 0.5em 0 2em 0; }
+ul#menu li { display: block; float: left; background-color: #222; color: #fdec2c; padding: 0.5em; border: 2px solid #bbb; margin-right: 1em; }
+
+/* Div's */
+div.raid div { margin: 1em 0 0 10em; clear: both; }
+div.raid dl dd div, div.raid div div { margin: 0 0 0.3em 0; }
+
+div.bio { width: 900px; background-color: #320023; border: 2px solid yellow; padding: 10px; }
+div.info { padding-bottom: 20px; }
+div.info { padding: 0.5em; border: 2px solid #bbb; background-color: #222;
+           margin: 0 0 1em 0; width: 600px; text-align: center; }
+
+dl.list dd div.note { display: none; }
+dl.list dd:hover div.note { display: block; color: white; font-weight: normal; width: 225px;
+                            border: 1px dashed #ffd302; background-color: #222222;
+                            padding: 0.5em; line-height: 1.5em;
+                            position: absolute; top: 0; left: 10em; text-align: left;
+                            z-index: 5; }
+dl.list dd:hover div.note span { font-size: 1.3em; }
+
+div#error { position: absolute; padding: 10px; font-weight: bold;
+            border: 1px solid #a00; background-color: #000; top: 250px: left: 20px; }
+
+div#footer { font-size: 0.8em; line-height: 1.4em; width: 40em; margin-top: 3em; padding: 0.5em; }
+
+/* Links */
+a:link, a:visited, a:active { color: #99f; text-decoration: none; }
+a:hover { color: white; }
+a.loot:link, a.loot:visited, a.loot:active, a.loot:hover { color: #a335ee; }
+
+div.raid dl dd .tiny { line-height: 1em; font-size: 0.7em; }
+
+/* forms */
+div.raid input.dim[type=text] { color: #bbb; }
+
+/* span */
+span.note { color: #aaa; }
+
+/* classes */
+.charinfo{ padding: 3px 10px 10px 10px; }
+.invisible { opacity: 0; }

@@ -30,8 +30,8 @@
         <ul>
           <% character.loots.each do |loot| -%>
             <li>
-              <a class="loot" href="<%= loot.item_url %>"><%= loot.item_name %></a>
-              <%= link_to(loot.raid.name, raid_url(loot.raid)) %>
+              <%= link_to loot.item_name, loot.item_url, :class => 'loot' %>        
+              <%= link_to(loot.location.raid.name, raid_url(loot.location.raid), :class => 'tiny') %>
             </li>
           <% end -%>
         </ul>
