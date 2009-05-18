@@ -1,6 +1,6 @@
 <div class="raid">
-  <% if @active.size > 0 || @inactive.size > 0 %>
-    <h3>Instances</h3>
+  <h3>Instances</h3>
+  <% form_for [:admin, @new_instance] do |f| %>
     <dl>
       <% if @active.size > 0 %>
         <dt>Active</dt>
@@ -10,6 +10,10 @@
           </ul>
         </dd>
       <% end %>
+      <dt>New Instance</dt>
+      <dd><%= f.text_field :name %></dd>
+      <dt></dt>
+      <dd><%= submit_tag 'Create' %></dd>
       <% if @inactive.size > 0 %>
         <dt>Inactive</dt>
         <dd>
@@ -18,15 +22,6 @@
           </ul>
         </dd>
       <% end %>
-    </dl>
-  <% end %>
-  <h3>New Instance</h3>
-  <% form_for [:admin, @new_instance] do |f| %>
-    <dl>
-      <dt>Name</dt>
-      <dd><%= f.text_field :name %></dd>
-      <dt></dt>
-      <dd><%= submit_tag 'Create' %></dd>
     </dl>
   <% end %>
 </div>
