@@ -16,7 +16,7 @@
         <ul>
           <% f.fields_for :locations do |l| %>
             <li><%= l.collection_select(:instance_id, Instance.active,
-                                        :id, :name) %></li>
+                                        :id, :name, :include_blank => true) %></li>
           <% end %>
         </ul>
       </dd>

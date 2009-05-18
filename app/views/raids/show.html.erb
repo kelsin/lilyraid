@@ -38,14 +38,16 @@
       <dt>Loot rules:</dt>
       <dd><%= @raid.loot_note %></dd>
     <%- end -%>
-    <dt>Instances:</dt>
-    <dd>
-      <ul>
-        <% @raid.locations.each do |location| %>
-          <li><%= location.instance.name %></li>
-        <% end %>
-      </ul>
-    </dd>
+    <% if @raid.locations.size > 0 %>
+      <dt>Instances:</dt>
+      <dd>
+        <ul>
+          <% @raid.locations.each do |location| %>
+            <li><%= location.instance.name %></li>
+          <% end %>
+        </ul>
+      </dd>
+    <% end %>
     <%- if !@raid.note.blank? -%>
       <dt>Note:</dt>
       <dd><%= @raid.note %></dd>
