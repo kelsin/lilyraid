@@ -3,7 +3,7 @@ require 'mysql'
 class Account < ActiveRecord::Base
   has_many :list_positions
 
-  has_many :characters, :dependent => :nullify
+  has_many :characters, :dependent => :destroy
 
   has_many(:old_signups,
            :class_name => "Signup",
