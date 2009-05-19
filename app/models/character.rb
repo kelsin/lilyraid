@@ -99,7 +99,11 @@ class Character < ActiveRecord::Base
   end
 
   def name_with_level_and_account
-    "#{name} (#{level}-#{account.name})"
+    if account
+      "#{name} (#{level}-#{account.name})"
+    else
+      name_with_level
+    end
   end
 
   def name_with_account
