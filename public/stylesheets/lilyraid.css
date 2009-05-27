@@ -113,5 +113,8 @@ div.raid input.dim[type=text] { color: #bbb; }
 span.note { color: #aaa; }
 
 /* classes */
-.charinfo{ padding: 3px 10px 10px 10px; }
+.charinfo { padding: 3px 10px 10px 10px; }
 .invisible { opacity: 0; }
+
+/* Errors */
+div.errorExplanation ul { list-style-position: inside; color: #f00; }

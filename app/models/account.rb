@@ -2,7 +2,7 @@ require 'mysql'
 require 'digest/md5'
 
 class Account < ActiveRecord::Base
-  attr_accessor :password, :password_confirmation
+  attr_accessor :change_password, :password_confirmation
 
   has_many :list_positions
   has_many :characters, :dependent => :destroy
@@ -39,7 +39,9 @@ class Account < ActiveRecord::Base
   @@mysql = nil
 
   def validate
-    errors.add('password', 'Password and confirmation do not match') unless password_confirmation == password
+    unless password_confirmation == change_password
+      errors.add_to_base('Password and Password Confirmation must match to change your password')
+    end
   end
 
   def characters_that_can_join(raid)
@@ -160,8 +162,8 @@ class Account < ActiveRecord::Base
   end
 
   def before_save
-    if CONFIG[:auth] == 'login' && password
-      self[:password] = Digest::MD5.hexdigest(password)
+    if CONFIG[:auth] == 'login' && (not change_password.blank?)
+      self[:password] = Digest::MD5.hexdigest(change_password)
     end
   end
 end

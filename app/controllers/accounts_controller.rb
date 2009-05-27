@@ -38,7 +38,7 @@ class AccountsController < ApplicationController
     if @current_account == @account || @current_account.admin
       respond_to do |format|
         format.html
-        format.js { render :template => false }
+        format.js
       end
     else
       respond_to do |format|
@@ -52,14 +52,14 @@ class AccountsController < ApplicationController
 
   def update
     if @current_account.id == params[:id].to_i
+      
       @account = Account.update(params[:id], params[:account])
     else
       @account = Account.find(params[:id])
-    end
-
-    respond_to do |format|
-      format.html { redirect_to account_url(@account) }
-      format.js
+      respond_to do |format|
+        format.html { redirect_to account_url(@account) }
+        format.js
+      end
     end
   end
 end
