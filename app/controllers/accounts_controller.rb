@@ -1,4 +1,6 @@
 class AccountsController < ApplicationController
+  skip_before_filter :authorize, :only => [:new, :create]
+
   def show
     @account = Account.find(params[:id])
   end
