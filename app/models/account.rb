@@ -38,10 +38,17 @@ class Account < ActiveRecord::Base
 
   @@mysql = nil
 
+  validates_uniqueness_of :name
+  validates_presence_of :name
+
   def validate
     unless password_confirmation == change_password
       errors.add_to_base('Password and Password Confirmation must match to change your password')
     end
+
+    if new_record? and change_password.blank?
+      errors.add_to_base('Password can\'t be blank')
+    end      
   end
 
   def characters_that_can_join(raid)

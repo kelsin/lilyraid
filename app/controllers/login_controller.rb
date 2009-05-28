@@ -32,8 +32,13 @@ class LoginController < ApplicationController
       redirect_to(:controller => 'raids', :action=> 'index')
     else
       reset_session
-      flash[:notice] = "Login Failed"
-      redirect_to(:action => 'index')
+      if Account.find_by_name(username)
+        flash[:notice] = "Wrong Password"
+        redirect_to(:action => 'index')
+      else
+        @account = Account.new(:name => username)
+        redirect_to(:controller => "accounts", :action => "new", :name => username)
+      end
     end
   end
 
