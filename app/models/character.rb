@@ -12,6 +12,9 @@ class Character < ActiveRecord::Base
                          :in => 1..80,
                          :message => "Valid levels are 1 through 80")
 
+  validates_uniqueness_of :name
+  validates_presence_of :name
+
   before_destroy :can_delete
 
   named_scope :active, { :conditions => { :inactive => false } }

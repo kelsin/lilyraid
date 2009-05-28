@@ -1,9 +1,15 @@
 <div class="raid">
   <h3>Add New Character</h3>
+  <%= error_messages_for 'account', :header_message => nil, :message => nil %>
+  <%= error_messages_for 'character', :header_message => nil, :message => nil %>
   <% form_for [:admin, @account] do |a| %>
     <dl>
       <dt><%= a.label :name, "Account Name" %></dt>
       <dd><%= a.text_field :name %></dd>
+      <dt>Password</dt>
+      <dd><%= a.password_field :change_password %></dd>
+      <dt>Confirm</dt>
+      <dd><%= a.password_field :password_confirmation %></dd>
       <% fields_for @character do |c| %>
         <dt><%= c.label :name, "Character Name" %></dt>
         <dd><%= c.text_field :name %></dd>

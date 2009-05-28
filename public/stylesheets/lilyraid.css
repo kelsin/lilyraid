@@ -1,6 +1,6 @@
 * { padding: 0px; margin: 0px; }
 
-.fieldWithErrors { padding: 2px; background-color: red; display: inline; }
+div.fieldWithErrors { background-color: red; display: inline; margin: 0 !important; }
 
 body { background-color: #000; color: #fff; padding-left: 20px; padding-bottom: 100px;
        font-family: helvetica, arial, sans serif; font-size: 13px; }

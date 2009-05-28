@@ -15,13 +15,22 @@ class Admin::AccountsController < ApplicationController
 
   def create
     @account = Account.new(params[:account])
-    @account.save
-    
     @character = Character.new(params[:character])
     @character.account = @account
-    @character.save
 
-    redirect_to account_url(@account.id)
+    if @account.valid? and @character.valid?
+      @account.save
+      @character.save
+      redirect_to account_url(@account.id)
+    else
+      @cclasses = Cclass.find(:all, :order => :name)
+    
+      @deletable = Account.find(:all, :order => :name).select do |account|
+        account.can_delete
+      end
+
+      render :action => "index"
+    end
   end
 
   def rename
