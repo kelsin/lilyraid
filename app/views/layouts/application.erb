@@ -3,6 +3,7 @@
 <html>
   <head>
     <title><%= @title || CONFIG[:guild] + " Raid Signups" || "World of Warcraft Raid Signup" %></title>
+    <link rel="icon" href="/images/<%= RAILS_ENV %>-favicon.png" type="image/png">
     <%= stylesheet_link_tag 'lilyraid', RAILS_ENV, 'jquery', 'jquery.timepickr' %>
     <%= javascript_include_tag('jquery', 'jquery-ui', 'application', 'jquery.timepickr.min') %>
     <%= javascript_include_tag('http://www.wowhead.com/widgets/power.js') %>
