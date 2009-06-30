@@ -3,7 +3,7 @@ class CharactersController < ApplicationController
   before_filter(:load_character, :only => [:destroy, :edit])
 
   def create
-    if @current_account == @account
+    if @current_account.admin || @current_account == @account
       @character = Character.new(params[:character])
       @character.account = @account
       @character.save
@@ -16,7 +16,7 @@ class CharactersController < ApplicationController
   end
 
   def edit
-    if @current_account == @account
+    if @current_account.admin || @current_account == @account
       respond_to do |format|
         format.html
         format.js { render :template => false }
@@ -30,7 +30,7 @@ class CharactersController < ApplicationController
   end
 
   def update
-    if @current_account == @account
+    if @current_account.admin || @current_account == @account
       @character = Character.update(params[:id], params[:character])
     end
 
@@ -41,7 +41,7 @@ class CharactersController < ApplicationController
   end
 
   def destroy
-    @character.destroy if @current_account == @account
+    @character.destroy if @current_account.admin || @current_account == @account
 
     respond_to do |format|
       format.html { redirect_to account_url(@account) }

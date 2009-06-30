@@ -72,8 +72,7 @@ class AccountsController < ApplicationController
   end
 
   def update
-    if @current_account.id == params[:id].to_i
-      
+    if @current_account.admin || @current_account.id == params[:id].to_i
       @account = Account.update(params[:id], params[:account])
     else
       @account = Account.find(params[:id])
