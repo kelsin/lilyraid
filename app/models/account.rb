@@ -151,7 +151,7 @@ class Account < ActiveRecord::Base
       account = Account.new
       account.id = account_id
       account.admin = false
-      account.save!
+      account.save(false)
       
       return account
     end
