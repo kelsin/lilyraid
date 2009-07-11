@@ -42,13 +42,15 @@ class Account < ActiveRecord::Base
   validates_presence_of :name
 
   def validate
-    unless password_confirmation == change_password
-      errors.add_to_base('Password and Password Confirmation must match to change your password')
-    end
+    if CONFIG[:auth] == 'login'
+      unless password_confirmation == change_password
+        errors.add_to_base('Password and Password Confirmation must match to change your password')
+      end
 
-    if new_record? and change_password.blank?
-      errors.add_to_base('Password can\'t be blank')
-    end      
+      if new_record? and change_password.blank?
+        errors.add_to_base('Password can\'t be blank')
+      end
+    end
   end
 
   def characters_that_can_join(raid)
@@ -149,7 +151,7 @@ class Account < ActiveRecord::Base
       account = Account.new
       account.id = account_id
       account.admin = false
-      account.save
+      account.save!
       
       return account
     end
