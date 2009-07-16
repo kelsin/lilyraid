@@ -58,7 +58,10 @@
         <ul>
           <% @raid.signups.from_account(@current_account).each do |signup| %>
             <li>
-              <%= signup.character.name %>
+              <%= "<strong>"if signup.preferred? %>
+                <%= signup.character.name %>
+              <%= "</strong>"if signup.preferred? %>
+              <%= link_to signup.preferred? ? 'Unprefer' : 'Prefer', preferred_raid_signup_url(@raid, signup), :method => :post if @raid.signups.from_account(@current_account).count > 1 %>
               <%= link_to("Remove",
                           raid_signup_url(@raid, signup),
                           :confirm => "Are you sure you want to leave the raid?",
@@ -95,7 +98,7 @@
       </dd>
     <% end %>
     <% if @current_account.can_edit(@raid) || @raid.finalized? %>
-      <dt>Slots:</dt> 
+      <dt>Slots:</dt>
       <dd id="slots">
         <%= render :partial => "group", :collection => @raid.groups %>
       </dd>
@@ -215,7 +218,7 @@ var AUTH_TOKEN = <%= form_authenticity_token.inspect %>;
 $(document).ready(function() {
   make_signup('dd#slots dd.signup, dl#waiting_list dd.signup');
   make_slot('dl#waiting_list', '*');
-  
+
   <% @raid.slots.each do |slot| %>
     <% if !slot.signup %>
       make_slot('#slot_<%= slot.id %>', '<%= slot.accepts %>');

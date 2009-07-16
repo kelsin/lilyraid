@@ -41,7 +41,8 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :raids, :member => { 'finalize' => :post } do |raids|
-    raids.resources :signups, :loots, :locations
+    raids.resources :signups, :member => { 'preferred' => :post }
+    raids.resources :loots, :locations
     raids.resources :slots, :collection => { 'wait_list' => :put }
   end
 
@@ -49,7 +50,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :characters, :templates, :instances
     admin.resources :accounts, :collection => { 'rename' => :post }
   end
-  
+
   map.login('login',
             :controller => 'login',
             :action => 'index',
@@ -62,7 +63,7 @@ ActionController::Routing::Routes.draw do |map|
                  :controller => 'login',
                  :action => 'login',
                  :conditions => { :method => :post })
-  
+
   map.root :controller => 'raids'
 
   map.connect 'roles/:id', :controller => 'characters', :action => 'roles'

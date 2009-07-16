@@ -1,6 +1,6 @@
 <% signup = note %>
 <%= render(:partial => "shared/character",
-           :object => signup.character) %><br />
+           :object => signup.character) %><%= " (preferred)" if signup.preferred? %><br />
 <b>Account</b>: <%= signup.character.account.name %><br />
 <b>Level</b>: <%= signup.character.level %><br />
 <% if signup.character.guild %>
