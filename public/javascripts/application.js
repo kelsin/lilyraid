@@ -113,3 +113,27 @@ function validate_loot() {
         return confirm('Are you sure you wish to assign loot?');
     }
 }
+
+// Wowhead search
+function wowhead_items(data) {
+    var items = data[1];
+    var meta = data[7];
+
+    var results = [];
+
+    $.each(items, function(i, name) {
+        var m = meta[i];
+
+        // Check for an item
+        if(m[0] === 3 && m[3] === 4) {
+            results.push([name.replace(/ \(Item\)/, ''), m[1]]);
+        }
+    });
+
+    return results;
+}
+
+// Wow Heroes Lookup
+$(function () {
+    $('dd > span.character').live('dblclick', function() { window.open('http://www.wowarmory.com/character-sheet.xml?r=Bronzebeard&n=' + $(this).text(), '_blank'); });
+});
