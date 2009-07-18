@@ -115,6 +115,17 @@ function validate_loot() {
 }
 
 // Wowhead search
+function wowhead_search(str) {
+    str = str.replace(/^\s+|\s+$/g, '');
+
+    if(str !== '') {
+        $('#wowhead_search_loading_image').fadeIn();
+        $.get('/wowhead/' + escape(str),'', function(data) {
+            wowhead_items(data);
+            $('#wowhead_search_loading_image').fadeOut(); }, 'json');
+    }
+}
+
 function wowhead_items(data) {
     var items = data[1];
 

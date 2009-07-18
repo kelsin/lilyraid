@@ -1,6 +1,6 @@
 <dt>Search Wowhead:</dt>
 <dd>
   <input name="wowhead_search" type="text" size="20"
-         onchange="$('#wowhead_search_loading_image').fadeIn(); $.get('/wowhead/' + escape(this.value),'', function(data) { wowhead_items(data); $('#wowhead_search_loading_image').fadeOut(); }, 'json');" />
+         onchange="wowhead_search(this.value);" />
   <img src="/images/loading.gif" style="display: none;" id="wowhead_search_loading_image" />
 </dd>
