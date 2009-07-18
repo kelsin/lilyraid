@@ -1,7 +1,9 @@
+require 'net/http'
+
 class LootsController < ApplicationController
-  before_filter :load_raid
+  before_filter :load_raid, :except => :search
   before_filter :load_character, :only => :create
-  before_filter :require_admin
+  before_filter :require_admin, :except => :search
 
   def create
     @loot = Loot.new(params[:loot])
@@ -28,6 +30,10 @@ class LootsController < ApplicationController
   def update
     @loot = Loot.find(params[:id])
     @loot.update_attributes(params[:loot]) ? redirect_to(raid_url(@raid)) : render(:action => :edit)
+  end
+
+  def search
+    render :json => Net::HTTP.get('www.wowhead.com', "/?search=#{CGI::escape(params[:search])}&opensearch")
   end
 
   private

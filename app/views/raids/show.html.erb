@@ -145,6 +145,7 @@
           <dd id="new_loot">
             <%= render :partial => "new_loot", :locals => { :raid => @raid } %>
           </dd>
+          <%= render :partial => 'shared/wowhead' %>
           <% @raid.locations.each do |location| %>
             <dt><%= location.instance.name %> Loot</dt>
             <dd>

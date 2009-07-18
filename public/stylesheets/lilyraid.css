@@ -38,7 +38,7 @@ div.raid dl { position: relative; overflow: hidden; margin: 1em 0; }
 div.raid dt { float: left; clear: left;
               margin-bottom: 1em; font-weight: bold; line-height: 1em;
               width: 9em; text-align: right; padding-right: 1em; }
-div.raid dd { float: left; clear: right;
+div.raid dd { float: left; clear: right; position: relative;
               margin-bottom: 1em; margin-right: 1em; line-height: 1em;
               max-width: 40em; }
 div.raid dd#slots { max-width: 70em; }
@@ -55,7 +55,7 @@ div.raid dl.list { background-color: #111; border: 1px solid #000; overflow: vis
                              padding: 0.5em; float: left; margin: 0 1em 0 0; }
 div.raid dl.list dt { color: #ffd302; font-weight: bold;
                                 padding: 0; margin: 0.2em 0 0.7em 0; text-align: center;
-                                vertical-align: top; width: auto; 
+                                vertical-align: top; width: auto;
                                 float: none; }
 div.raid dl.list dd { background-color: #222;
                       border: 1px solid #000;
@@ -118,3 +118,6 @@ span.note { color: #aaa; }
 
 /* Errors */
 div.errorExplanation ul { list-style-position: inside; color: #f00; }
+
+/* WoWhead search */
+img#wowhead_search_loading_image { position: absolute; display: inline; top: 0; right: -20px; }

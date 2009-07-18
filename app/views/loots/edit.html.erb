@@ -18,9 +18,15 @@
                               :id, :name) %>
     </dd>
     <dt></dt>
-    <dd><%= submit_tag "Save" %>
+    <dd>
+      <%= submit_tag "Save" %>
+      <%= link_to 'Back to raid', @raid %>
+    </dd>
   </dl>
   <% end %>
+  <dl>
+    <%= render :partial => 'shared/wowhead' %>
+  </dl>
 <% end %>
-      
-      
+
+

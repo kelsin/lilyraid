@@ -51,6 +51,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :accounts, :collection => { 'rename' => :post }
   end
 
+  map.wowhead('wowhead/:search', :controller => 'loots', :action => 'search')
+
   map.login('login',
             :controller => 'login',
             :action => 'index',

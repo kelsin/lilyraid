@@ -117,20 +117,21 @@ function validate_loot() {
 // Wowhead search
 function wowhead_items(data) {
     var items = data[1];
-    var meta = data[7];
 
-    var results = [];
+    if (items.length > 0) {
+        var meta = data[7];
 
-    $.each(items, function(i, name) {
-        var m = meta[i];
+        $.each(items, function(i, name) {
+            var m = meta[i];
 
-        // Check for an item
-        if(m[0] === 3 && m[3] === 4) {
-            results.push([name.replace(/ \(Item\)/, ''), m[1]]);
-        }
-    });
-
-    return results;
+            // Check for an item
+            if(m[0] === 3 && m[3] === 4) {
+                // Found first item, fill out and quit
+                fill_loot(name.replace(/ \(Item\)/, ''), 'http://www.wowhead.com/?item=' + m[1]);
+                return false;
+            }
+        });
+    }
 }
 
 // Wow Heroes Lookup
