@@ -6,8 +6,6 @@
     <link rel="icon" href="/images/<%= RAILS_ENV %>-favicon.png" type="image/png">
     <%= stylesheet_link_tag 'lilyraid', RAILS_ENV, 'jquery', 'jquery.timepickr' %>
     <%= javascript_include_tag('jquery', 'jquery-ui', 'application', 'jquery.timepickr.min') %>
-    <%= javascript_include_tag('http://www.wowhead.com/widgets/power.js') %>
-    <%= javascript_include_tag('http://www.armory-light.com/powered/powered.js') %>
   </head>
   <body>
     <h1><%= CONFIG[:guild] %>: Raid Signups</h1>
@@ -55,5 +53,7 @@
       or want to request new features. The source is licensed using the <%=
       link_to "GPL v.3", "http://www.gnu.org/copyleft/gpl.html" %> license.
     </div>
+    <%= javascript_include_tag('http://www.wowhead.com/widgets/power.js') %>
+    <%= javascript_include_tag('http://www.armory-light.com/powered/powered.js') %>
   </body>
 </html>
