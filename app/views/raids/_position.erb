@@ -1,6 +1,6 @@
 <% hide ||= false%>
 <% position.account.characters.each do |character| %>
-  <% content_tag_for(:dd, character, :class => "account_#{position.account.id} " + ((character.signups.in_raid(raid).first.slot && (!hide)) ? "seated" : "")) do %>
+  <% content_tag_for(:dd, character, :class => "account_#{position.account.id} " + ((character.signups.in_raid(raid).first && character.signups.in_raid(raid).first.slot && (!hide)) ? "seated" : "")) do %>
     <%= position.position %>
     <%= render(:partial => "shared/character",
                :object => character) %>
