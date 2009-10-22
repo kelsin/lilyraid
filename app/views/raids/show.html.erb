@@ -214,7 +214,6 @@
 
 <% javascript_tag do %>
 var raid_id = <%= @raid.id %>;
-var AUTH_TOKEN = <%= form_authenticity_token.inspect %>;
 
 $(document).ready(function() {
   make_signup('dd#slots dd.signup, dl#waiting_list dd.signup');

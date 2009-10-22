@@ -79,7 +79,7 @@ function signup_dropped(event, ui) {
     if(this.id == 'waiting_list') {
         if(ui.draggable.hasClass('slot')) {
             slot_id = ui.draggable.attr('id').replace(/^slot_/, '');
-            $.delete_('/raids/' + raid_id + '/slots/' + slot_id, {}, null, "script");
+            $.delete_('/raids/' + raid_id + '/slots/' + slot_id, { authenticity_token: AUTH_TOKEN }, null, "script");
         }
     } else {
         if(ui.draggable.hasClass('slot')) {
