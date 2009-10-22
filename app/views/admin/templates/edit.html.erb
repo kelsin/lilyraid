@@ -5,15 +5,16 @@
       <dt>Name</dt>
       <dd><%= f.text_field :name %></dd>
       <dt>Slots</dt>
-      <dd>
+      <dd id="slots">
         <% @raid_template.groups.each do |group| -%>
-          <dl id="edit_slots" class="list">
+          <dl id="edit_slots" class="list template">
             <dt>Group <%= cycle(*(1..8).to_a) %></dt>
             <% group.each do |slot| -%>
               <dd>
                 <% f.fields_for :slots, slot do |s| %>
                   <%= s.collection_select(:role_id, Role.all, :id, :name, :include_blank => "Any") %>
-                  <%= s.collection_select(:cclass_id, Cclass.all, :id, :name, :include_blank => "Any") %><br />
+                  <%= s.collection_select(:cclass_id, Cclass.all, :id, :name, :include_blank => "Any") %>
+                  <%= s.select(:team, (1..4).inject([]) { |col, x| col << ["Team #{x}", x] }) %><br />
                 <% end %>
               </dd>
             <% end %>

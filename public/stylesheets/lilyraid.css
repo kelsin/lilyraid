@@ -64,6 +64,7 @@ div.raid dl.list dd { background-color: #222;
                       float: none; position: relative; }
 div.raid dl.item_list dd { width: 30em; text-align: left; }
 div.raid dl#edit_slots dd { width: 15em; text-align: left; }
+div.raid dl#edit_slots.template dd { width: 20em; }
 div.raid dl.list dd.empty { color: #333; font-style: italic; }
 div.raid dl#waiting_list dd.seated { display: none; }
 div.raid dl#loot_list dd, div.raid dl#add_to_loot_list dd { display: none; }

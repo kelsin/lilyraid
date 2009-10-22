@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(:version => 20091022201125) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "template_id"
-    t.integer  "team"
+    t.integer  "team",        :default => 1
   end
 
   add_index "slots", ["raid_id"], :name => "index_slots_on_raid_id"
