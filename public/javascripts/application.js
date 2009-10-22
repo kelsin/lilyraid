@@ -149,3 +149,11 @@ function wowhead_items(data) {
 $(function () {
     $('dd > span.character').live('dblclick', function() { window.open('http://www.wowarmory.com/character-sheet.xml?r=Bronzebeard&n=' + $(this).text(), '_blank'); });
 });
+
+function raid_edit_slots(ele) {
+    if($(ele).val() === '') {
+        $('select.slot_select').removeAttr('disabled');
+    } else {
+        $('select.slot_select').attr('disabled', 'disabled');
+    }
+}

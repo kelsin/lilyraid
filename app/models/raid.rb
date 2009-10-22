@@ -160,10 +160,38 @@ class Raid < ActiveRecord::Base
 
   # Used for templates
   def template_id=(template_id)
+    return if template_id.blank?
+
+    # Number of slots that this raid has
+    number_in_raid = self.slots.count
+
     # Apply a raid template to this raid
     template = Template.find(template_id)
-    template.slots.each do |slot|
-      slots.build(slot.attributes).template = nil
+    number_in_template = template.slots.count
+
+    # Remove some slots from this raid
+    self.slots.all[number_in_template..-1].map(&:destroy) if number_in_template < number_in_raid
+
+    template.slots.each_with_index do |slot, index|
+      if index < number_in_raid
+        raid_slot = self.slots[index]
+
+        # We only care if these slots are different
+        if raid_slot != slot
+          signup = raid_slot.signup
+          raid_slot.update_attributes(slot.attributes)
+          raid_slot.raid = self
+          raid_slot.template = nil
+
+          # Remove character if there is one that doesn't fit into the template
+          if signup and raid_slot.accept(signup)
+            raid_slot.signup = signup
+          end
+        end
+      else
+        # Easy, just create the new one
+        self.slots.build(slot.attributes).template = nil
+      end
     end
   end
 
