@@ -127,6 +127,9 @@ function wowhead_search(str) {
 }
 
 function wowhead_items(data) {
+    // Clear search box
+    $('ul#wowhead_results').empty();
+    
     var items = data[1];
 
     if (items.length > 0) {
@@ -138,8 +141,12 @@ function wowhead_items(data) {
             // Check for an item
             if(m[0] === 3 && m[3] === 4) {
                 // Found first item, fill out and quit
-                fill_loot(name.replace(/ \(Item\)/, ''), 'http://www.wowhead.com/?item=' + m[1]);
-                return false;
+                item_name = name.replace(/ \(Item\)/, '');
+                item_url = 'http://www.wowhead.com/?item=' + m[1];
+
+                dd = $('<li><a href="' + item_url + '" onclick="fill_loot(\'' + item_name + '\', \'' + item_url + '\'); return false;">' + item_name + '</a></li>');
+
+                $('ul#wowhead_results').append(dd);
             }
         });
     }

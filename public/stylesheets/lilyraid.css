@@ -62,7 +62,7 @@ div.raid dl.list dd { background-color: #222;
                       padding: 0.5em; margin: 0.3em 0 0 0; text-align: center;
                       vertical-align: top; width: 8em;
                       float: none; position: relative; }
-div.raid dl#item_list dd { width: 30em; text-align: left; }
+div.raid dl.item_list dd { width: 30em; text-align: left; }
 div.raid dl#edit_slots dd { width: 15em; text-align: left; }
 div.raid dl.list dd.empty { color: #333; font-style: italic; }
 div.raid dl#waiting_list dd.seated { display: none; }
@@ -72,6 +72,8 @@ div.raid dl#loot_list.list dd, div.raid dl#needed_list.list dd { text-align: lef
 
 div.raid dd#slots dd.signup, div.raid dl#waiting_list dd.signup { cursor: pointer; }
 div.raid dl.list dd.hovering, div.raid dl#waiting_list.hovering { border: 1px solid #f00; }
+
+div.raid dd ul#wowhead_results li { margin-top: 0.5em; }
 
 /* Main Menu List */
 ul#menu { clear: both; overflow: auto; margin: 0.5em 0 2em 0; }
