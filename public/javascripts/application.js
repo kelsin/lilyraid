@@ -144,7 +144,7 @@ function wowhead_items(data) {
                 item_name = name.replace(/ \(Item\)/, '');
                 item_url = 'http://www.wowhead.com/?item=' + m[1];
 
-                dd = $('<li><a href="' + item_url + '" onclick="fill_loot(\'' + escape(item_name) + '\', \'' + escape(item_url) + '\'); return false;">' + item_name + '</a></li>');
+                dd = $('<li><a href="' + item_url + '" onclick="fill_loot(unescape(\'' + escape(item_name) + '\'), unescape(\'' + escape(item_url) + '\')); return false;">' + item_name + '</a></li>');
 
                 $('ul#wowhead_results').append(dd);
             }
