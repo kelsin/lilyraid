@@ -154,7 +154,10 @@ function wowhead_items(data) {
 
 function wowhead_pull() {
     $('#wowhead_search').val($('#loot_item_name').val());
-    $('#wowhead_search').change();
+
+    if($('#loot_item_name').val() !== '') {
+        $('#wowhead_search').change();
+    }
 }
 
 // Wow Heroes Lookup
