@@ -10,6 +10,11 @@ class ListPosition < ActiveRecord::Base
     }
   }
 
+  named_scope :for_account, lambda { |account| {
+      :conditions => { :account_id => account }
+    }
+  }
+
   named_scope :seated_in, lambda { |raid| {
       :include => { :account => { :characters => { :signups => :slot } } },
       :conditions => ["signups.raid_id = ? and slots.id is not null", raid.id]

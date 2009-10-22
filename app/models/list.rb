@@ -65,7 +65,8 @@ class List < ActiveRecord::Base
 
   # Takes a character that got loot and a list of characters that were present
   def new_loot(raid, loot)
-    account_lp = find(loot.character.account)
+    account_lp = self.list_positions.for_account(loot.character.account).first
+    slot = raid.signups.seated.first(:include => :slot, :conditions => { :character_id => loot.character }).slot
 
     if account_lp
       position = account_lp.position
@@ -73,7 +74,9 @@ class List < ActiveRecord::Base
       self.list_positions.find(:all,
                                :order => :position,
                                :conditions => ["account_id in (?) and position > ?",
-                                               raid.accounts { |account| account.id },
+                                               raid.slots.in_team(slot.team).all(:include => {
+                                                                                   :signup => {
+                                                                                     :character => :account}}).map(&:signup).compact.map(&:character).map(&:account).map(&:id),
                                                position]).each do |lp|
         temp = lp.position
         lp.position = position

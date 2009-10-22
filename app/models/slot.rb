@@ -17,6 +17,11 @@ class Slot < ActiveRecord::Base
 
   default_scope :order => 'slots.id'
 
+  named_scope :in_team, lambda { |team| {
+      :conditions => { :team => team }
+    }
+  }
+
   def eql?(o)
     o.is_a?(Slot) && self.role_id == o.role_id && self.cclass_id == o.cclass_id
   end
