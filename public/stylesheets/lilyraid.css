@@ -114,6 +114,8 @@ div.raid input.dim[type=text] { color: #bbb; }
 
 /* span */
 span.note { color: #aaa; }
+span.team { color: #333; font-size: 0.8em; }
+
 
 /* classes */
 .charinfo { padding: 3px 10px 10px 10px; }
