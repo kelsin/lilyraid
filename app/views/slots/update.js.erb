@@ -30,12 +30,14 @@ $('#needed_list').html("<%= escape_javascript(render(:partial => "raids/needed",
         $('#waiting_list dd.empty').slideDown();
     }
     $('#character_<%= @signup.character.id %>').slideDown();
+    $('#character_<%= @slot.signup.character.id %> span.team').html('<%= @slot.team > 1 ? @slot.team : '' %>');
     
 <% else %>
     $('dl#add_to_loot_list dd.account_<%= @slot.signup.character.account.id %>').slideUp();
     $('dl#loot_list dd.account_<%= @slot.signup.character.account.id %>').slideUp();
 
     $('#character_<%= @slot.signup.character.id %>').slideDown();
+    $('#character_<%= @slot.signup.character.id %> span.team').html('<%= @slot.team > 1 ? @slot.team : '' %>');
 <% end %>
 
 // New Loot
