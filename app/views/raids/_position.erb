@@ -5,7 +5,7 @@
     <%= render(:partial => "shared/character",
                :object => character) %>
     <span class="team">
-      <%= character.signups.in_raid(raid).first.slot.team if character.signups.in_raid(raid).first.slot.team > 1 %>
+      <%= character.signups.in_raid(raid).first.slot.team if character.signups.in_raid(raid).first.slot && character.signups.in_raid(raid).first.slot.team > 1 %>
     </span>
     <div class="note">
       <%= render(:partial => "signups/note", :object => character.signups.in_raid(raid).first) %>
