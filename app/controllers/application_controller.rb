@@ -10,15 +10,38 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '599f44b29c4a78b118884b977571fb10'
 
-
   if RAILS_ENV == 'development'
     before_filter :fake_authorize
   else
     before_filter :authorize    
   end
 
-
   private
+
+  def signup_log(signup, message)
+    Log.create(:source => 'signup',
+               :account_id => @current_account.id,
+               :raid_id => signup.raid.id,
+               :character_id => signup.character.id,
+               :message => message)
+  end
+
+  def slot_log(raid, character, message)
+    Log.create(:source => 'slot',
+               :account_id => @current_account.id,
+               :raid_id => raid.id,
+               :character_id => character.id,
+               :message => message)
+  end
+
+  def loot_log(loot, message)
+    Log.create(:source => 'loot',
+               :account_id => @current_account.id,
+               :raid_id => loot.raid.id,
+               :character_id => loot.character.id,
+               :loot_id => loot.id,
+               :message => message)
+  end
 
   def fake_authorize
     session[:account_id] = 2

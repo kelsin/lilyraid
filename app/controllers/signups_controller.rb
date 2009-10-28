@@ -7,6 +7,8 @@ class SignupsController < ApplicationController
     @signup.raid = @raid
     @signup.save
 
+    signup_log(@signup, "New signup")
+
     respond_to do |format|
       format.html { redirect_to raid_url(@raid) }
     end
@@ -15,12 +17,15 @@ class SignupsController < ApplicationController
   def destroy
     @signup.destroy
 
+    # Handle preferred settings if there is one signup left
     if @signup.raid.signups.from_account(@signup.character.account).count == 1
       @signup.raid.signups.from_account(@signup.character.account).each do |signup|
         signup.preferred = false
         signup.save
       end
     end
+
+    signup_log(@signup, "Removed signup")
 
     respond_to do |format|
       format.html { redirect_to raid_url(@raid) }

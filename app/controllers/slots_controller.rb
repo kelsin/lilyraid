@@ -28,6 +28,8 @@ class SlotsController < ApplicationController
           @from_slot.save
           @slot.save
           @signup = nil
+
+          slot_log(@raid, @slot.signup.character, "Moved to new slot")
         else
           others = @from_slot.signup.other_signups.select do |other_signup|
             @slot.accept(other_signup)
@@ -39,8 +41,11 @@ class SlotsController < ApplicationController
             @from_slot.save
             @slot.save
             @signup = nil
+
+            slot_log(@raid, @slot.signup.character, "Moved to new slot (auto character switch)")
           end
         end
+        
       elsif params[:from_signup_id]
         @signup = @raid.signups.find(params[:from_signup_id])
         @from_slot = nil
@@ -49,6 +54,8 @@ class SlotsController < ApplicationController
           @slot.signup = @signup
           @slot.save
           @from_slot = nil
+
+          slot_log(@raid, @slot.signup.character, "Seated from waiting list")
         end
       end
       
@@ -68,6 +75,8 @@ class SlotsController < ApplicationController
     @signup = @slot.signup
     @slot.signup = nil
     @slot.save
+
+    slot_log(@raid, @signup.character, "Moved back to waiting list")
 
     load_list
     

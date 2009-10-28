@@ -88,9 +88,6 @@ class List < ActiveRecord::Base
       account_lp.save
 
       self.reload
-
-      #loot.list = self.backup("Loot Won")
-      #loot.save
     end
   end
 
