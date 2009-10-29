@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091022201125) do
+ActiveRecord::Schema.define(:version => 20091028182507) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -94,6 +94,17 @@ ActiveRecord::Schema.define(:version => 20091022201125) do
   end
 
   add_index "locations", ["raid_id", "instance_id"], :name => "locations_by_raid_and_instance", :unique => true
+
+  create_table "logs", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "character_id"
+    t.integer  "raid_id"
+    t.integer  "loot_id"
+    t.string   "source"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "loots", :force => true do |t|
     t.integer  "character_id", :default => 0, :null => false

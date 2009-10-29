@@ -10,7 +10,7 @@ class LootsController < ApplicationController
     @loot.raid = @raid
     @loot.save
 
-    loot_log(@loot, "Loot assigned (Was in position #{ListPosition.for_account(@loot.character.account).position})")
+    loot_log(@loot, "Loot assigned (Was in position #{ListPosition.for_account(@loot.character.account).first.position})")
 
     @list = List.first
     @list.new_loot(@raid, @loot)
