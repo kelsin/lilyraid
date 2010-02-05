@@ -4,7 +4,7 @@ require 'digest/md5'
 class Account < ActiveRecord::Base
   attr_accessor :change_password, :password_confirmation
 
-  has_many :list_positions
+  has_many :list_positions, :dependent => :destroy
   has_many :characters, :dependent => :destroy
 
   has_many(:old_signups,
