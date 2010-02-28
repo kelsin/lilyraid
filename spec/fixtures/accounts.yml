@@ -1,0 +1,8 @@
+kelsin:
+  id: 2
+  name: Kelsin
+  age: 35
+  lj_account: kelsin
+  location: Framingham, MA
+  email: kelsin@valefor.com
+  admin: true
