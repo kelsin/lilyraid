@@ -6,17 +6,16 @@ class Raid < ActiveRecord::Base
   has_many :locations
   accepts_nested_attributes_for(:locations, :allow_destroy => true,
                                 :reject_if => proc { |attr|
-                                  attr['instance_id'].blank?                                  
+                                  attr['instance_id'].blank?
                                 })
   has_many :instances, :through => :locations
   has_many :loots, :through => :locations
-  
+
   belongs_to :raid_template
 
   has_many :slots, :dependent => :destroy
   accepts_nested_attributes_for(:slots,
                                 :allow_destroy => true)
-  
 
   has_many :signups, :dependent => :destroy
   has_many :characters, :through => :signups
