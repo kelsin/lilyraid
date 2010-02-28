@@ -4,6 +4,9 @@ class Template < ActiveRecord::Base
 
   default_scope :order => 'templates.name'
 
+  validates_presence_of :name
+  validates_uniqueness_of :name
+
   def types
     slots.count(:include => :role, :group => "roles.name")
   end
