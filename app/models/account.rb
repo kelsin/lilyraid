@@ -121,16 +121,11 @@ class Account < ActiveRecord::Base
   end
 
   def Account.mysql
-    unless @@mysql
-      phpbb_db = CONFIG[:phpbb_db]
-      phpbb_host = CONFIG[:phpbb_host]
-      phpbb_user = CONFIG[:phpbb_user]
-      phpbb_pass = CONFIG[:phpbb_pass]
-      phpbb_port = CONFIG[:phpbb_port].to_i
-      @@mysql = Mysql.new(phpbb_host, phpbb_user, phpbb_pass, phpbb_db, phpbb_port)
-    end
-
-    @@mysql
+    @@mysql ||= Mysql.new(CONFIG[:phpbb_host],
+                          CONFIG[:phpbb_user],
+                          CONFIG[:phpbb_pass],
+                          CONFIG[:phpbb_db],
+                          CONFIG[:phpbb_post].to_i)
   end
 
   def before_save
