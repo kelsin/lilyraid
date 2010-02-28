@@ -7,13 +7,16 @@ class Admin::InstancesController < ApplicationController
     @new_instance = Instance.new
   end
 
+  def edit
+    @instance = Instance.find(params[:id])
+  end
+
   def update
     @instance = Instance.find(params[:id])
-    @instance.active = !@instance.active
-    @instance.save
+    @instance.update_attributes(params[:instance])
 
     redirect_to admin_instances_url
-  end    
+  end
 
   def create
     @new_instance = Instance.new(params[:instance])
