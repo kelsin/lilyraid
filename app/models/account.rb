@@ -31,7 +31,7 @@ class Account < ActiveRecord::Base
   def can_edit(raid)
     self.admin or self == raid.account
   end
-  alias :can_edit?, :can_edit
+  alias :can_edit? :can_edit
 
   def can_delete
     characters.map do |c|
