@@ -1,8 +1,7 @@
 class RemoveBadDefaultNotes < ActiveRecord::Migration
   def self.up
-    Signup.find(:all, :conditions => { :note => "Note" }).each do |signup|
-      signup.note = ""
-      signup.save
+    Signup.all(:conditions => { :note => "Note" }).each do |signup|
+      signup.update_attribute(:note, nil)
     end
   end
 

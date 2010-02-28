@@ -50,7 +50,7 @@ class Character < ActiveRecord::Base
     :conditions => ["not exists (select 1
                                    from list_positions lp
                                   where lp.account_id = characters.account_id
-                                    and lp.list_id = ?)", List.first.id]
+                                    and lp.list_id = ?)", List.first ? List.first.id : 0]
   }
 
   default_scope :order => 'characters.level desc, characters.name'
