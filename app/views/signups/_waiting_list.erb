@@ -1,7 +1,7 @@
 <tr>
   <th id="waiting_list_title">
     <div>
-      <% if @current_account.can_edit(raid) %>
+      <% if @current_account.can_edit?(raid) %>
         <%= link_to_remote("Waiting List",
                            :url => "/raids/#{raid.id}/slots/'+slot+'",
                            :method => :delete,
@@ -29,7 +29,7 @@
   <%= render(:partial => "signups/signup",
              :collection => waiting_list,
              :locals => { :raid => raid }) %>
-  <% if @current_account.can_edit(raid) %>
+  <% if @current_account.can_edit?(raid) %>
     <tr id="add_whole_waiting_list"><td>
         <div>
           <%= link_to_remote "Add To Raid",

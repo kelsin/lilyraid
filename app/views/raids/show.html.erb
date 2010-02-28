@@ -4,7 +4,7 @@
 
 <%- div_for(@raid) do -%>
   <h3><%= @raid.name %></h3>
-  <%- if @current_account.can_edit(@raid) -%>
+  <%- if @current_account.can_edit?(@raid) -%>
     <p><%= link_to("Edit Raid Info", edit_raid_url(@raid)) -%></p>
   <%- end -%>
   <dl>
@@ -12,7 +12,7 @@
     <dd>
       <%- if @raid.finalized -%>
         Yes
-        <%- if @current_account.can_edit(@raid) -%>
+        <%- if @current_account.can_edit?(@raid) -%>
           <%= link_to "Un-Finalize",
                       finalize_raid_url(@raid),
                       :method => :post,
@@ -21,7 +21,7 @@
         <%- end -%>
       <%- else -%>
         No
-        <%- if @current_account.can_edit(@raid) -%>
+        <%- if @current_account.can_edit?(@raid) -%>
           <%= link_to "Finalize",
                       finalize_raid_url(@raid),
                       :method => :post,
@@ -97,7 +97,7 @@
         <% end %>
       </dd>
     <% end %>
-    <% if @current_account.can_edit(@raid) || @raid.finalized? %>
+    <% if @current_account.can_edit?(@raid) || @raid.finalized? %>
       <dt>Slots:</dt>
       <dd id="slots">
         <%= render :partial => "group", :collection => @raid.groups %>
@@ -139,7 +139,7 @@
           </dl>
         </dd>
       <% end %>
-      <% if @current_account.can_edit(@raid) %>
+      <% if @current_account.can_edit?(@raid) %>
         <% if @raid.uses_loot_system %>
           <dt>New Loot:</dt>
           <dd id="new_loot">
@@ -225,4 +225,4 @@ $(document).ready(function() {
     <% end %>
   <% end %>
 });
-<% end if @current_account.can_edit(@raid) %>
+<% end if @current_account.can_edit?(@raid) %>

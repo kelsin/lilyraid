@@ -3,7 +3,7 @@
   <% signups.each do |signup| -%>
     <% content_tag_for(:td, signup) do %>
       <div>
-        <% if @current_account.can_edit(raid) %>
+        <% if @current_account.can_edit?(raid) %>
           <%= link_to_function(render(:partial => "shared/character",
                                       :object => signup.character),
                                nil) do |page|

@@ -17,7 +17,7 @@ class SlotsController < ApplicationController
   end
 
   def update
-    if @current_account.can_edit(@raid)
+    if @current_account.can_edit?(@raid)
       if params[:from_slot_id]
         @signup = nil
         @from_slot = @raid.slots.find(params[:from_slot_id])

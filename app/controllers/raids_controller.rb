@@ -44,7 +44,7 @@ class RaidsController < ApplicationController
   end
 
   def update
-    if @current_account.can_edit(@raid)
+    if @current_account.can_edit?(@raid)
       @raid.update_attributes(params[:raid])
       @raid.date = Time.parse("#{params[:caldate]} #{params[:caltime]}")
 
@@ -60,7 +60,7 @@ class RaidsController < ApplicationController
   end
 
   def destroy
-    if @current_account.can_edit(@raid)
+    if @current_account.can_edit?(@raid)
       @raid.destroy
 
       respond_to do |format|

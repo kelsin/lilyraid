@@ -4,7 +4,7 @@
   <% elsif slot.signup == nil -%>
     <% content_tag_for(:td, slot, :td) do %>
       <div>
-        <% if @current_account.can_edit(slot.raid) -%>
+        <% if @current_account.can_edit?(slot.raid) -%>
           <nobr>
             <%= link_to_function(content_tag("b", render(:partial => "shared/slot",
                                                        :object => slot)),
@@ -30,7 +30,7 @@
     <% content_tag_for(:td, slot, :td) do %>
       <div>
         <nobr>
-          <% if @current_account.can_edit(slot.raid) %>
+          <% if @current_account.can_edit?(slot.raid) %>
             <%= link_to_function(render(:partial => "shared/character",
                                         :object => slot.signup.character),
                                  "select_slot(#{slot.id})") %>
