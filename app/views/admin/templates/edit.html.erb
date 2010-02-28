@@ -1,8 +1,9 @@
 <div class="raid">
   <h3>Edit Template</h3>
   <% form_for [:admin, @raid_template] do |f| %>
+    <%= error_messages_for(:raid_template) %>
     <dl>
-      <dt>Name</dt>
+      <dt><%= f.label :name %></dt>
       <dd><%= f.text_field :name %></dd>
       <dt>Slots</dt>
       <dd id="slots">

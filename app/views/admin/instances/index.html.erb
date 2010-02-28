@@ -10,7 +10,11 @@
           </ul>
         </dd>
       <% end %>
-      <dt>New Instance</dt>
+      <% unless @new_instance.errors.empty? %>
+        <dt></dt>
+        <dd><%= error_messages_for(:new_instance) %></dd>
+      <% end %>
+      <dt><%= f.label :name, 'New Instance' %></dt>
       <dd><%= f.text_field :name %></dd>
       <dt></dt>
       <dd><%= submit_tag 'Create' %></dd>

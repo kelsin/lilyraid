@@ -13,16 +13,24 @@ class Admin::InstancesController < ApplicationController
 
   def update
     @instance = Instance.find(params[:id])
-    @instance.update_attributes(params[:instance])
 
-    redirect_to admin_instances_url
+    if @instance.update_attributes(params[:instance])
+      redirect_to admin_instances_url
+    else
+      render :action => :edit
+    end
   end
 
   def create
     @new_instance = Instance.new(params[:instance])
-    @new_instance.save
 
-    redirect_to admin_instances_url
+    if @new_instance.save
+      redirect_to admin_instances_url
+    else
+      @active = Instance.active.all
+      @inactive = Instance.inactive.all
+      render :action => :index
+    end
   end
 
   def destroy

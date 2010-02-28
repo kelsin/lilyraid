@@ -125,8 +125,8 @@ div.errorExplanation { border: 2px solid #a00;
                        padding: 1em;
                        width: 450px; }
 div.errorExplanation h2 { font-size: 1.2em; }
-div.errorExplanation p { padding: 0; margin: 0.5em 0 0 0; }
-div.errorExplanation ul { list-style-position: inside; margin-top 0.5em; }
+div.errorExplanation p { padding: 0; margin: 0.5em 0 0 0 !important; }
+div.errorExplanation ul { list-style: disc inside none !important; margin-top 0.5em; }
 
 div.fieldWithErrors { color: #f00; display: inline; margin: 0 !important; }
 

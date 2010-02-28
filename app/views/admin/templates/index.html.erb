@@ -11,9 +11,9 @@
     <dl>
       <dt><%= f.label :name %></dt>
       <dd><%= f.text_field :name %></dd>
-      <dt>Number of Slots</dt>
+      <dt><%= f.label :number_of_slots %></dt>
       <dd>
-        <%= text_field_tag :slots, 10, :size => 3 %>
+        <%= f.text_field :number_of_slots, :size => 3 %>
       </dd>
       <dt></dt>
       <dd><%= submit_tag 'Create' %></dd>
