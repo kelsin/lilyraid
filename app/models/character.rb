@@ -15,6 +15,8 @@ class Character < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :name
 
+  validates_presence_of :account
+
   before_destroy :can_delete?
 
   named_scope :active, { :conditions => { :inactive => false } }
@@ -47,64 +49,16 @@ class Character < ActiveRecord::Base
                                     and lp.list_id = ?)", List.first ? List.first.id : 0]
   }
 
-  default_scope :order => 'characters.level desc, characters.name'
-
-  def attuned(instance)
-    instances.member?(instance)
-  end
-
-  def instances=(instance_ids)
-    Attunement.destroy_all(["character_id = ?", self.id])
-    instance_ids.each do |id|
-      Attunement.new(:character => self,
-                     :instance_id => id).save
-    end
-    reload
-  end
-
-  def keyed(instance)
-    instances.member?(instance)
-  end
-
-  def self.can_join(raid)
-    if raid.instance.requires_key
-      find(:all,
-           :order => "characters.name",
-           :include => :instances,
-
-           :conditions => ["instances.id = ? and characters.level >= ? and characters.level <= ? and characters.inactive = ?", raid.instance.id, raid.min_level, raid.max_level, false]) - raid.characters
-    else
-      find(:all,
-           :order => "characters.name",
-           :include => :instances,
-           :conditions => ["characters.level >= ? and characters.level <= ? and characters.inactive = ?", raid.min_level, raid.max_level, false]) - raid.characters
-    end
-  end
-
-  def can_join(raid)
-    if level < raid.min_level or level > raid.max_level
-      false
-    elsif raid.instance.requires_key and !keyed(raid.instance)
-      false
-    else
-      true unless raids.member?(raid)
-    end
-  end
-
   def name_with_level
     "#{name} (#{level})"
   end
 
   def name_with_level_and_account
-    if account
-      "#{name} (#{level}-#{account.name})"
-    else
-      name_with_level
-    end
+    "#{name} (#{level}-#{account.name})"
   end
 
   def name_with_account
-    "#{name} (#{account.name if account})"
+    "#{name} (#{account.name})"
   end
 
   def can_delete?
