@@ -72,7 +72,7 @@
         </ul>
       </dd>
     <% end %>
-    <% if @current_account.characters.active.not_in_raid(@raid).count > 0 %>
+    <% if @current_account.characters.active.not_signed_up_for(@raid).count > 0 %>
       <dt>Signup:</dt>
       <dd id="new_signup">
         <% if @raid.started? %>
@@ -81,7 +81,7 @@
           <% form_for([@raid, Signup.new(:note => "Note")]) do |f| %>
             <div>
               <%= f.collection_select(:character_id,
-                                      @current_account.characters.active.not_in_raid(@raid),
+                                      @current_account.characters.active.not_signed_up_for(@raid),
                                       :id, :name_with_level, {},
                                       :onchange => "character_roles(this, '#new_signup_roles');") %>
               <%= f.text_field(:note,
@@ -91,7 +91,7 @@
               <%= submit_tag "Sign up" %>
             </div>
             <div id="new_signup_roles">
-              <%= render(:partial => "role", :collection => @current_account.characters.not_in_raid(@raid).first.cclass.roles) %>
+              <%= render(:partial => "role", :collection => @current_account.characters.not_signed_up_for(@raid).first.cclass.roles) %>
             </div>
           <% end %>
         <% end %>
@@ -157,13 +157,13 @@
             </dd>
           <% end %>
         <% end %>
-        <% if Character.not_in_raid(@raid).count > 0 %>
+        <% if Character.not_signed_up_for(@raid).count > 0 %>
           <dt>Add Signup:</dt>
           <dd id="admin_new_signup">
             <% form_for([@raid, Signup.new(:note => "Note")]) do |f| %>
               <div>
                 <%= f.collection_select(:character_id,
-                                        Character.not_in_raid(@raid),
+                                        Character.not_signed_up_for(@raid),
                                         :id, :name_with_level_and_account, {},
                                         :onchange => "character_roles(this, '#admin_new_signup_roles');") %>
                 <%= f.text_field(:note,
@@ -174,7 +174,7 @@
               </div>
               <div id="admin_new_signup_roles">
                 <%= render(:partial => "characters/roles",
-                           :locals => { :character => Character.not_in_raid(@raid).first }) %>
+                           :locals => { :character => Character.not_signed_up_for(@raid).first }) %>
               </div>
             <% end %>
           </dd>

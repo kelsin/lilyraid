@@ -26,13 +26,7 @@ class Character < ActiveRecord::Base
     }
   }
 
-  named_scope :in_raid, lambda { |raid| {
-      :include => :signups,
-      :conditions => ["signups.raid_id = ?", raid.id]
-    }
-  }
-
-  named_scope :not_in_raid, lambda { |raid| {
+  named_scope :not_signed_up_for, lambda { |raid| {
       :conditions => ["not exists (select 1
                                      from signups
                                     where raid_id = ?
