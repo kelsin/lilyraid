@@ -15,7 +15,7 @@ class Character < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :name
 
-  before_destroy :can_delete
+  before_destroy :can_delete?
 
   named_scope :active, { :conditions => { :inactive => false } }
   named_scope :inactive, { :conditions => { :inactive => true } }
@@ -113,7 +113,7 @@ class Character < ActiveRecord::Base
     "#{name} (#{account.name if account})"
   end
 
-  def can_delete
+  def can_delete?
     raids.empty?
   end
 end

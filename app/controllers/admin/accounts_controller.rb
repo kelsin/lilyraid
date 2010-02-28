@@ -9,7 +9,7 @@ class Admin::AccountsController < ApplicationController
     @cclasses = Cclass.find(:all, :order => :name)
     
     @deletable = Account.find(:all, :order => :name).select do |account|
-      account.can_delete
+      account.can_delete?
     end
   end
 
@@ -26,7 +26,7 @@ class Admin::AccountsController < ApplicationController
       @cclasses = Cclass.find(:all, :order => :name)
     
       @deletable = Account.find(:all, :order => :name).select do |account|
-        account.can_delete
+        account.can_delete?
       end
 
       render :action => "index"

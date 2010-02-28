@@ -9,7 +9,18 @@ class Account < ActiveRecord::Base
   has_many :signups, :through => :characters
   has_many :raids, :dependent => :destroy
 
-  before_destroy :can_delete
+  # Make sure all characters can be deleted
+  before_destroy :can_delete?
+
+  named_scope(:admins,
+              :include => { :characters => [:account, :cclass, :race] },
+              :conditions => { :admin => true },
+              :order => "accounts.name, characters.level desc, characters.name")
+
+  named_scope(:members,
+              :include => { :characters => [:account, :cclass, :race] },
+              :conditions => { :admin => false },
+              :order => "accounts.name, characters.level desc, characters.name")
 
   @@mysql = nil
 
@@ -28,25 +39,16 @@ class Account < ActiveRecord::Base
     end
   end
 
+  # Return true if this account is able to edit this raid
   def can_edit?(raid)
     self.admin or self == raid.account
   end
 
-  def can_delete
+  def can_delete?
     characters.map do |c|
-      c.can_delete
+      c.can_delete?
     end.all?
   end
-
-  named_scope(:admins,
-              :include => { :characters => [:account, :cclass, :race] },
-              :conditions => { :admin => true },
-              :order => "accounts.name, characters.level desc, characters.name")
-
-  named_scope(:members,
-              :include => { :characters => [:account, :cclass, :race] },
-              :conditions => { :admin => false },
-              :order => "accounts.name, characters.level desc, characters.name")
 
   def Account.get_account_id_from_info(username, password)
     account = find(:first,

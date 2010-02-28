@@ -6,7 +6,7 @@
                   edit_account_url(account),
                   :onclick => "$.get('#{edit_account_url(account)}', {}, null, 'script'); return false;") %>
     </p>
-    <% if @current_account.admin && account.can_delete %>
+    <% if @current_account.admin && account.can_delete? %>
       <p>
         <%= link_to "Delete", admin_account_url(account), :method => :delete, :confirm => "Are you sure you want to delete this account?" %>
       </p>
