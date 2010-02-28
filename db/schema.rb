@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(:version => 20091028182507) do
   end
 
   create_table "characters", :force => true do |t|
-    t.integer  "account_id", :default => 0,     :null => false
-    t.integer  "race_id",    :default => 0,     :null => false
-    t.integer  "cclass_id",  :default => 0,     :null => false
+    t.integer  "account_id",                    :null => false
+    t.integer  "race_id",                       :null => false
+    t.integer  "cclass_id",                     :null => false
     t.string   "name"
     t.string   "guild"
     t.integer  "level"
@@ -64,9 +64,9 @@ ActiveRecord::Schema.define(:version => 20091028182507) do
   end
 
   create_table "list_positions", :force => true do |t|
-    t.integer  "list_id",    :default => 0, :null => false
-    t.integer  "account_id", :default => 0, :null => false
-    t.integer  "position",   :default => 0, :null => false
+    t.integer  "list_id",    :null => false
+    t.integer  "account_id", :null => false
+    t.integer  "position",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(:version => 20091028182507) do
   add_index "list_positions", ["position"], :name => "index_list_positions_on_position"
 
   create_table "lists", :force => true do |t|
-    t.string   "name",       :default => "", :null => false
+    t.string   "name",       :null => false
     t.datetime "date"
     t.text     "note"
     t.datetime "created_at"
@@ -107,8 +107,8 @@ ActiveRecord::Schema.define(:version => 20091028182507) do
   end
 
   create_table "loots", :force => true do |t|
-    t.integer  "character_id", :default => 0, :null => false
-    t.integer  "list_id",      :default => 0, :null => false
+    t.integer  "character_id", :null => false
+    t.integer  "list_id",      :null => false
     t.string   "item_url"
     t.string   "item_name"
     t.datetime "created_at"
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(:version => 20091028182507) do
     t.text     "loot_note"
     t.boolean  "uses_loot_system", :default => false, :null => false
     t.boolean  "locked",           :default => false, :null => false
-    t.integer  "account_id",       :default => 0,     :null => false
+    t.integer  "account_id",                          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "finalized",        :default => false, :null => false
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(:version => 20091028182507) do
   add_index "raids", ["date"], :name => "index_raids_on_date"
 
   create_table "roles", :force => true do |t|
-    t.string   "name",       :default => "", :null => false
+    t.string   "name",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -159,8 +159,8 @@ ActiveRecord::Schema.define(:version => 20091028182507) do
   add_index "signup_roles", ["signup_id"], :name => "index_signup_roles_on_signup_id"
 
   create_table "signups", :force => true do |t|
-    t.integer  "raid_id",      :default => 0,     :null => false
-    t.integer  "character_id", :default => 0,     :null => false
+    t.integer  "raid_id",                         :null => false
+    t.integer  "character_id",                    :null => false
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
