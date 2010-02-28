@@ -6,33 +6,8 @@ class Account < ActiveRecord::Base
 
   has_many :list_positions, :dependent => :destroy
   has_many :characters, :dependent => :destroy
-
-  has_many(:old_signups,
-           :class_name => "Signup",
-           :include => :raid,
-           :through => :characters,
-           :conditions => ["raids.date < now()"]) do
-    def old_raids
-      proxy_target.collect(&:raid).uniq
-    end
-  end
-  has_many(:signups,
-           :include => :raid,
-           :through => :characters) do
-    def raid(id)
-      find(:all,
-           :include => :raid,
-           :conditions => ["raid_id = ?", id])
-    end
-    def raids
-      proxy_target.collect(&:raid).uniq
-    end
-  end
-  has_many :raids, :class_name => "Raid", :dependent => :destroy
-  has_one(:closest_raid,
-          :class_name => 'Raid',
-          :order => 'date',
-          :conditions => 'date >= NOW()')
+  has_many :signups, :through => :characters
+  has_many :raids, :dependent => :destroy
 
   before_destroy :can_delete
 
@@ -48,45 +23,32 @@ class Account < ActiveRecord::Base
       end
 
       if new_record? and change_password.blank?
-        errors.add_to_base('Password can\'t be blank')
+        errors.add_to_base("Password can't be blank")
       end
-    end
-  end
-
-  def characters_that_can_join(raid)
-    characters.select do |character|
-      character.can_join(raid)
     end
   end
 
   def can_edit(raid)
     self.admin or self == raid.account
   end
+  alias :can_edit?, :can_edit
 
   def can_delete
-    characters.select do |c|
-      !c.can_delete
-    end.empty?
+    characters.map do |c|
+      c.can_delete
+    end.all?
   end
 
-  def lj_link
-    "http://#{lj_account}.livejournal.com/" if lj_account
-  end
+  named_scope(:admins,
+              :include => { :characters => [:account, :cclass, :race] },
+              :conditions => { :admin => true },
+              :order => "accounts.name, characters.level desc, characters.name")
 
-  def self.admins
-    find(:all,
-         :include => { :characters => [:account, :cclass, :race] },
-         :conditions => ["accounts.admin = ?", true],
-         :order => "accounts.name, characters.level desc, characters.name")
-  end
-  
-  def self.members
-    find(:all,
-         :include => { :characters => [:account, :cclass, :race] },
-         :conditions => ["accounts.admin = ?", false],
-         :order => "accounts.name, characters.level desc, characters.name")
-  end
-  
+  named_scope(:members,
+              :include => { :characters => [:account, :cclass, :race] },
+              :conditions => { :admin => false },
+              :order => "accounts.name, characters.level desc, characters.name")
+
   def Account.get_account_id_from_info(username, password)
     account = find(:first,
                    :conditions => ['name = ? and password = md5(?)', username, password])
@@ -95,18 +57,18 @@ class Account < ActiveRecord::Base
 
   def Account.get_account_id_from_sid(sid)
     phpbb_prefix = CONFIG[:phpbb_prefix] || ""
-    
+
     # Get User Id
     user_id_sql = "select session_user_id
                          from #{phpbb_prefix}sessions
                         where #{phpbb_prefix}sessions.session_id = '#{sid}'"
-    
+
     mysql.query(user_id_sql) do |user_id_result|
       user_id_result.each_hash do |user_id_row|
         return user_id_row["session_user_id"]
       end
     end
-    
+
     return nil
   end
 
@@ -118,7 +80,7 @@ class Account < ActiveRecord::Base
                                 user_email
                            from #{phpbb_prefix}users
                           where user_id = #{id}"
-    
+
     Account.mysql.query(user_info_sql) do |user_info|
       user_info.each_hash do |user_info_row|
         self.name = user_info_row["username"]
@@ -137,12 +99,12 @@ class Account < ActiveRecord::Base
         self.admin = true
       end
     end
-    
+
     self.save
-    
+
     return self
   end
-  
+
   def Account.get_account_from_id(account_id)
     if Account.exists?(account_id)
       return Account.find(account_id)
@@ -152,11 +114,11 @@ class Account < ActiveRecord::Base
       account.id = account_id
       account.admin = false
       account.save(false)
-      
+
       return account
     end
   end
-  
+
   def Account.mysql
     unless @@mysql
       phpbb_db = CONFIG[:phpbb_db]
@@ -166,7 +128,7 @@ class Account < ActiveRecord::Base
       phpbb_port = CONFIG[:phpbb_port].to_i
       @@mysql = Mysql.new(phpbb_host, phpbb_user, phpbb_pass, phpbb_db, phpbb_port)
     end
-    
+
     @@mysql
   end
 

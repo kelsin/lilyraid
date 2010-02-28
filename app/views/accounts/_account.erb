@@ -13,9 +13,9 @@
     <% end %>
   <% end %>
   <dl>
-    <% if !account.lj_account.blank? -%>
+    <% unless account.lj_account.blank? -%>
       <dt>LJ</dt>
-      <dd><%= link_to account.lj_account, account.lj_link, :class => "lj" %></dd>
+      <dd><%= link_to account.lj_account, lj_link(account), :class => "lj" %></dd>
     <% end -%>
     <% if !account.age.blank? %>
       <dt>Age:</dt>
