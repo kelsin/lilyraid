@@ -91,7 +91,7 @@
               <%= submit_tag "Sign up" %>
             </div>
             <div id="new_signup_roles">
-              <%= render(:partial => "role", :collection => @current_account.characters.not_signed_up_for(@raid).first.cclass.roles) %>
+              <%= render(:partial => "role", :collection => @current_account.characters.active.not_signed_up_for(@raid).first.cclass.roles) %>
             </div>
           <% end %>
         <% end %>
