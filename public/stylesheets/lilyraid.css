@@ -88,7 +88,7 @@ div.info { padding: 0.5em; border: 2px solid #bbb; background-color: #222;
            margin: 0 0 1em 0; width: 600px; text-align: center; }
 
 dl.list dd div.note { display: none; }
-dl.list dd:hover div.note { display: block; color: white; font-weight: normal; width: 225px;
+dl.list dd:hover div.note { display: block; color: white; font-weight: normal; width: 250px;
                             border: 1px dashed #ffd302; background-color: #222222;
                             padding: 0.5em; line-height: 1.5em;
                             position: absolute; top: 0; left: 10em; text-align: left;
@@ -96,9 +96,9 @@ dl.list dd:hover div.note { display: block; color: white; font-weight: normal; w
 dl.list dd:hover div.note span { font-size: 1.3em; }
 div.raid dl.list div.note dl { clear: both; font-size: 0.8em; line-height: 0.8em; margin: 0; padding: 0; }
 div.raid dl.list div.note dl dt { float: left; clear: left; text-align: left; color: #fff; padding: 0;
-                                  margin: 0; width: 8em; color: #999; }
+                                  margin: 0; width: 85px; color: #999; }
 div.raid dl.list div.note dl dd { float: left; border: 0px solid #000; background-color: inherit;
-                                  margin: 0; padding: 0 1em 0 0.5em; text-align: left; width: 3em; }
+                                  margin: 0; padding: 0 1em 0 0.5em; text-align: left; width: 40px; }
 div.raid dl.list div.note dl dd span { font-size: 0.7em; color: #999; }
 
 div#error { position: absolute; padding: 10px; font-weight: bold;
