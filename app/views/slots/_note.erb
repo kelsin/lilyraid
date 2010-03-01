@@ -6,5 +6,6 @@
   <br /><br />
   <%= render(:partial => "signups/note",
              :collection => slot.signup.other_signups,
-             :spacer_template => "slots/spacer") %>
+             :spacer_template => "slots/spacer",
+             :locals => { :hide_stats => true }) %>
 <% end -%>

@@ -1,4 +1,5 @@
 <% signup = note %>
+<% hide_stats ||= false %>
 <%= render(:partial => "shared/character",
            :object => signup.character) %><%= " (preferred)" if signup.preferred? %><br />
 <% if signup.no_show != 'Showed Up' %>
@@ -16,7 +17,7 @@
   <b>Roles</b>: <%= signup.roles.map { |role| role.name }.join ", " %><br />
 <% end %>
 <%= signup.date.to_s(:raid) %>
-<% if @current_account.admin? and signup.in_raid_slot? %>
+<% if @current_account.admin? and !hide_stats %>
   <br /><br />
   <b>Signup Stats</b>
   <dl>
