@@ -5,9 +5,10 @@ class RaidsController < ApplicationController
     @old = params[:old]
 
     if @old
-      @raids = Raid.find(:all,
-                         :conditions => ["raids.date < ?", Time.zone.now - 5.hours],
-                         :order => "raids.date desc")
+      @raids = Raid.paginate(:all,
+                             :page => params[:page],
+                             :conditions => ["raids.date < ?", Time.zone.now - 5.hours],
+                             :order => "raids.date desc")
     else
       @raids = Raid.find(:all,
                          :conditions => ["raids.date >= ?", Time.zone.now - 5.hours],

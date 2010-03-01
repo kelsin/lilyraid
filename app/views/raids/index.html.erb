@@ -11,6 +11,7 @@
   <tr>
     <td align="left" colspan="5">
       <% if @old %>
+        <%= will_paginate @raids %><br />
         <%= link_to "See New Raids", :old => false %>
       <% else %>
         <%= link_to "See Old Raids", :old => true %>
