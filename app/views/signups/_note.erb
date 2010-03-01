@@ -16,7 +16,7 @@
   <b>Roles</b>: <%= signup.roles.map { |role| role.name }.join ", " %><br />
 <% end %>
 <%= signup.date.to_s(:raid) %>
-<% if signup.character.account.admin? %>
+<% if @current_account.admin? %>
   <br /><br />
   <b>Signup Stats</b>
   <dl>
