@@ -6,13 +6,15 @@ class LootsController < ApplicationController
   before_filter :require_admin, :except => :search
 
   def create
+    @list = List.first
+
     @loot = Loot.new(params[:loot])
     @loot.raid = @raid
+    @loot.list = @list
     @loot.save
 
     loot_log(@loot, "Loot assigned (Was in position #{ListPosition.for_account(@loot.character.account).first.position})")
 
-    @list = List.first
     @list.new_loot(@raid, @loot)
 
     @raid.reload

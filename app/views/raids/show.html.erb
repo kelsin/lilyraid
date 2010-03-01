@@ -153,7 +153,7 @@
                              "<option value=\"\"></option>" + options_for_select(location.instance.loots.all(:order => "loots.item_name").map { |loot|
                                  [loot.item_name, loot.item_url]
                              }.uniq),
-                             :onchange => "fill_loot($(this).find(':selected').text(), this.value);") %>
+                             :onchange => "fill_loot_with_location($(this).find(':selected').text(), this.value, '#{location.id}');") %>
             </dd>
           <% end %>
         <% end %>

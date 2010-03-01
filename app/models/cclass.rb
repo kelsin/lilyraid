@@ -8,6 +8,10 @@ class Cclass < ActiveRecord::Base
                       :with => /[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]/,
                       :message => "must be a valid hex color (#xxxxxx)")
 
+  def self.named(name)
+    self.first(:conditions => { :name => name })
+  end
+
   # Sort by name by default
   def <=>(o)
     self.name <=> o.name
