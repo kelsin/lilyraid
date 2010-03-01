@@ -47,40 +47,33 @@ class Account < ActiveRecord::Base
     counts = {
       :raids => {
         :title => 'Raids',
-        't' => total_raids,
         '30' => last_month_raids,
         '90' => last_three_months_raids },
       :signed => {
         :title => 'Signed Up',
-        't' => self.signups.past.count,
-        '30' => self.signups.past.last_month.count,
-        '90' => self.signups.past.last_three_months.count },
+        '30' => self.signups.past.last_month.count(:group => :raid_id).size,
+        '90' => self.signups.past.last_three_months.count(:group => :raid_id).size },
       :not_signed => {
         :title => 'Did Not Sign up',
-        't' => total_raids - self.signups.past.count,
-        '30' => last_month_raids - self.signups.past.last_month.count,
-        '90' => last_three_months_raids - self.signups.past.last_three_months.count },
+        '30' => last_month_raids - self.signups.past.last_month.count(:group => :raid_id).size,
+        '90' => last_three_months_raids - self.signups.past.last_three_months.count(:group => :raid_id).size },
       :seated => {
         :title => 'Seated',
-        't' => self.signups.seated.past.count,
-        '30' => self.signups.seated.past.last_month.count,
-        '90' => self.signups.seated.past.last_three_months.count } }
+        '30' => self.signups.seated.past.last_month.count(:group => :raid_id).size,
+        '90' => self.signups.seated.past.last_three_months.count(:group => :raid_id).size } }
   end
 
   def no_shows
-    total_counts = self.signups.past.count(:group => :no_show)
     last_month_counts = self.signups.past.last_month.count(:group => :no_show)
     last_three_months_counts = self.signups.past.last_three_months.count(:group => :no_show)
 
     counts = Signup::NO_SHOW_OPTIONS.inject({}) do |hash, option|
       hash.merge({ option => {
-          't' => total_counts[option] || 0,
           '30' => last_month_counts[option] || 0,
           '90' => last_three_months_counts[option] || 0 } })
     end
 
     counts['Total No Shows'] = {
-      't' => counts['No Notice']['t'] + counts['Advance Notice']['t'],
       '30' => counts['No Notice']['30'] + counts['Advance Notice']['30'],
       '90' => counts['No Notice']['90'] + counts['Advance Notice']['90'] }
 

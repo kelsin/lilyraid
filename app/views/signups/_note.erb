@@ -16,7 +16,7 @@
   <b>Roles</b>: <%= signup.roles.map { |role| role.name }.join ", " %><br />
 <% end %>
 <%= signup.date.to_s(:raid) %>
-<% if @current_account.admin? %>
+<% if @current_account.admin? and signup.in_raid_slot? %>
   <br /><br />
   <b>Signup Stats</b>
   <dl>
@@ -25,7 +25,6 @@
       <dt><%= numbers[:title] %></dt>
       <dd><%= numbers['30'] %> <span>1m</span></dd>
       <dd><%= numbers['90'] %> <span>3m</span></dd>
-      <dd><%= numbers['t'] %> <span>total</span></dd>
     <% end %>
   </dl>
   <br />
@@ -35,7 +34,6 @@
       <dt><%= status %></dt>
       <dd><%= numbers['30'] %> <span>1m</span></dd>
       <dd><%= numbers['90'] %> <span>3m</span></dd>
-      <dd><%= numbers['t'] %> <span>total</span></dd>
     <% end %>
   </dl>
 <% end %>
