@@ -1,6 +1,6 @@
 class SignupsController < ApplicationController
-  before_filter(:load_raid, :only => [:create, :destroy, :preferred])
-  before_filter(:load_signup, :only => [:destroy, :preferred])
+  before_filter(:load_raid, :only => [:create, :destroy, :preferred, :update])
+  before_filter(:load_signup, :only => [:destroy, :preferred, :update])
 
   def create
     @signup = Signup.new(params[:signup])
@@ -30,6 +30,12 @@ class SignupsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to raid_url(@raid) }
     end
+  end
+
+  def update
+    @signup.update_attributes(params[:signup])
+
+    redirect_to @raid
   end
 
   def update_char_slot_types

@@ -39,8 +39,52 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def signup_stats
+    total_raids = Raid.past.count
+    last_month_raids = Raid.last_month.past.count
+    last_three_months_raids = Raid.last_three_months.past.count
+
+    counts = {
+      :raids => {
+        :title => 'Raids',
+        't' => total_raids,
+        '30' => last_month_raids,
+        '90' => last_three_months_raids },
+      :signed => {
+        :title => 'Signed Up',
+        't' => self.signups.past.count,
+        '30' => self.signups.past.last_month.count,
+        '90' => self.signups.past.last_three_months.count },
+      :not_signed => {
+        :title => 'Did Not Sign up',
+        't' => total_raids - self.signups.past.count,
+        '30' => last_month_raids - self.signups.past.last_month.count,
+        '90' => last_three_months_raids - self.signups.past.last_three_months.count },
+      :seated => {
+        :title => 'Seated',
+        't' => self.signups.seated.past.count,
+        '30' => self.signups.seated.past.last_month.count,
+        '90' => self.signups.seated.past.last_three_months.count } }
+  end
+
   def no_shows
-    self.signups.count(:group => :no_show)
+    total_counts = self.signups.past.count(:group => :no_show)
+    last_month_counts = self.signups.past.last_month.count(:group => :no_show)
+    last_three_months_counts = self.signups.past.last_three_months.count(:group => :no_show)
+
+    counts = Signup::NO_SHOW_OPTIONS.inject({}) do |hash, option|
+      hash.merge({ option => {
+          't' => total_counts[option] || 0,
+          '30' => last_month_counts[option] || 0,
+          '90' => last_three_months_counts[option] || 0 } })
+    end
+
+    counts['Total No Shows'] = {
+      't' => counts['No Notice']['t'] + counts['Advance Notice']['t'],
+      '30' => counts['No Notice']['30'] + counts['Advance Notice']['30'],
+      '90' => counts['No Notice']['90'] + counts['Advance Notice']['90'] }
+
+    return counts
   end
 
   # Return true if this account is able to edit this raid

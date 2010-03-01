@@ -20,6 +20,10 @@ class Raid < ActiveRecord::Base
   has_many :signups, :dependent => :destroy
   has_many :characters, :through => :signups
 
+  named_scope :past, :conditions => ['raids.date < ?', Date.today]
+  named_scope :last_month, :conditions => ['raids.date >= ?', Date.today - 1.month]
+  named_scope :last_three_months, :conditions => ['raids.date >= ?', Date.today - 3.months]
+
   # Validation
   validates_presence_of :name
 

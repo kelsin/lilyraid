@@ -94,6 +94,12 @@ dl.list dd:hover div.note { display: block; color: white; font-weight: normal; w
                             position: absolute; top: 0; left: 10em; text-align: left;
                             z-index: 5; }
 dl.list dd:hover div.note span { font-size: 1.3em; }
+div.raid dl.list div.note dl { clear: both; font-size: 0.8em; line-height: 0.8em; margin: 0; padding: 0; }
+div.raid dl.list div.note dl dt { float: left; clear: left; text-align: left; color: #fff; padding: 0;
+                                  margin: 0; width: 8em; color: #999; }
+div.raid dl.list div.note dl dd { float: left; border: 0px solid #000; background-color: inherit;
+                                  margin: 0; padding: 0 1em 0 0.5em; text-align: left; width: 3em; }
+div.raid dl.list div.note dl dd span { font-size: 0.7em; color: #999; }
 
 div#error { position: absolute; padding: 10px; font-weight: bold;
             border: 1px solid #a00; background-color: #000; top: 250px: left: 20px; }

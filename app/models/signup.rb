@@ -17,6 +17,14 @@ class Signup < ActiveRecord::Base
       :include => :character,
       :conditions => ["characters.account_id = ?", account.id] } }
 
+  named_scope :showed_up, :conditions => { :no_show => 'Showed Up' }
+  named_scope :no_show_with_no_notice, :conditions => { :no_show => 'No Notice' }
+  named_scope :no_show_with_notice, :conditions => { :no_show => 'Advance Notice' }
+
+  named_scope :past, :include => :raid, :conditions => ['raids.date < ?', Date.today]
+  named_scope :last_month, :include => :raid, :conditions => ['raids.date >= ?', Date.today - 1.month]
+  named_scope :last_three_months, :include => :raid, :conditions => ['raids.date >= ?', Date.today - 3.months]
+
   named_scope :in_raid, lambda { |raid| {
       :conditions => ["signups.raid_id = ?", raid.id] } }
 

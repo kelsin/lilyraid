@@ -180,12 +180,15 @@
           </dd>
         <% end %>
         <% if @raid.signups.count > 0 %>
-          <dt>Remove Signup:</dt>
+          <dt>Edit Signups:</dt>
           <dd id="remove_signup">
             <ul>
               <% @raid.signups.each do |signup| %>
                 <li>
                   <%= signup.character.name %>
+                  <% form_for [@raid, signup] do |f| %>
+                    <%= f.select :no_show, Signup::NO_SHOW_OPTIONS, {}, :onchange => "$('#edit_#{dom_id(signup)}').submit();" %>
+                  <% end %>
                   <%= link_to("Remove",
                               raid_signup_url(@raid, signup),
                               :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?",
