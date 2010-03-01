@@ -51,6 +51,12 @@ function fill_loot(item_name, item_url) {
     }
 }
 
+function fill_loot_with_location(item_name, item_url, location_id) {
+    fill_loot(item_name, item_url);
+
+    $('#loot_location_id').val(location_id);
+}
+
 function swap_loot() {
     var temp = $('#loot_item_url').attr('value');
     $('#loot_item_url').attr('value', $('#loot_item_name').attr('value'));
