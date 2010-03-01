@@ -16,3 +16,9 @@ end
 ['Blood Elf', 'Draenei', 'Dwarf', 'Gnome', 'Human', 'Night Elf', 'Orc', 'Tauren', 'Troll', 'Undead'].each do |name|
   Race.create(:name => name)
 end
+
+['DPS','Healer','Tank'].each do |name|
+  Role.create(:name => name)
+end
+
+CclassRole.create(:cclass => Cclass.named('Druid'), :role => Role.named('DPS'))
