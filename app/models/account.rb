@@ -39,6 +39,10 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def no_shows
+    self.signups.count(:group => :no_show)
+  end
+
   # Return true if this account is able to edit this raid
   def can_edit?(raid)
     self.admin or self == raid.account

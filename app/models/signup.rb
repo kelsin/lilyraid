@@ -7,34 +7,33 @@ class Signup < ActiveRecord::Base
 
   has_one :slot, :dependent => :nullify
 
+  NO_SHOW_OPTIONS = ['Showed Up', 'Advance Notice', 'No Notice']
+
+  validates_inclusion_of :no_show, :in => NO_SHOW_OPTIONS
+
   default_scope :order => 'signups.created_at'
 
-  named_scope :from_account, lambda { |account|
-    { :include => :character,
-      :conditions => ["characters.account_id = ?", account.id] }
-  }
+  named_scope :from_account, lambda { |account| {
+      :include => :character,
+      :conditions => ["characters.account_id = ?", account.id] } }
 
-  named_scope :in_raid, lambda { |raid|
-    { :conditions => ["signups.raid_id = ?", raid.id] }
-  }
+  named_scope :in_raid, lambda { |raid| {
+      :conditions => ["signups.raid_id = ?", raid.id] } }
 
   named_scope :waiting_list, {
     :include => :slot,
-    :conditions => "slots.id is null",
-  }
+    :conditions => "slots.id is null" }
 
   named_scope :seated, {
     :include => :slot,
-    :conditions => "slots.id is not null"
-  }
+    :conditions => "slots.id is not null" }
 
   named_scope :not_in_loot_list, {
     :include => :character,
     :conditions => ["not exists (select 1
                                    from list_positions lp
                                   where lp.account_id = characters.account_id
-                                    and lp.list_id = ?)", List.first ? List.first.id : 0]
-  }
+                                    and lp.list_id = ?)", List.first ? List.first.id : 0] }
 
   before_save :remove_default_note
 
