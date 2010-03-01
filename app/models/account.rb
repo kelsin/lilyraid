@@ -51,16 +51,16 @@ class Account < ActiveRecord::Base
         '90' => last_three_months_raids },
       :signed => {
         :title => 'Signed Up',
-        '30' => self.signups.past.last_month.count(:group => :raid_id).size,
-        '90' => self.signups.past.last_three_months.count(:group => :raid_id).size },
+        '30' => self.signups.past.last_month.count(:group => 'signups.raid_id').size,
+        '90' => self.signups.past.last_three_months.count(:group => 'signups.raid_id').size },
       :not_signed => {
         :title => 'Did Not Sign up',
-        '30' => last_month_raids - self.signups.past.last_month.count(:group => :raid_id).size,
-        '90' => last_three_months_raids - self.signups.past.last_three_months.count(:group => :raid_id).size },
+        '30' => last_month_raids - self.signups.past.last_month.count(:group => 'signups.raid_id').size,
+        '90' => last_three_months_raids - self.signups.past.last_three_months.count(:group => 'signups.raid_id').size },
       :seated => {
         :title => 'Seated',
-        '30' => self.signups.seated.past.last_month.count(:group => :raid_id).size,
-        '90' => self.signups.seated.past.last_three_months.count(:group => :raid_id).size } }
+        '30' => self.signups.seated.past.last_month.count(:group => 'signups.raid_id').size,
+        '90' => self.signups.seated.past.last_three_months.count(:group => 'signups.raid_id').size } }
   end
 
   def no_shows
