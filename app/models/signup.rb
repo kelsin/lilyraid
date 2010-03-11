@@ -64,7 +64,7 @@ class Signup < ActiveRecord::Base
   end
 
   protected
-  
+
   def classes_array
     c = Array.new
     c.push("character_#{character.id}")
@@ -72,7 +72,7 @@ class Signup < ActiveRecord::Base
       c.push(role.name.downcase)
     end
     c.push(character.cclass.name.downcase.sub(/ /, '_'))
-  end    
+  end
 
   public
 
