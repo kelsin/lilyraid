@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20100311013921) do
   create_table "raider_tags", :force => true do |t|
     t.integer  "account_id"
     t.integer  "raid_id"
+    t.integer  "tag_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -166,13 +167,12 @@ ActiveRecord::Schema.define(:version => 20100311013921) do
   add_index "signup_roles", ["signup_id"], :name => "index_signup_roles_on_signup_id"
 
   create_table "signups", :force => true do |t|
-    t.integer  "raid_id",                               :null => false
-    t.integer  "character_id",                          :null => false
+    t.integer  "raid_id",                         :null => false
+    t.integer  "character_id",                    :null => false
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "preferred",    :default => false,       :null => false
-    t.string   "no_show",      :default => "Showed Up", :null => false
+    t.boolean  "preferred",    :default => false, :null => false
   end
 
   add_index "signups", ["character_id"], :name => "index_signups_on_character_id"

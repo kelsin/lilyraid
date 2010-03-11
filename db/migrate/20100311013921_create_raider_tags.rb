@@ -3,6 +3,7 @@ class CreateRaiderTags < ActiveRecord::Migration
     create_table :raider_tags do |t|
       t.references :account
       t.references :raid
+      t.references :tag
       t.timestamps
     end
 

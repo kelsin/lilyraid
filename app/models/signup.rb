@@ -7,19 +7,11 @@ class Signup < ActiveRecord::Base
 
   has_one :slot, :dependent => :nullify
 
-  NO_SHOW_OPTIONS = ['Showed Up', 'Advance Notice', 'No Notice']
-
-  validates_inclusion_of :no_show, :in => NO_SHOW_OPTIONS
-
   default_scope :order => 'signups.created_at'
 
   named_scope :from_account, lambda { |account| {
       :include => :character,
       :conditions => ["characters.account_id = ?", account.id] } }
-
-  named_scope :showed_up, :conditions => { :no_show => 'Showed Up' }
-  named_scope :no_show_with_no_notice, :conditions => { :no_show => 'No Notice' }
-  named_scope :no_show_with_notice, :conditions => { :no_show => 'Advance Notice' }
 
   named_scope :past, :include => :raid, :conditions => ['raids.date < ?', Date.today]
   named_scope :last_month, :include => :raid, :conditions => ['raids.date >= ?', Date.today - 1.month]
