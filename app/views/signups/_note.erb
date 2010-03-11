@@ -31,7 +31,7 @@
   <br />
   <b>Tag Data</b>
   <dl>
-    <% Tag.all do |tag| %>
+    <% Tag.all.each do |tag| %>
       <dt><%= tag.name %></dt>
       <dd><%= signup.character.account.raider_tags.for_tag(tag).in_past(30.days).count %> <span>1m</span></dd>
       <dd><%= signup.character.account.raider_tags.for_tag(tag).in_past(90.days).count %> <span>1m</span></dd>
