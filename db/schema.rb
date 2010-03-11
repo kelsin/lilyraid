@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100301004819) do
+ActiveRecord::Schema.define(:version => 20100311013921) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -121,6 +121,13 @@ ActiveRecord::Schema.define(:version => 20100301004819) do
 
   create_table "races", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "raider_tags", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "raid_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
