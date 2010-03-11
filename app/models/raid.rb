@@ -3,6 +3,9 @@ class Raid < ActiveRecord::Base
 
   belongs_to :instance
 
+  has_many :raider_tags
+  has_many :tags, :through => :raider_tags
+
   has_many :locations
   accepts_nested_attributes_for(:locations, :allow_destroy => true,
                                 :reject_if => proc { |attr|
