@@ -185,15 +185,17 @@
             <table>
               <tr>
                 <th>Signup</th>
-                <th>Tags</th>
+                <% if @current_account.admin %>
+                  <th>Tags</th>
+                <% end %>
                 <th></th>
               </tr>
               <% @raid.signups.each do |signup| %>
                 <tr>
                   <td><%= signup.character.name %></td>
-                  <%= render :partial => 'tags', :locals => { :signup => signup } %>
+                  <%= render(:partial => 'tags', :locals => { :signup => signup }) if @current_account.admin %>
                   <td>
-                    <%= link_to("Remove",
+                    <%= link_to("Remove Signup",
                                 raid_signup_url(@raid, signup),
                                 :confirm => "Are you sure you want to remove #{signup.character.name} from this raid?",
                                 :class => "tiny",

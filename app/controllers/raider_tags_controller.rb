@@ -1,11 +1,11 @@
 class RaiderTagsController < ApplicationController
+  before_filter :require_admin
+
   def create
     @raid = Raid.find(params[:raid_id])
     @account = Account.find(params[:account_id])
 
-    if @current_account.can_edit? @raid
-      @raider_tag = @account.raider_tags.create(params[:raider_tag][params[:signup_id]].merge({ :raid_id => @raid.id }))
-    end
+    @raider_tag = @account.raider_tags.create(params[:raider_tag][params[:signup_id]].merge({ :raid_id => @raid.id }))
 
     respond_to do |format|
       format.js
@@ -17,9 +17,7 @@ class RaiderTagsController < ApplicationController
     @account = Account.find(params[:account_id])
     @raider_tag = @raid.raider_tags.for_account(@account).find(params[:id])
 
-    if @current_account.can_edit? @raid
-      @raider_tag.destroy
-    end
+    @raider_tag.destroy
 
     respond_to do |format|
       format.js
