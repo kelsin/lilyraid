@@ -1,6 +1,3 @@
-require 'mysql'
-require 'digest/md5'
-
 class Account < ActiveRecord::Base
   attr_accessor :change_password, :password_confirmation
 
