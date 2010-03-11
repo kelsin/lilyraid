@@ -2,8 +2,8 @@
 <% hide_stats ||= false %>
 <%= render(:partial => "shared/character",
            :object => signup.character) %><%= " (preferred)" if signup.preferred? %><br />
-<% if signup.no_show != 'Showed Up' %>
-<b>No Show</b>: <%= signup.no_show %><br />
+<% unless signup.character.account.raider_tags.for_raid(signup.raid).empty? %>
+  <b>Tags</b>: <%= signup.character.account.raider_tags.for_raid(signup.raid).join(',') %><br />
 <% end %>
 <b>Account</b>: <%= signup.character.account.name %><br />
 <b>Level</b>: <%= signup.character.level %><br />
@@ -29,12 +29,12 @@
     <% end %>
   </dl>
   <br />
-  <b>No-Show Data</b>
+  <b>Tag Data</b>
   <dl>
-    <% signup.character.account.no_shows.each do |status, numbers| %>
-      <dt><%= status %></dt>
-      <dd><%= numbers['30'] %> <span>1m</span></dd>
-      <dd><%= numbers['90'] %> <span>3m</span></dd>
+    <% Tag.all do |tag| %>
+      <dt><%= tag.name %></dt>
+      <dd><%= signup.character.account.raider_tags.for_tag(tag).in_past(30.days).count %> <span>1m</span></dd>
+      <dd><%= signup.character.account.raider_tags.for_tag(tag).in_past(90.days).count %> <span>1m</span></dd>
     <% end %>
   </dl>
 <% end %>

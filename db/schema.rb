@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100311013921) do
+ActiveRecord::Schema.define(:version => 20100311015417) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -194,6 +194,12 @@ ActiveRecord::Schema.define(:version => 20100311013921) do
   add_index "slots", ["raid_id"], :name => "index_slots_on_raid_id"
   add_index "slots", ["role_id", "cclass_id"], :name => "index_slots_on_role_id_and_cclass_id"
   add_index "slots", ["signup_id"], :name => "index_slots_on_signup_id"
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "templates", :force => true do |t|
     t.string   "name"
