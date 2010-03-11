@@ -67,6 +67,9 @@
                           :confirm => "Are you sure you want to leave the raid?",
                           :class => "tiny",
                           :method => :delete) %>
+              <% unless signup.note.blank? %>
+                <br /><span class="tiny">Note:</span> <%= signup.note %>
+              <% end %>
             </li>
           <% end %>
         </ul>
