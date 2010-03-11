@@ -185,17 +185,13 @@
             <table>
               <tr>
                 <th>Signup</th>
-                <th>No Show Status</th>
+                <th>Tags</th>
                 <th></th>
               </tr>
               <% @raid.signups.each do |signup| %>
                 <tr>
                   <td><%= signup.character.name %></td>
-                  <td>
-                    <% form_for [@raid, signup] do |f| %>
-                      <%= f.select :no_show, Signup::NO_SHOW_OPTIONS, {}, :onchange => "$('#edit_#{dom_id(signup)}').submit();" %>
-                    <% end %>
-                  </td>
+                  <td><%= signup.character.account.raider_tags.for_raid(@raid).join(',') %></td>
                   <td>
                     <%= link_to("Remove",
                                 raid_signup_url(@raid, signup),
@@ -207,18 +203,25 @@
               <% end %>
             </table>
           </dd>
+          <dt>Add Tag:</dt>
+          <dd id="tags">
+            <% form_for [:admin, Tag.new] do |f| %>
+              <%= hidden_field_tag :raid_id, @raid.id %>
+              <%= f.text_field :name %>
+              <%= f.submit %>
+            <% end %>
+          </dd>
         <% end %>
       <% end %>
     <% else %>
       <dt></dt>
       <dd>
         <p>This raid is not yet finalized. You can edit your signups above but
-          until the raid is finalize you can not see the current signup
-          list.</p>
+        until the raid is finalize you can not see the current signup list.</p>
         <p>Please use the note field to indicate any special requests. "Only if
         there is room", "Prefer Healing" and the like.</p>
         <p>We will try to get raids finalize at least 48 hours before they
-          start. Sooner if plenty of people sign up in time.</p>
+        start. Sooner if plenty of people sign up in time.</p>
       </dd>
       <% end %>
   </dl>

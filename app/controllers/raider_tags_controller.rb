@@ -1,0 +1,2 @@
+class RaiderTagsController < ApplicationController
+end

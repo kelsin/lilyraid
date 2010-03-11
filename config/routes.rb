@@ -41,7 +41,10 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :raids, :member => { 'finalize' => :post } do |raids|
-    raids.resources :signups, :member => { 'preferred' => :post }
+    raids.resources :signups, :member => { 'preferred' => :post } do |signups|
+      signups.resources :raider_tags
+    end
+
     raids.resources :loots, :locations
     raids.resources :slots, :collection => { 'wait_list' => :put }
   end
@@ -49,6 +52,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :characters, :templates, :instances
     admin.resources :accounts, :collection => { 'rename' => :post }
+    admin.resources :tags
   end
 
   map.wowhead('wowhead/:search', :controller => 'loots', :action => 'search')
