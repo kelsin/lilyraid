@@ -41,8 +41,9 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :raids, :member => { 'finalize' => :post } do |raids|
-    raids.resources :signups, :member => { 'preferred' => :post } do |signups|
-      signups.resources :raider_tags
+    raids.resources :signups, :member => { 'preferred' => :post }
+    raids.resources :accounts do |accounts|
+      accounts.resources :raider_tags
     end
 
     raids.resources :loots, :locations

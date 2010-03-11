@@ -55,4 +55,17 @@
       <% end %>
     <% end %>
   </dl>
+
+  <h3>Tags</h3>
+  <dl>
+    <dt>Add Tag</dt>
+    <dd>
+      <% form_for [:admin, Tag.new] do |f| %>
+        <%= f.text_field :name %>
+        <%= f.submit %>
+      <% end %>
+    <% Tag.deletable.each do |tag| %>
+      <dt></dt><dd><%= link_to tag, admin_tag_path(tag), :method => :delete %></dd>
+    <% end %>
+  </dl>
 </div>

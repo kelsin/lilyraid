@@ -191,7 +191,7 @@
               <% @raid.signups.each do |signup| %>
                 <tr>
                   <td><%= signup.character.name %></td>
-                  <td><%= signup.character.account.raider_tags.for_raid(@raid).join(',') %></td>
+                  <%= render :partial => 'tags', :locals => { :signup => signup } %>
                   <td>
                     <%= link_to("Remove",
                                 raid_signup_url(@raid, signup),
@@ -202,14 +202,6 @@
                 </tr>
               <% end %>
             </table>
-          </dd>
-          <dt>Add Tag:</dt>
-          <dd id="tags">
-            <% form_for [:admin, Tag.new] do |f| %>
-              <%= hidden_field_tag :raid_id, @raid.id %>
-              <%= f.text_field :name %>
-              <%= f.submit %>
-            <% end %>
           </dd>
         <% end %>
       <% end %>

@@ -11,7 +11,7 @@ class Signup < ActiveRecord::Base
 
   named_scope :from_account, lambda { |account| {
       :include => :character,
-      :conditions => ["characters.account_id = ?", account.id] } }
+      :conditions => { 'characters.account_id' => account } } }
 
   named_scope :past, :include => :raid, :conditions => ['raids.date < ?', Date.today]
   named_scope :last_month, :include => :raid, :conditions => ['raids.date >= ?', Date.today - 1.month]
@@ -68,8 +68,20 @@ class Signup < ActiveRecord::Base
 
   public
 
+  def raider_tags
+    self.character.account.raider_tags.for_raid(self.raid)
+  end
+
+  def tags
+    self.raider_tags.map(&:tag)
+  end
+
   def date
     created_at
+  end
+
+  def account
+    self.character.account if self.character
   end
 
   def other_signups
