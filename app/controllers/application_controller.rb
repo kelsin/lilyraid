@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   if RAILS_ENV == 'development'
     before_filter :fake_authorize
   else
-    before_filter :authorize    
+    before_filter :authorize
   end
 
   private
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
       return false
     end
   end
-  
+
   def display_error(msg)
     render :update do |page|
       page.alert(msg)
