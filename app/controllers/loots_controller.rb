@@ -40,7 +40,7 @@ class LootsController < ApplicationController
     if params[:search].blank?
       render :json => "['',[]]"
     else
-      render :json => Net::HTTP.get('www.wowhead.com', "/?search=#{CGI::escape(params[:search])}&opensearch")
+      render :json => Net::HTTP.get('www.wowhead.com', "/search?q=#{CGI::escape(params[:search])}&opensearch")
     end
   end
 
