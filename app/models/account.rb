@@ -31,6 +31,23 @@ class Account < ActiveRecord::Base
     self.first(:conditions => { :name => name })
   end
 
+  def self.orphins
+    phpbb_prefix = CONFIG[:phpbb_prefix] || ""
+
+    self.all.select do |a|
+      user_info_sql = "select 1
+                         from #{phpbb_prefix}users
+                        where username = '#{a.name}'"
+
+      num_rows = 0
+      Account.mysql.query(user_info_sql) do |result|
+        num_rows = result.num_rows
+      end
+
+      num_rows == 0
+    end
+  end
+
   def to_s
     self.name
   end
