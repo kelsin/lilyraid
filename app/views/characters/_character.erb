@@ -1,6 +1,6 @@
 <% div_for(character, :class => "raid") do %>
   <h4><%= character.name %></h4>
-  <% if @current_account == character.account %>
+  <% if @current_account == character.account || @current_account.admin %>
     <p id="<%=dom_id(character)%>_edit_link">
       <%= link_to("Edit", edit_account_character_url(character.account, character),
                   :onclick => "$.get('#{edit_account_character_url(character.account, character)}', {}, null, 'script'); return false;") %>

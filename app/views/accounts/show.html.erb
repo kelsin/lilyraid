@@ -5,11 +5,7 @@
 
 <div id="characters">
   <%= render(:partial => "characters/character",
-             :collection => if @current_account == @account 
-                                @account.characters 
-                            else 
-                                @account.characters
-                            end) %>
+             :collection => @account.characters) %>
 </div>
 
 <%= render(:partial => "characters/form",
