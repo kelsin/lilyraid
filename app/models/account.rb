@@ -101,43 +101,44 @@ class Account < ActiveRecord::Base
     account ? account.id : nil
   end
 
-  def Account.get_account_id_from_sid(sid)
+  def Account.get_account_from_phpbb(sid)
     phpbb_prefix = CONFIG[:phpbb_prefix] || ""
 
     # Get User Id
-    user_id_sql = "select session_user_id
-                         from #{phpbb_prefix}sessions
-                        where #{phpbb_prefix}sessions.session_id = '#{sid}'"
+    username_sql = "select u.username
+                      from #{phpbb_prefix}sessions s
+                      join #{phpbb_prefix}users u on (u.user_id = s.session_user_id)
+                     where s.session_id = '#{sid}'"
 
-    mysql.query(user_id_sql) do |user_id_result|
-      user_id_result.each_hash do |user_id_row|
-        return user_id_row["session_user_id"]
+    mysql.query(username_sql) do |username_result|
+      username_result.each_hash do |username_row|
+        username = username_row["username"]
       end
     end
 
-    return nil
+    # Find or create Account
+    return username ? Account.find_or_create_by_name(username).update_info : nil
   end
 
   def update_info
     phpbb_prefix = CONFIG[:phpbb_prefix] || ""
     admin_group_id = CONFIG[:phpbb_admin_group]
 
-    user_info_sql = "select username,
-                                user_email
-                           from #{phpbb_prefix}users
-                          where user_id = #{id}"
+    user_info_sql = "select user_email
+                       from #{phpbb_prefix}users
+                      where username = #{self.name}"
 
     Account.mysql.query(user_info_sql) do |user_info|
       user_info.each_hash do |user_info_row|
-        self.name = user_info_row["username"]
         self.email = user_info_row["user_email"]
       end
     end
 
     group_sql = "select 1
-                       from #{phpbb_prefix}user_group
-                      where user_id = #{id}
-                        and group_id = #{admin_group_id}"
+                   from #{phpbb_prefix}user_group g
+                   join #{phpbb_prefix}users u on (u.user_id = g.user_id)
+                  where u.username = #{self.name}
+                    and g.group_id = #{admin_group_id}"
 
     self.admin = false
     Account.mysql.query(group_sql) do |admin_info|
@@ -149,20 +150,6 @@ class Account < ActiveRecord::Base
     self.save
 
     return self
-  end
-
-  def Account.get_account_from_id(account_id)
-    if Account.exists?(account_id)
-      return Account.find(account_id)
-    else
-      # Create an account for this user
-      account = Account.new
-      account.id = account_id
-      account.admin = false
-      account.save(false)
-
-      return account
-    end
   end
 
   def Account.mysql

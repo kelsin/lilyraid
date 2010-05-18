@@ -49,14 +49,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    # Check to see if we have an account_id in memory
-    if session[:account_id] and session[:account_id].to_i != 1
-      # Get Account info
-      @current_account = Account.get_account_from_id(session[:account_id])
-    else
-      # We don't, redirect
-      redirect_to(:controller => 'login', :action => 'index')
-    end
+    @current_account = Account.find_by_id(session[:account_id])
+
+    redirect_to(:controller => 'login', :action => 'index') unless @current_account
   end
 
   def require_admin

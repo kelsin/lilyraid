@@ -8,10 +8,10 @@ class LoginController < ApplicationController
 
       if session_id
         # We are logged into phpbb, let's get their info
-        session[:account_id] = Account.get_account_id_from_sid(session_id)
+        account = Account.get_account_from_phpbb(session_id)
 
-        if session[:account_id] and session[:account_id].to_i != 1
-          Account.get_account_from_id(session[:account_id]).update_info
+        if account
+          session[:account_id] = account.id
           redirect_to(:controller => 'raids', :action=> 'index')
         else
           reset_session
