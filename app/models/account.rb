@@ -27,6 +27,10 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :name
 
+  def self.named(name)
+    self.first(:conditions => { :name => name })
+  end
+
   def to_s
     self.name
   end
@@ -110,6 +114,9 @@ class Account < ActiveRecord::Base
                       join #{phpbb_prefix}users u on (u.user_id = s.session_user_id)
                      where s.session_id = '#{sid}'"
 
+    Rails.logger.info username_sql
+
+    username = nil
     mysql.query(username_sql) do |username_result|
       username_result.each_hash do |username_row|
         username = username_row["username"]
@@ -126,7 +133,7 @@ class Account < ActiveRecord::Base
 
     user_info_sql = "select user_email
                        from #{phpbb_prefix}users
-                      where username = #{self.name}"
+                      where username = '#{self.name}'"
 
     Account.mysql.query(user_info_sql) do |user_info|
       user_info.each_hash do |user_info_row|
@@ -137,8 +144,8 @@ class Account < ActiveRecord::Base
     group_sql = "select 1
                    from #{phpbb_prefix}user_group g
                    join #{phpbb_prefix}users u on (u.user_id = g.user_id)
-                  where u.username = #{self.name}
-                    and g.group_id = #{admin_group_id}"
+                  where u.username = '#{self.name}'
+                    and g.group_id = '#{admin_group_id}'"
 
     self.admin = false
     Account.mysql.query(group_sql) do |admin_info|
