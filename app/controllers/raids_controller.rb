@@ -20,6 +20,11 @@ class RaidsController < ApplicationController
     if @raid.uses_loot_system
       @list = List.first
     end
+
+    # Logs
+    if @current_account == @raid.account or @current_account.admin
+      @logs = Log.in(@raid).all
+    end
   end
 
   def finalize
@@ -74,7 +79,7 @@ class RaidsController < ApplicationController
         format.html { redirect_to raids_url }
         format.js { redirect_to raids_url }
       end
-    end        
+    end
   end
 
   def new
@@ -103,4 +108,3 @@ class RaidsController < ApplicationController
     @raid = Raid.find(params[:id])
   end
 end
-

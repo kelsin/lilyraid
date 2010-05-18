@@ -208,8 +208,33 @@
               <% end %>
             </table>
           </dd>
+        <% end # Signup Editing %>
+        <% unless @logs.empty? %>
+          <dt>Logs</dt>
+          <dd id="logs">
+            <table>
+              <tr>
+                <th>Account</th>
+                <th>Character</th>
+                <th>Loot</th>
+                <th>Source</th>
+                <th>Messages</th>
+                <th>Time</th>
+              </tr>
+              <% @logs.each_with_index do |log, index| %>
+                <tr id="<%= dom_id(log) %>" class="log <%= index > 4 ? 'hidden' : 'shown' %>">
+                  <td><%= link_to log.account, account_path(log.account) %></td>
+                  <td><%= link_to(render(:partial => 'shared/character', :object => log.character), account_path(log.character.account)) %></td>
+                  <td><%= link_to log.loot.item_name, log.loot.item_url, :class => 'loot' if log.loot %></td>
+                  <td><%= log.source %></td>
+                  <td><%= log.message %></td>
+                  <td><%= log.created_at.to_s(:raid_short) %></td>
+                </tr>
+              <% end %>
+            </table>
+          </dd>
         <% end %>
-      <% end %>
+      <% end # Admin Editing %>
     <% else %>
       <dt></dt>
       <dd>
@@ -220,7 +245,7 @@
         <p>We will try to get raids finalize at least 48 hours before they
         start. Sooner if plenty of people sign up in time.</p>
       </dd>
-      <% end %>
+    <% end %>
   </dl>
 <%- end # div_for @raid -%>
 

@@ -27,6 +27,10 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :name
 
+  def to_s
+    self.name
+  end
+
   def validate
     if CONFIG[:auth] == 'login'
       unless password_confirmation == change_password

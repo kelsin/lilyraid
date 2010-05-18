@@ -19,5 +19,5 @@ class Log < ActiveRecord::Base
   named_scope :from, lambda { |type| {
       :conditions => { :source => type } } }
 
-  default_scope :order => 'created_at'
+  default_scope :order => 'created_at desc'
 end

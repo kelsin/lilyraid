@@ -42,6 +42,7 @@ div.raid dd { float: left; clear: right; position: relative;
 div.raid dd#slots { max-width: 70em; }
 div.raid dd#loot { max-width: 70em; }
 div.raid dd#signups { max-width: 70em; }
+div.raid dd#logs { max-width: 70em; }
 
 div.raid dd ul { list-style: none; }
 div.raid dd ul li { margin-top: 0.5em; }

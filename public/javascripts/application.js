@@ -166,11 +166,6 @@ function wowhead_pull() {
     }
 }
 
-// Wow Heroes Lookup
-$(function () {
-    $('dd > span.character').live('dblclick', function() { window.open('http://www.wowarmory.com/character-sheet.xml?r=Bronzebeard&n=' + $(this).text(), '_blank'); });
-});
-
 function raid_edit_slots(ele) {
     if($(ele).val() === '') {
         $('select.slot_select').removeAttr('disabled');
@@ -178,3 +173,22 @@ function raid_edit_slots(ele) {
         $('select.slot_select').attr('disabled', 'disabled');
     }
 }
+
+$(function () {
+    // Wow Heroes Lookup
+    $('dd > span.character').live('dblclick', function() { window.open('http://www.wowarmory.com/character-sheet.xml?r=Bronzebeard&n=' + $(this).text(), '_blank'); });
+
+    // Hide hidden logs
+    $('tr.log.hidden').hide();
+    $('tr.log.shown').last().after($('<tr><td colspan="6"><a id="more_logs" href="#">Show More Logs ...</a></td></tr>'));
+    $('#more_logs').click(function() {
+        if($('tr.log.hidden').is(':visible')) {
+            $(this).html('Show More Logs ...');
+        } else {
+            $(this).html('Hide Logs ...');
+        }
+        $('tr.log.hidden').toggle();
+        return false;
+    });
+});
+
