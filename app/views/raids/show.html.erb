@@ -222,7 +222,7 @@
                 <th>Time</th>
               </tr>
               <% @logs.each_with_index do |log, index| %>
-                <tr id="<%= dom_id(log) %>" class="log <%= index > 4 ? 'hidden' : 'shown' %>">
+                <tr id="<%= dom_id(log) %>" class="log <%= index > 9 ? 'hidden' : 'shown' %>">
                   <td><%= link_to log.account, account_path(log.account) %></td>
                   <td><%= link_to(render(:partial => 'shared/character', :object => log.character), account_path(log.character.account)) %></td>
                   <td><%= link_to log.loot.item_name, log.loot.item_url, :class => 'loot' if log.loot %></td>
