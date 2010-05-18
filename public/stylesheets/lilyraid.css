@@ -51,7 +51,7 @@ div.raid dd ul li:first-child { margin-top: 0; }
 table td ul { list-style: none; }
 
 div.raid dl.list { background-color: #111; border: 1px solid #000; overflow: visible;
-                             padding: 0.5em; float: left; margin: 0 1em 0 0; }
+                   padding: 0.5em; float: left; margin: 0 1em 0 0; min-width: 120px; }
 div.raid dl.list dt { color: #ffd302; font-weight: bold;
                                 padding: 0; margin: 0.2em 0 0.7em 0; text-align: center;
                                 vertical-align: top; width: auto;
