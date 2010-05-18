@@ -11,7 +11,7 @@ class AccountsController < ApplicationController
 
   def create
     @account = Account.new(params[:account])
-    
+
     if params[:creation_password] == CONFIG[:account_creation_password]
       if @account.save
         redirect_to account_url(@account)
