@@ -86,6 +86,8 @@ class RaidsController < ApplicationController
     @raid = Raid.new
     @raid.date = Date.tomorrow + 18.hours unless @raid.date
     @raid.locations.build
+    @raid.locations.build
+    @raid.locations.build
   end
 
   def create
