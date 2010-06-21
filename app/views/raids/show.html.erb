@@ -236,6 +236,11 @@
         <% end %>
         <dt>Tag Chart</dt>
         <dd id="tags">
+          <p>Select the tag you want to view from this drop down. If you have no
+          tags defined then the only option will be "Seated". Signups are
+          totaled separately on the right. If an account was signed up for a
+          raid than the background of the box will be highlighted with light
+          grey.</p>
           <select name="tag_select" id="tag_select">
             <option value="seated">Seated</option>
             <% @tags.each do |tag| %>
