@@ -8,4 +8,8 @@ class Tag < ActiveRecord::Base
   def to_s
     self.name
   end
+
+  def slug
+    self.name.downcase.gsub(/ +/, '_')
+  end
 end

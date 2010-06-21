@@ -190,5 +190,12 @@ $(function () {
         $('tr.log.hidden').toggle();
         return false;
     });
+
+    $('dd#tags td span.stat').hide();
+    $('dd#tags td span.stat.seated').show();
+    $('#tag_select').change(function() {
+        $('dd#tags td span.stat').hide();
+        $('dd#tags td span.stat.' + $(this).val()).show();
+    });
 });
 

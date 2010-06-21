@@ -142,3 +142,6 @@ span.ui-timepickr { width: 600px; }
 
 /* WoWhead search */
 img#wowhead_search_loading_image { position: absolute; display: inline; top: 0; right: -20px; }
+
+/* Tag Chart */
+span.stat.total { font-weight: bold; }

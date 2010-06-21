@@ -48,6 +48,18 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def signed_up_for(raid)
+    !(raid.signups.select do |signup|
+        signup.character.account == self
+      end.empty?)
+  end
+
+  def seated_for(raid)
+    !(raid.slots.select do |slot|
+        slot.signup and slot.signup.character.account == self
+      end.empty?)
+  end
+
   def to_s
     self.name
   end

@@ -21,6 +21,9 @@ class RaidsController < ApplicationController
       @list = List.first
     end
 
+    @tags = Tag.all
+    @recent_raids = Raid.all(:limit => 8, :order => 'date desc', :conditions => ['date < ?', @raid.date]).reverse
+
     # Logs
     if @current_account == @raid.account or @current_account.admin
       @logs = Log.in(@raid).all
