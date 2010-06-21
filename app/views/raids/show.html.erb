@@ -263,7 +263,7 @@
               <% @raid.signups.group_by { |signup| signup.character.account }.each do |account, signups| %>
                 <tr class="account">
                   <td rowspan="<%= signups.size %>"><%= link_to account, account_path(account) %></td>
-                  <td><%= link_to(render(:partial => 'shared/character', :object => signups.first.character), account_path(signups.first.character.account, :anchor => "character_#{signups.first.character.id}")) %></td>
+                  <td class="char"><%= link_to(render(:partial => 'shared/character', :object => signups.first.character), account_path(signups.first.character.account, :anchor => "character_#{signups.first.character.id}")) %></td>
                   <% @recent_raids.each do |raid| %>
                     <td rowspan="<%= signups.size %>">
                       <span class="stat seated"><%= "X" if account.seated_for(raid) %></span>
@@ -273,7 +273,7 @@
                       <% end %>
                     </td>
                   <% end %>
-                  <td rowspan="<%= signups.size %>">
+                  <td class="total" rowspan="<%= signups.size %>">
                     <span class="stat total seated"><%= @recent_raids.inject(0) { |total, raid| total + (account.seated_for(raid) ? 1 : 0) } %></span>
                     <span class="stat total signed_up"><%= @recent_raids.inject(0) { |total, raid| total + (account.signed_up_for(raid) ? 1 : 0) } %></span>
                     <% @tags.each do |tag| %>
@@ -283,7 +283,7 @@
                 </tr>
                 <% signups[1..-1].each do |signup| %>
                   <tr>
-                    <td><%= link_to(render(:partial => 'shared/character', :object => signup.character), account_path(signup.character.account, :anchor => "character_#{signup.character.id}")) %></td>
+                    <td class="char"><%= link_to(render(:partial => 'shared/character', :object => signup.character), account_path(signup.character.account, :anchor => "character_#{signup.character.id}")) %></td>
                   </tr>
                 <% end %>
               <% end %>
