@@ -261,7 +261,7 @@
             </thead>
             <tbody>
               <% @raid.signups.group_by { |signup| signup.character.account }.each do |account, signups| %>
-                <tr>
+                <tr class="account">
                   <td rowspan="<%= signups.size %>"><%= link_to account, account_path(account) %></td>
                   <td><%= link_to(render(:partial => 'shared/character', :object => signups.first.character), account_path(signups.first.character.account, :anchor => "character_#{signups.first.character.id}")) %></td>
                   <% @recent_raids.each do |raid| %>

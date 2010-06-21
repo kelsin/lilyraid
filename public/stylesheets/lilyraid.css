@@ -145,3 +145,4 @@ img#wowhead_search_loading_image { position: absolute; display: inline; top: 0; 
 
 /* Tag Chart */
 span.stat.total { font-weight: bold; }
+dd#tags tr.account td { border-top: 1px solid #999; }
