@@ -238,7 +238,6 @@
         <dd id="tags">
           <select name="tag_select" id="tag_select">
             <option value="seated">Seated</option>
-            <option value="signed_up">Signed Up</option>
             <% @tags.each do |tag| %>
               <option value="<%= tag.slug %>"><%= tag %></option>
             <% end %>
@@ -252,6 +251,7 @@
                   <th><%= raid.name %></th>
                 <% end %>
                 <th rowspan="2">Total</th>
+                <th rowspan="2">Sign Ups</th>
               </tr>
               <tr>
                 <% @recent_raids.each do |raid| %>
@@ -265,9 +265,8 @@
                   <td rowspan="<%= signups.size %>"><%= link_to account, account_path(account) %></td>
                   <td class="char"><%= link_to(render(:partial => 'shared/character', :object => signups.first.character), account_path(signups.first.character.account, :anchor => "character_#{signups.first.character.id}")) %></td>
                   <% @recent_raids.each do |raid| %>
-                    <td rowspan="<%= signups.size %>">
+                    <td rowspan="<%= signups.size %>" class="<%= "signed_up" if account.signed_up_for(raid) %>">
                       <span class="stat seated"><%= "X" if account.seated_for(raid) %></span>
-                      <span class="stat signed_up"><%= "X" if account.signed_up_for(raid) %></span>
                       <% @tags.each do |tag| %>
                         <span class="stat <%= tag.slug %>"><%= "X" if not account.raider_tags.for_raid(raid).empty? %></span>
                       <% end %>
@@ -280,6 +279,7 @@
                       <span class="stat total <%= tag.slug %>"><%= @recent_raids.inject(0) { |total, raid| total + (account.raider_tags.for_raid(raid).empty? ? 0 : 1) } %></span>
                     <% end %>
                   </td>
+                  <td rowspan="<%= signups.size %>" class="stat total"><%= @recent_raids.inject(0) { |total, raid| total + (account.signed_up_for(raid) ? 1 : 0) } %></td>
                 </tr>
                 <% signups[1..-1].each do |signup| %>
                   <tr>
