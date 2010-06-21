@@ -149,3 +149,4 @@ dd#tags tr.account td { border-top: 1px solid #999; }
 dd#tags td.total { border-left: 1px solid #999; }
 dd#tags td.char { border-right: 1px solid #999; }
 dd#tags td.signed_up { background-color: #222; }
+dd#tags th.header { white-space: nowrap; }

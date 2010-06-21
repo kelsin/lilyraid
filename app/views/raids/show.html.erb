@@ -251,11 +251,11 @@
                   <th><%= raid.name %></th>
                 <% end %>
                 <th rowspan="2">Total</th>
-                <th rowspan="2">Sign Ups</th>
+                <th class="header" rowspan="2">Sign Ups</th>
               </tr>
               <tr>
                 <% @recent_raids.each do |raid| %>
-                  <th><%= raid.date.strftime('%m-%d-%Y') %></th>
+                  <th class="header"><%= raid.date.strftime('%m-%d-%Y') %></th>
                 <% end %>
               </tr>
             </thead>
