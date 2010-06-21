@@ -174,6 +174,18 @@ function raid_edit_slots(ele) {
     }
 }
 
+function time_slot_data(ele) {
+    var match = $(ele).attr('id').match(/^schedule_([0-9]+)_([0-9]+)_([0-9]+)$/);
+    var data = new Object();
+    data['day'] = parseInt(match[1]);
+    data['hour'] = parseFloat(match[2] + '.' + match[3]);
+    data['ele'] = $(ele);
+
+    return data;
+}
+
+var selected_time_slot = null;
+
 $(function () {
     // Wow Heroes Lookup
     $('dd > span.character').live('dblclick', function() { window.open('http://www.wowarmory.com/character-sheet.xml?r=Bronzebeard&n=' + $(this).text(), '_blank'); });
@@ -199,5 +211,59 @@ $(function () {
     });
 
     $('#caltime').timepicker({ timeSeparator: ":", showPeriod: true });
+
+    $('div#schedule').disableTextSelect();
+
+    $('div#schedule div.time_slot').mousedown(function() {
+        selected_time_slot = time_slot_data(this);
+    });
+
+    $('div#schedule div.time_slot').mouseover(function() {
+        if(selected_time_slot !== null) {
+            var current_time_slot = time_slot_data(this);
+
+            var start_day = Math.min(selected_time_slot['day'], current_time_slot['day']);
+            var end_day = Math.max(selected_time_slot['day'], current_time_slot['day']);
+
+            var start_hour = Math.min(selected_time_slot['hour'], current_time_slot['hour']);
+            var end_hour = Math.max(selected_time_slot['hour'], current_time_slot['hour']);
+
+            $('div.time_slot.hover').removeClass('hover');
+            for(d = start_day; d <= end_day; d++) {
+                for(h = start_hour; h <= end_hour; h += 0.5) {
+                    var hour = parseInt(h);
+                    var min = h == hour ? 0 : 5;
+                    $('#schedule_' + d + '_' + hour + '_' + min).addClass('hover');
+                }
+            }
+        }
+    });
+
+    $('div#schedule div.time_slot').mouseup(function() {
+        var current_time_slot = time_slot_data(this);
+
+        var start_day = Math.min(selected_time_slot['day'], current_time_slot['day']);
+        var end_day = Math.max(selected_time_slot['day'], current_time_slot['day']);
+
+        var start_hour = Math.min(selected_time_slot['hour'], current_time_slot['hour']);
+        var end_hour = Math.max(selected_time_slot['hour'], current_time_slot['hour']);
+
+        var selecting = !selected_time_slot['ele'].hasClass('selected');
+
+        for(d = start_day; d <= end_day; d++) {
+            for(h = start_hour; h <= end_hour; h += 0.5) {
+                var hour = parseInt(h);
+                var min = h == hour ? 0 : 5;
+                if(selecting) {
+                    $('#schedule_' + d + '_' + hour + '_' + min).addClass('selected');
+                } else {
+                    $('#schedule_' + d + '_' + hour + '_' + min).removeClass('selected');
+                }
+            }
+        }
+
+        $('div.time_slot.hover').removeClass('hover');
+        selected_time_slot = null;
+    });
 });
 

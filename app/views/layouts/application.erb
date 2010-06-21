@@ -7,7 +7,8 @@
     <%= stylesheet_link_tag 'lilyraid', RAILS_ENV, 'jquery', 'jquery.timepicker' %>
     <%= javascript_include_tag('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
                                'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js',
-                               'application', 'jquery.timepicker.min') %>
+                               'jquery.disable.text.select.pack.js',
+                               'application', 'jquery.timepickr.min') %>
     <% javascript_tag do %>
       var AUTH_TOKEN = <%= form_authenticity_token.inspect %>;
     <% end %>
@@ -23,6 +24,7 @@
         <li><%= link_to("Account", account_url(@current_account)) %></li>
         <li><%= link_to("Member List", accounts_url) %></li>
         <li><%= link_to("Loot", lists_url) %></li>
+        <li><%= link_to("Schedule", schedule_url) %></li>
         <li><%= link_to("Calendars", calendar_url) %></li>
         <% if @current_account.admin %>
           <li><%= link_to("Admin", admin_accounts_url) %></li>

@@ -36,6 +36,8 @@ ActionController::Routing::Routes.draw do |map|
     accounts.resources :characters, :member => { 'roles' => :get }
   end
 
+  map.resource :schedule
+
   map.resources :raids, :member => { 'finalize' => :post } do |raids|
     raids.resources :signups, :member => { 'preferred' => :post }
     raids.resources :accounts do |accounts|

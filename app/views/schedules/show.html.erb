@@ -1,0 +1,14 @@
+<div id="schedule">
+  <% Date::DAYNAMES.each_with_index do |day, index| %>
+    <div id="schedule_<%= index %>" class="day">
+      <div id="schedule_<%= index %>_header" class="header">
+        <%= day %>
+      </div>
+      <% (Time.parse("12:00 am")..Time.parse("11:30 pm")).step(30.minutes) do |time| %>
+        <div id="schedule_<%= index %>_<%= time.hour %>_<%= time.min == 30 ? '5' : '0' %>" class="time_slot">
+          <%= time.strftime("%I:%M %p").gsub(/^0/,'') %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
