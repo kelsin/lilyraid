@@ -7,6 +7,7 @@ class Character < ActiveRecord::Base
   has_many :raids, :through => :signups
 
   has_many :loots, :dependent => :nullify
+  has_many :logs, :dependent => :destroy
 
   validates_inclusion_of(:level,
                          :in => 1..80,

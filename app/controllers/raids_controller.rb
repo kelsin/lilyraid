@@ -23,11 +23,6 @@ class RaidsController < ApplicationController
 
     @tags = Tag.all
     @recent_raids = Raid.all(:limit => 8, :order => 'date desc', :conditions => ['date < ?', @raid.date]).reverse
-
-    # Logs
-    if @current_account == @raid.account or @current_account.admin
-      @logs = Log.in(@raid).all
-    end
   end
 
   def finalize
@@ -35,6 +30,8 @@ class RaidsController < ApplicationController
       @raid.finalized = !@raid.finalized
       @raid.save
     end
+
+    finalize_log(@raid)
 
     respond_to do |format|
       format.html { redirect_to raid_url(@raid) }

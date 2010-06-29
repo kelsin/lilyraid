@@ -209,7 +209,7 @@
             </table>
           </dd>
         <% end # Signup Editing %>
-        <% unless @logs.empty? %>
+        <% unless @raid.logs.empty? %>
           <dt>Logs</dt>
           <dd id="logs">
             <table>
@@ -221,10 +221,11 @@
                 <th>Messages</th>
                 <th>Time</th>
               </tr>
-              <% @logs.each_with_index do |log, index| %>
+              <% @raid.logs.each_with_index do |log, index| %>
                 <tr id="<%= dom_id(log) %>" class="log <%= index > 9 ? 'hidden' : 'shown' %>">
                   <td><%= link_to log.account, account_path(log.account) %></td>
-                  <td><%= link_to(render(:partial => 'shared/character', :object => log.character), account_path(log.character.account, :anchor => "character_#{log.character.id}")) %></td>
+                  <td><%= link_to(render(:partial => 'shared/character', :object => log.character),
+                                  account_path(log.character.account, :anchor => "character_#{log.character.id}")) if log.character %></td>
                   <td><%= link_to log.loot.item_name, log.loot.item_url, :class => 'loot' if log.loot %></td>
                   <td><%= log.source %></td>
                   <td><%= log.message %></td>

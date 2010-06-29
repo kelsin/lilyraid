@@ -8,6 +8,7 @@ class Account < ActiveRecord::Base
 
   has_many :raider_tags
   has_many :tags, :through => :raider_tags
+  has_many :logs, :dependent => :destroy
 
   # Make sure all characters can be deleted
   before_destroy :can_delete?

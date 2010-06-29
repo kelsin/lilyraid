@@ -18,6 +18,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def finalize_log(raid)
+    Log.create(:source => raid.finalized ? 'finalized' : 'unfinalized',
+               :account_id => @current_account.id,
+               :raid_id => raid.id)
+  end
+
   def signup_log(signup, message)
     Log.create(:source => 'signup',
                :account_id => @current_account.id,
