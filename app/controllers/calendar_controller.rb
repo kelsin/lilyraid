@@ -10,7 +10,7 @@ class CalendarController < ApplicationController
     cal.custom_property("X-WR-TIMEZONE", "America/Los_Angeles")
 
     # cal.add_component(get_tz)
-    
+
     Raid.find(:all, :order => :date).each do |raid|
       if raid.date
         event = Icalendar::Event.new
@@ -47,8 +47,8 @@ class CalendarController < ApplicationController
     cal.custom_property("X-WR-CALDESC", "Raid schedule for #{@account.name} of the " + CONFIG[:guild] + " Warcraft Guild")
 
     cal.add_component(get_tz)
-    
-    @account.all_raid_signups.each do |raid| 
+
+    @account.all_raid_signups.each do |raid|
       if raid.date
         event = Icalendar::Event.new
         params = { "TZID" => ["America/Los_Angeles"] }
@@ -71,7 +71,7 @@ class CalendarController < ApplicationController
     send_data(cal.to_ical,
               :filename => "#{@account.name}.ics",
               :type => "text/calendar")
-  end            
+  end
 
   private
 
@@ -94,5 +94,5 @@ class CalendarController < ApplicationController
     stan.add_rrule "FREQ=YEARLY;BYMONTH=11;BYDAY=1SU"
     tz.add_component(stan)
     return tz
-  end        
+  end
 end
