@@ -185,10 +185,14 @@ function time_slot_data(ele) {
 }
 
 var selected_time_slot = null;
+var AUTH_TOKEN = '';
 
 $(function () {
     // Wow Heroes Lookup
     $('dd > span.character').live('dblclick', function() { window.open('http://www.wowarmory.com/character-sheet.xml?r=Bronzebeard&n=' + $(this).text(), '_blank'); });
+
+    // Auth Token
+    AUTH_TOKEN = $('#auth_token').html();
 
     // Hide hidden logs
     $('tr.log.hidden').hide();

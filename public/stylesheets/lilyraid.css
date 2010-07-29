@@ -25,6 +25,9 @@ p.note {
     width: auto;
 }
 
+/* Auth Token */
+div#auth_token { display: none; }
+
 /* Table */
 table th { text-align: left; padding: 0.5em 1em 0.5em 0.5em; }
 table td { padding: 0.5em 1em 0.5em 0.5em; vertical-align: top; }

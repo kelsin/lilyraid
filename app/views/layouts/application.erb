@@ -4,14 +4,10 @@
   <head>
     <title><%= @title || CONFIG[:guild] + " Raid Signups" || "World of Warcraft Raid Signup" %></title>
     <link rel="icon" href="/images/<%= RAILS_ENV %>-favicon.png" type="image/png">
-    <%= stylesheet_link_tag 'lilyraid', RAILS_ENV, 'jquery', 'jquery.timepicker' %>
+    <%= stylesheet_link_tag 'lilyraid.min', "#{RAILS_ENV}.min", 'jquery.min', 'jquery.timepickr.min', :cache => true %>
     <%= javascript_include_tag('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
-                               'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js',
-                               'jquery.disable.text.select.pack.js',
-                               'application', 'jquery.timepickr.min') %>
-    <% javascript_tag do %>
-      var AUTH_TOKEN = <%= form_authenticity_token.inspect %>;
-    <% end %>
+                               'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js') %>
+    <%= javascript_include_tag('jquery.disable-text-select.min', 'application.min', 'jquery.timepickr.min', :cache => true) %>
   </head>
   <body>
     <h1><%= CONFIG[:guild] %>: Raid Signups</h1>
@@ -61,6 +57,6 @@
       link_to "GPL v.3", "http://www.gnu.org/copyleft/gpl.html" %> license.
     </div>
     <%= javascript_include_tag('http://static.wowhead.com/widgets/power.js') %>
-    <%# javascript_include_tag('http://www.armory-light.com/powered/powered.js') %>
+    <div id="auth_token"><%= form_authenticity_token.to_s %></div>
   </body>
 </html>
