@@ -13,7 +13,6 @@ class CalendarController < ApplicationController
         @cal.event do
           dtstart raid.date.strftime("%Y%m%dT%H%M%S")
           dtend raid.date.advance(:hours => 3).strftime("%Y%m%dT%H%M%S")
-          duration 'PT3H'
           url rurl
           location "Bronzebeard World of Warcraft Server"
           organizer raid.account.name if raid.account
@@ -42,7 +41,6 @@ class CalendarController < ApplicationController
         @cal.event do
           dtstart raid.date.strftime("%Y%m%dT%H%M%S")
           dtend raid.date.advance(:hours => 3).strftime("%Y%m%dT%H%M%S")
-          duration 'PT3H'
           url rurl
           location "Bronzebeard World of Warcraft Server"
           organizer raid.account.name if raid.account
