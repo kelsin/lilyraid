@@ -13,18 +13,19 @@ class CalendarController < ApplicationController
 
     Raid.find(:all, :order => :date).each do |raid|
       if raid.date
-        event = Icalendar::Event.new
         params = { "TZID" => ["America/Los_Angeles"] }
-        event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
-        event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
-        event.url = raid_url(raid)
-        event.location = "Bronzebeard World of Warcraft Server"
-        event.organizer = raid.account.name if raid.account
-        event.summary = raid.name
-        event.description = raid.note
-        event.klass = "PUBLIC"
-        event.uid = raid.uid
-        cal.add_event(event)
+        rurl = raid_url(raid)
+        cal.event do
+          dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
+          duration 'PT4H'
+          url rurl
+          location "Bronzebeard World of Warcraft Server"
+          organizer raid.account.name if raid.account
+          summary raid.name
+          description raid.note
+          klass "PUBLIC"
+          uid raid.uid
+        end
       end
     end
 
@@ -47,18 +48,19 @@ class CalendarController < ApplicationController
 
     @account.all_raid_signups.each do |raid|
       if raid.date
-        event = Icalendar::Event.new
         params = { "TZID" => ["America/Los_Angeles"] }
-        event.dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
-        event.dtend = raid.date.advance(:hours => 4).strftime("%Y%m%dT%H%M%S")
-        event.url = raid_url(raid)
-        event.location = "Bronzebeard World of Warcraft Server"
-        event.organizer = raid.account.name if raid.account
-        event.summary = raid.name
-        event.description = raid.note
-        event.klass = "PUBLIC"
-      event.uid = raid.uid
-      cal.add_event(event)
+        rurl = raid_url(raid)
+        cal.event do
+          dtstart raid.date.strftime("%Y%m%dT%H%M%S"), params
+          duration 'PT4H'
+          url rurl
+          location "Bronzebeard World of Warcraft Server"
+          organizer raid.account.name if raid.account
+          summary raid.name
+          description raid.note
+          klass "PUBLIC"
+          uid raid.uid
+        end
       end
     end
 
