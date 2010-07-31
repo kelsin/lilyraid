@@ -142,7 +142,7 @@ class Account < ActiveRecord::Base
     username_sql = "select u.username
                       from #{phpbb_prefix}sessions s
                       join #{phpbb_prefix}users u on (u.user_id = s.session_user_id)
-                     where s.session_id = '#{sid}'"
+                     where s.session_id = '#{sid}' and u.username != 'Anonymous'"
 
     Rails.logger.info username_sql
 
