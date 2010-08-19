@@ -18,7 +18,6 @@ class CharactersController < ApplicationController
   def edit
     if @current_account.admin || @current_account == @account
       respond_to do |format|
-        format.html
         format.js { render :template => false }
       end
     else
