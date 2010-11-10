@@ -24,6 +24,7 @@ class CalendarController < ApplicationController
       end
     end
 
+    @cal.publish
     send_data(@cal.to_ical,
               :filename => "raids.ics",
               :type => "text/calendar")
@@ -52,6 +53,7 @@ class CalendarController < ApplicationController
       end
     end
 
+    @cal.publish
     send_data(@cal.to_ical,
               :filename => "#{@account.name}.ics",
               :type => "text/calendar")
