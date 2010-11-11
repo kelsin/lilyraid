@@ -29,12 +29,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
 
-  map.calendar 'calendar', :controller => 'calendar', :action => 'index'
-  map.raid_calendar 'calendar/raids', :controller => 'calendar', :action => 'raids'
-  map.ics_raid_calendar 'calendar/raids.ics', :controller => 'calendar', :action => 'raids'
-  map.account_calendar 'calendar/account/:id', :controller => 'calendar', :action => 'account'
-
   map.resources :lists
+  map.resource :calendar
 
   map.resources :accounts, :member => { 'add_to_list' => :post, 'remove_from_list' => :post }  do |accounts|
     accounts.resources :characters, :member => { 'roles' => :get }
