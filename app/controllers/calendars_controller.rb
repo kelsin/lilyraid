@@ -57,8 +57,8 @@ class CalendarsController < ApplicationController
   def event(raid)
     event = Event.new
 
-    event.dtstart = raid.date.strftime('%Y%m%dT%H%M%S'), { 'TZID' => ['America/Los_Angeles'] }
-    event.dtend = raid.date.advance(:hours => 3).strftime('%Y%m%dT%H%M%S'), { 'TZID' => ['America/Los_Angeles'] }
+    event.dtstart = raid.date.strftime('%Y%m%dT%H%M%S')
+    event.dtend = raid.date.advance(:hours => 3).strftime('%Y%m%dT%H%M%S')
     event.description = raid.note
     event.location = "Bronzebeard World of Warcraft Server"
     event.organizer = raid.account.name if raid.account
