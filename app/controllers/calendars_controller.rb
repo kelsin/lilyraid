@@ -42,7 +42,7 @@ class CalendarsController < ApplicationController
         timezone_offset_to "-0800"
         timezone_name "PST"
         dtstart "19701101T020000"
-        add_recurrence_rule "YEARLY;BYMONTH=11;BYDAY=1SU"
+        add_recurrence_rule "FREQ=YEARLY;BYMONTH=11;BYDAY=1SU"
       end
     end
 
