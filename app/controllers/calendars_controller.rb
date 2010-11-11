@@ -46,7 +46,7 @@ class CalendarsController < ApplicationController
       end
     end
 
-    Raid.find(:all, :order => :date).each do |raid|
+    Raid.find(:all, :conditions => ['date >= ?', DateTime.now - 1.month], :order => :date).each do |raid|
       cal.add_event event(raid)
     end
 
