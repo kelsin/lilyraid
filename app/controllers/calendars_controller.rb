@@ -50,6 +50,9 @@ class CalendarsController < ApplicationController
     Raid.find(:all, :order => :date).each do |raid|
       cal.add_event event(raid)
     end
+
+    cal.publish
+    return cal.to_ical
   end
 
   def event(raid)
