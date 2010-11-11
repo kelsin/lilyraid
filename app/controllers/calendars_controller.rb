@@ -17,7 +17,6 @@ class CalendarsController < ApplicationController
 
   def calendar(account = nil)
     cal = Calendar.new
-    cal.custom_property("METHOD", "PUBLISH")
     cal.custom_property("X-WR-CALNAME", CONFIG[:guild] + " Raid Calendar")
     cal.custom_property("X-WR-TIMEZONE", "America/Los_Angeles")
 
