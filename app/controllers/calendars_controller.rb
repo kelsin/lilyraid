@@ -33,7 +33,7 @@ class CalendarsController < ApplicationController
         timezone_offset_from "-0800"
         timezone_offset_to "-0700"
         timezone_name "PDT"
-        dtstart "19700308TO20000"
+        dtstart "19700308T020000"
         add_recurrence_rule "FREQ=YEARLY;BYMONTH=3;BYDAY=2SU"
       end
 
