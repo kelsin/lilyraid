@@ -10,3 +10,4 @@ doc/app
 log/*.log
 public/stylesheets/raid.css
 tmp/*
+.bundle
