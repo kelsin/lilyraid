@@ -67,9 +67,9 @@ class CalendarsController < ApplicationController
     event.uid = raid.uid
     event.url = url_for(raid)
 
-    raid.confirmed_characters.each do |character|
-      event.add_attendee character.name
-    end
+    # raid.confirmed_characters.each do |character|
+    #   event.add_attendee character.name
+    # end
 
     return event
   end
