@@ -9,14 +9,8 @@ class Character < ActiveRecord::Base
   has_many :loots, :dependent => :nullify
   has_many :logs, :dependent => :destroy
 
-  validates_inclusion_of(:level,
-                         :in => 1..80,
-                         :message => "Valid levels are 1 through 80")
-
   validates_uniqueness_of :name
-  validates_presence_of :name
-
-  validates_presence_of :account
+  validates_presence_of :name, :account, :race_id, :cclass_id
 
   before_destroy :can_delete?
 
@@ -64,5 +58,24 @@ class Character < ActiveRecord::Base
 
   def can_delete?
     raids.empty?
+  end
+
+  def armory_char_data
+    response = HTTParty.get(URI::escape("http://#{CONFIG[:region]}.wowarmory.com/character-sheet.xml?r=#{CONFIG[:realm]}&n=#{self.name}&rhtml=no"))
+    response['page']['characterInfo']['character']
+  end
+
+  def update_from_armory!
+    char = armory_char_data
+
+    if char
+      self.level = char['level']
+      self.guild = char['guildName']
+      self.cclass = Cclass.find_by_name(char['class'])
+      self.race = Race.find_by_name(char['race'])
+      self.save
+    else
+      false
+    end
   end
 end
