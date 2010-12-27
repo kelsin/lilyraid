@@ -6,7 +6,7 @@ class CharactersController < ApplicationController
     if @current_account.admin || @current_account == @account
       @character = Character.new(params[:character])
       @character.account = @account
-      @character.save
+      @character.update_from_armory!
     end
 
     respond_to do |format|
