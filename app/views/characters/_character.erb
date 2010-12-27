@@ -4,6 +4,8 @@
     <p id="<%=dom_id(character)%>_edit_link">
       <%= link_to("Edit", edit_account_character_url(character.account, character),
                   :onclick => "$.get('#{edit_account_character_url(character.account, character)}', {}, null, 'script'); return false;") %>
+        | <%= link_to_remote("Update from Armory", :url => account_character_path(character.account, character, :armory_update => true),
+                             :method => :put, :loading => "$('#character_#{character.id}_edit_link').html('Loading...');") %>
       <% if character.raids.empty? %>
         | <span id="<%=dom_id(character)%>_delete_link">
           <%= link_to("Delete", account_character_url(character.account, character),
@@ -30,7 +32,7 @@
         <ul>
           <% character.loots.each do |loot| -%>
             <li>
-              <%= link_to loot.item_name, loot.item_url, :class => 'loot' %>        
+              <%= link_to loot.item_name, loot.item_url, :class => 'loot' %>
               <%= link_to(loot.location.raid.name, raid_url(loot.location.raid), :class => 'tiny') %>
             </li>
           <% end -%>
