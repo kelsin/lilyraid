@@ -65,6 +65,10 @@ class Character < ActiveRecord::Base
     response['page']['characterInfo']['character']
   end
 
+  def not_found_in_armory
+    @not_found_in_armory || false
+  end
+
   def update_from_armory!
     char = armory_char_data
 
@@ -75,6 +79,7 @@ class Character < ActiveRecord::Base
       self.race = Race.find_by_name(char['race'])
       self.save
     else
+      @not_found_in_armory = true
       false
     end
   end

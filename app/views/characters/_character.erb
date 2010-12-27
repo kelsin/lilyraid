@@ -4,8 +4,12 @@
     <p id="<%=dom_id(character)%>_edit_link">
       <%= link_to("Edit", edit_account_character_url(character.account, character),
                   :onclick => "$.get('#{edit_account_character_url(character.account, character)}', {}, null, 'script'); return false;") %>
-        | <%= link_to_remote("Update from Armory", :url => account_character_path(character.account, character, :armory_update => true),
-                             :method => :put, :loading => "$('#character_#{character.id}_edit_link').html('Loading...');") %>
+        | <% if character.not_found_in_armory %>
+            Can't find this character on the armory
+          <% else %>
+            <%= link_to_remote("Update from Armory", :url => account_character_path(character.account, character, :armory_update => true),
+                               :method => :put, :loading => "$('#character_#{character.id}_edit_link').html('Loading...');") %>
+          <% end %>
       <% if character.raids.empty? %>
         | <span id="<%=dom_id(character)%>_delete_link">
           <%= link_to("Delete", account_character_url(character.account, character),
