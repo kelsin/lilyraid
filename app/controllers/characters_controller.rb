@@ -30,12 +30,8 @@ class CharactersController < ApplicationController
 
   def update
     if @current_account.admin || @current_account == @account
-      if params[:armory_update] == 'true'
-        @character = Character.find(params[:id])
-        @character.update_from_armory!
-      else
-        @character = Character.update(params[:id], params[:character])
-      end
+      @character = Character.update(params[:id], params[:character])
+      @character.update_from_armory!
     end
 
     respond_to do |format|

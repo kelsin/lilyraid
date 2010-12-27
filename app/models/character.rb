@@ -61,8 +61,12 @@ class Character < ActiveRecord::Base
   end
 
   def armory_char_data
-    response = HTTParty.get(URI::escape("http://#{CONFIG[:region]}.wowarmory.com/character-sheet.xml?r=#{CONFIG[:realm]}&n=#{self.name}&rhtml=no"))
-    response['page']['characterInfo']['character']
+    begin
+      response = HTTParty.get(URI::escape("http://#{CONFIG[:region]}.wowarmory.com/character-sheet.xml?r=#{CONFIG[:realm]}&n=#{self.name}&rhtml=no"))
+      response['page']['characterInfo']['character']
+    rescue
+      nil
+    end
   end
 
   def not_found_in_armory

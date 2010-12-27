@@ -7,7 +7,7 @@
         | <% if character.not_found_in_armory %>
             Can't find this character on the armory
           <% else %>
-            <%= link_to_remote("Update from Armory", :url => account_character_path(character.account, character, :armory_update => true),
+            <%= link_to_remote("Update from Armory", :url => account_character_path(character.account, character),
                                :method => :put, :loading => "$('#character_#{character.id}_edit_link').html('Loading...');") %>
           <% end %>
       <% if character.raids.empty? %>
