@@ -23,9 +23,9 @@
     <dt>Level:</dt>
     <dd><%= character.level %></dd>
     <dt>Race:</dt>
-    <dd><%= character.race.name %></dd>
+    <dd><%= character.race.name if character.race %></dd>
     <dt>Class:</dt>
-    <dd><%= render(:partial => "shared/cclass", :object => character.cclass) %></dd>
+    <dd><%= render(:partial => "shared/cclass", :object => character.cclass) if character.cclass %></dd>
     <% if !character.guild.blank? %>
       <dt>Guild:</dt>
       <dd><%= character.guild %></dd>
