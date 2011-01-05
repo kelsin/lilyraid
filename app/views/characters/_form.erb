@@ -5,16 +5,7 @@
     <dl>
       <dt>Name:</dt>
       <dd><%= f.text_field :name %></dd>
-      <dt>Level:</dt>
-      <dd><%= f.text_field :level, :size => 5 %></dd>
-      <dt>Guild:</dt>
-      <dd><%= f.text_field :guild  %></dd>
-      <% if character.new_record? %>
-        <dt>Race:</dt>
-        <dd><%= f.collection_select(:race_id, Race.find(:all), :id, :name) %></dd>
-        <dt>Class:</dt>
-        <dd><%= f.collection_select(:cclass_id, Cclass.find(:all), :id, :name) %></dd>
-      <% else %>
+      <% unless character.new_record? %>
         <dt>Inactive:</dt>
         <dd>
           <%= f.check_box :inactive %>

@@ -8,7 +8,8 @@ gem "dbi"
 gem "hoptoad_notifier"
 gem "icalendar"
 gem "will_paginate"
+gem "httparty"
 
 group :development do
-    gem "sqlite3-ruby"
+  gem "sqlite3-ruby"
 end

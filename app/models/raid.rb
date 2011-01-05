@@ -210,4 +210,12 @@ class Raid < ActiveRecord::Base
   def uid
     "raid_#{self.id}@raids.dota-guild.com"
   end
+
+  def caldate
+    date.strftime("%m/%d/%Y")
+  end
+
+  def caltime
+    date.strftime("%I:%M %P")
+  end
 end

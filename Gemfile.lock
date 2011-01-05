@@ -11,13 +11,16 @@ GEM
     activeresource (2.3.5)
       activesupport (= 2.3.5)
     activesupport (2.3.5)
-    builder (2.1.2)
+    builder (3.0.0)
+    crack (0.1.8)
     dbi (0.4.5)
       deprecated (= 2.0.1)
     deprecated (2.0.1)
     hoptoad_notifier (2.3.12)
       activesupport
       builder
+    httparty (0.6.1)
+      crack (= 0.1.8)
     icalendar (1.1.5)
     mysql (2.8.1)
     rack (1.0.1)
@@ -38,6 +41,7 @@ PLATFORMS
 DEPENDENCIES
   dbi
   hoptoad_notifier
+  httparty
   icalendar
   mysql
   rails (= 2.3.5)
