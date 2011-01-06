@@ -84,7 +84,7 @@ class RaidsController < ApplicationController
 
   def new
     @raid = Raid.new
-    @raid.date = Date.tomorrow + 18.hours unless @raid.date
+    @raid.date = Time.zone.parse("Tomorrow 18h00") unless @raid.date
     @raid.locations.build
     @raid.locations.build
     @raid.locations.build
@@ -94,7 +94,7 @@ class RaidsController < ApplicationController
     # Create raid object
     @raid = Raid.new(params[:raid])
     @raid.account = @current_account
-    @raid.date = Time.parse("#{params[:caldate]} #{params[:caltime]}")
+    @raid.date = Time.zone.parse("#{params[:caldate]} #{params[:caltime]}")
 
     if @raid.save
       flash[:notice] = 'Raid saved!'

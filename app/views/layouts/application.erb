@@ -4,10 +4,10 @@
   <head>
     <title><%= @title || CONFIG[:guild] + " Raid Signups" || "World of Warcraft Raid Signup" %></title>
     <link rel="icon" href="/images/<%= RAILS_ENV %>-favicon.png" type="image/png">
-    <%= stylesheet_link_tag 'lilyraid', RAILS_ENV, 'jquery', 'jquery.timepickr' %>
+    <%= stylesheet_link_tag 'lilyraid', RAILS_ENV, 'jquery', 'jquery.timepicker' %>
     <%= javascript_include_tag('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
                                'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js',
-                               'application', 'jquery.timepickr.min') %>
+                               'application', 'jquery.timepicker.min') %>
     <% javascript_tag do %>
       var AUTH_TOKEN = <%= form_authenticity_token.inspect %>;
     <% end %>

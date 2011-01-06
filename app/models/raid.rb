@@ -216,6 +216,6 @@ class Raid < ActiveRecord::Base
   end
 
   def caltime
-    date.strftime("%I:%M %P")
+    date.strftime("%I:%M %p")
   end
 end

@@ -197,5 +197,7 @@ $(function () {
         $('dd#tags td span.stat').hide();
         $('dd#tags td span.stat.' + $(this).val()).show();
     });
+
+    $('#caltime').timepicker({ timeSeparator: ":", showPeriod: true });
 });
 
