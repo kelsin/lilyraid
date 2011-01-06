@@ -64,7 +64,8 @@ class Character < ActiveRecord::Base
     begin
       response = HTTParty.get(URI::escape("http://#{CONFIG[:region]}.wowarmory.com/character-sheet.xml?r=#{CONFIG[:realm]}&n=#{self.name}&rhtml=no"))
       response['page']['characterInfo']['character']
-    rescue
+    rescue Exception => e
+      Rails.logger.error e.message
       nil
     end
   end
