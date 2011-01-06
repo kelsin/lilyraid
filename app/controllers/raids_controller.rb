@@ -52,7 +52,7 @@ class RaidsController < ApplicationController
   def update
     if @current_account.can_edit?(@raid)
       @raid.update_attributes(params[:raid])
-      @raid.date = Time.parse("#{params[:caldate]} #{params[:caltime]}")
+      @raid.date = Time.zone.parse("#{params[:caldate]} #{params[:caltime]}")
 
       if @raid.save
         redirect_to raid_url(@raid)
