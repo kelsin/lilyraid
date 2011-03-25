@@ -70,10 +70,6 @@ class Character < ActiveRecord::Base
     end
   end
 
-  def not_found_in_armory
-    @not_found_in_armory || false
-  end
-
   def update_from_armory!
     char = armory_char_data
 
@@ -82,10 +78,7 @@ class Character < ActiveRecord::Base
       self.guild = char['guildName']
       self.cclass = Cclass.find_by_name(char['class'])
       self.race = Race.find_by_name(char['race'])
-      self.save
-    else
-      @not_found_in_armory = true
-      false
+      self.reload unless self.save
     end
   end
 end
