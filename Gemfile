@@ -12,4 +12,6 @@ gem "httparty"
 
 group :development do
   gem "sqlite3-ruby"
+  gem "capistrano"
+  gem "capistrano-ext"
 end

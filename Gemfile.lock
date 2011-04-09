@@ -11,14 +11,30 @@ GEM
     activeresource (2.3.11)
       activesupport (= 2.3.11)
     activesupport (2.3.11)
+    capistrano (2.5.21)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.0.0)
+    capistrano-ext (1.2.1)
+      capistrano (>= 1.0.0)
     crack (0.1.8)
     dbi (0.4.5)
       deprecated (= 2.0.1)
     deprecated (2.0.1)
+    highline (1.6.1)
     httparty (0.7.4)
       crack (= 0.1.8)
     icalendar (1.1.6)
     mysql (2.8.1)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.1.4)
+    net-ssh-gateway (1.0.1)
+      net-ssh (>= 1.99.1)
     rack (1.1.2)
     rails (2.3.11)
       actionmailer (= 2.3.11)
@@ -38,6 +54,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  capistrano
+  capistrano-ext
   dbi
   httparty
   icalendar
