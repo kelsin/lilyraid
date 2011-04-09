@@ -1,9 +1,6 @@
 Capfile
 config/database.yml
 config/config.yml
-config/initializers/hoptoad.rb
-config/deploy.rb
-config/deploy/*
 db/*.sqlite3
 doc/api
 doc/app

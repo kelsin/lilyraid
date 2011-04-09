@@ -6,7 +6,6 @@ gem "mysql"
 gem "dbi"
 gem "tzinfo"
 
-gem "hoptoad_notifier"
 gem "icalendar"
 gem "will_paginate"
 gem "httparty"
