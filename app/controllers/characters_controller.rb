@@ -4,7 +4,7 @@ class CharactersController < ApplicationController
 
   def create
     if @current_account.admin || @current_account == @account
-      @character = @account.characters.create(params[:characters])
+      @character = @account.characters.create(params[:character])
       @character.update_from_armory!
     end
 

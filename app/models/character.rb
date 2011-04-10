@@ -65,6 +65,7 @@ class Character < ActiveRecord::Base
       response = HTTParty.get(URI::escape("http://#{CONFIG[:region]}.wowarmory.com/character-sheet.xml?r=#{CONFIG[:realm]}&n=#{self.name}&rhtml=no"))
       response['page']['characterInfo']['character']
     rescue Exception => e
+      Rails.logger.error "Failed to get armory data for #{self.account.name}/#{self.name}"
       Rails.logger.error e.message
       nil
     end
