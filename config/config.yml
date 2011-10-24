@@ -1,0 +1,14 @@
+default:
+  guild: Your Guild
+  forum: http://your.guilds.forum
+  region: us
+  realm: Bronzebeard
+  auth: phpbb
+  phpbb_db: your_db_name
+  phpbb_host: your.db.host
+  phpbb_user: username
+  phpbb_pass: password
+  phpbb_prefix: phpbb_
+  phpbb_admin_group: 1
+  phpbb_cookie: phpbb3_cookie
+
