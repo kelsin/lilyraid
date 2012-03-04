@@ -23,8 +23,6 @@ class Account < ActiveRecord::Base
               :conditions => { :admin => false },
               :order => "accounts.name, characters.level desc, characters.name")
 
-  @@mysql = nil
-
   validates_uniqueness_of :name
   validates_presence_of :name
 
@@ -190,11 +188,11 @@ class Account < ActiveRecord::Base
   end
 
   def Account.mysql
-    @@mysql ||= Mysql.new(CONFIG[:phpbb_host],
-                          CONFIG[:phpbb_user],
-                          CONFIG[:phpbb_pass],
-                          CONFIG[:phpbb_db],
-                          CONFIG[:phpbb_post].to_i)
+    Mysql.new(CONFIG[:phpbb_host],
+              CONFIG[:phpbb_user],
+              CONFIG[:phpbb_pass],
+              CONFIG[:phpbb_db],
+              CONFIG[:phpbb_post].to_i)
   end
 
   def before_save
