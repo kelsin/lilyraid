@@ -1,10 +1,12 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
@@ -19,16 +21,16 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.string   "email"
     t.boolean  "admin",                    :default => false, :null => false
     t.text     "bio"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.string   "password",   :limit => 32
   end
 
   create_table "cclass_roles", :force => true do |t|
     t.integer  "cclass_id"
     t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "cclass_roles", ["cclass_id", "role_id"], :name => "index_cclass_roles_on_cclass_id_and_role_id"
@@ -38,8 +40,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
   create_table "cclasses", :force => true do |t|
     t.string   "name"
     t.string   "color",      :limit => 6
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
   end
 
   create_table "characters", :force => true do |t|
@@ -50,16 +52,16 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.string   "guild"
     t.integer  "level"
     t.boolean  "inactive",   :default => false, :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "characters", ["account_id"], :name => "index_characters_on_account_id"
 
   create_table "instances", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.boolean  "active",     :default => true, :null => false
   end
 
@@ -67,8 +69,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.integer  "list_id",    :null => false
     t.integer  "account_id", :null => false
     t.integer  "position",   :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "list_positions", ["account_id"], :name => "index_list_positions_on_account_id"
@@ -79,8 +81,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.string   "name",       :null => false
     t.datetime "date"
     t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "lists", ["date"], :name => "index_lists_on_date"
@@ -89,8 +91,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
   create_table "locations", :force => true do |t|
     t.integer  "instance_id"
     t.integer  "raid_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "locations", ["raid_id", "instance_id"], :name => "locations_by_raid_and_instance", :unique => true
@@ -102,8 +104,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.integer  "loot_id"
     t.string   "source"
     t.string   "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "loots", :force => true do |t|
@@ -111,8 +113,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.integer  "list_id",      :null => false
     t.string   "item_url"
     t.string   "item_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "location_id"
   end
 
@@ -121,16 +123,16 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
 
   create_table "races", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "raider_tags", :force => true do |t|
     t.integer  "account_id"
     t.integer  "raid_id"
     t.integer  "tag_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "raids", :force => true do |t|
@@ -141,8 +143,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.boolean  "uses_loot_system", :default => false, :null => false
     t.boolean  "locked",           :default => false, :null => false
     t.integer  "account_id",                          :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.boolean  "finalized",        :default => false, :null => false
   end
 
@@ -151,15 +153,15 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
 
   create_table "roles", :force => true do |t|
     t.string   "name",       :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "signup_roles", :force => true do |t|
     t.integer  "signup_id"
     t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "signup_roles", ["role_id"], :name => "index_signup_roles_on_role_id"
@@ -170,8 +172,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.integer  "raid_id",                         :null => false
     t.integer  "character_id",                    :null => false
     t.string   "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.boolean  "preferred",    :default => false, :null => false
   end
 
@@ -185,8 +187,8 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
     t.integer  "signup_id"
     t.integer  "role_id"
     t.integer  "cclass_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.integer  "template_id"
     t.integer  "team",        :default => 1
   end
@@ -197,14 +199,14 @@ ActiveRecord::Schema.define(:version => 20100311015417) do
 
   create_table "tags", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "templates", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
