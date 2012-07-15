@@ -12,8 +12,12 @@ gem 'icalendar'
 # WoW Armory Integration
 gem 'httparty'
 
-# gem "thin"
-gem "unicorn"
+# Battle.net api
+gem 'battlenet'
+
+# Web Server
+gem 'unicorn'
+gem 'thin'
 
 # Haml and Sass
 gem 'haml'
@@ -24,6 +28,9 @@ gem 'airbrake'
 
 # jQuery
 gem 'jquery-rails'
+
+# Authorization
+gem 'cancan'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -36,7 +36,10 @@ GEM
       builder
       girl_friday
     arel (3.0.2)
+    battlenet (1.4.0)
+      httparty
     builder (3.0.4)
+    cancan (1.6.8)
     capistrano (2.13.5)
       highline
       net-scp (>= 1.0.0)
@@ -160,6 +163,8 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake
+  battlenet
+  cancan
   capistrano
   capistrano-ext
   coffee-rails (~> 3.2.1)

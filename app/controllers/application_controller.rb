@@ -49,6 +49,10 @@ class ApplicationController < ActionController::Base
     redirect_to(:controller => 'login', :action => 'index') unless @current_account
   end
 
+  def current_user
+    @current_account
+  end
+
   def require_admin
     # Check if the admin flag is set
     unless @current_account.admin
