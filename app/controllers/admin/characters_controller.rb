@@ -1,16 +1,16 @@
 class Admin::CharactersController < ApplicationController
   def index
-    @accounts = Account.find(:all, :order => :name)
+    @accounts = Account.order('name').all
 
     @account = Account.new
     @character = Character.new
-    @cclasses = Cclass.find(:all, :order => :name)
+    @cclasses = Cclass.order('name').all
   end
 
   def create
     @account = Account.new(params[:account])
     @account.save
-    
+
     @character = Character.new(params[:character])
     @character.account = @account
     @character.save

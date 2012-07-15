@@ -1,6 +1,6 @@
 <div class="raid">
   <h3>Edit Template</h3>
-  <% form_for [:admin, @raid_template] do |f| %>
+  <%= form_for [:admin, @raid_template] do |f| %>
     <%= error_messages_for(:raid_template) %>
     <dl>
       <dt><%= f.label :name %></dt>
@@ -12,7 +12,7 @@
             <dt>Group <%= cycle(*(1..8).to_a) %></dt>
             <% group.each do |slot| -%>
               <dd>
-                <% f.fields_for :slots, slot do |s| %>
+                <%= f.fields_for :slots, slot do |s| %>
                   <%= s.collection_select(:role_id, Role.all, :id, :name, :include_blank => "Any") %>
                   <%= s.collection_select(:cclass_id, Cclass.all, :id, :name, :include_blank => "Any") %>
                   <%= s.select(:team, (1..4).inject([]) { |col, x| col << ["Team #{x}", x] }) %><br />
@@ -27,5 +27,3 @@
     </dl>
   <% end %>
 </div>
-
-              

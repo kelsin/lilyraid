@@ -15,15 +15,10 @@ class Account < ActiveRecord::Base
   # Make sure all characters can be deleted
   before_destroy :can_delete?
 
-  named_scope(:admins,
-              :include => { :characters => [:account, :cclass, :race] },
-              :conditions => { :admin => true },
-              :order => "accounts.name, characters.level desc, characters.name")
-
-  named_scope(:members,
-              :include => { :characters => [:account, :cclass, :race] },
-              :conditions => { :admin => false },
-              :order => "accounts.name, characters.level desc, characters.name")
+  scope :by_name, order('name')
+  scope :with_characters, includes(:characters => [:account, :cclass, :race]).order('accounts.name, characters.level desc, characters.name')
+  scope :admins, with_characters.where(:admin => true)
+  scope :members, with_characters.where(:admin => false)
 
   validates_uniqueness_of :name
   validates_presence_of :name
@@ -130,8 +125,7 @@ class Account < ActiveRecord::Base
   end
 
   def Account.get_account_id_from_info(username, password)
-    account = find(:first,
-                   :conditions => ['name = ? and password = ?', username, Digest::MD5.hexdigest(password)])
+    account = where('name = ? and password = ?', username, Digest::MD5.hexdigest(password)).first
     account ? account.id : nil
   end
 

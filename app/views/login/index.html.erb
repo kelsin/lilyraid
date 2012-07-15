@@ -2,7 +2,7 @@
   <% if CONFIG[:auth] == 'login' %>
     <h3>Login</h3>
     <p>You can also create a <%= link_to "new account", new_account_url %></p>
-    <% form_tag :action => 'create' do %>
+    <%= form_tag :action => 'create' do %>
       <dl>
         <% if flash[:notice] %>
           <dt></dt><dd><%= flash[:notice] %></dd>

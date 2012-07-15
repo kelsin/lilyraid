@@ -1,9 +1,0 @@
-<dt><%= List.first.name %></dt>
-<% List.first.list_positions.in_raid(raid).each do |position| %>
-  <%= render :partial => "position", :locals => { :position => position, :raid => raid } %>
-<% end %>
-<% if List.first.list_positions.seated_in(raid).count > 0 %>
-  <dd class="empty">Empty</dd>
-<% else %>
-  <dd class="empty seated">Empty</dd>
-<% end %>

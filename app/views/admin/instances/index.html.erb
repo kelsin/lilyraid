@@ -1,6 +1,6 @@
 <div class="raid">
   <h3>Instances</h3>
-  <% form_for [:admin, @new_instance] do |f| %>
+  <%= form_for [:admin, @new_instance] do |f| %>
     <dl>
       <% if @active.size > 0 %>
         <dt>Active</dt>

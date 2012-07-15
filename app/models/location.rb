@@ -5,6 +5,10 @@ class Location < ActiveRecord::Base
 
   before_save :check_duplicates
 
+  def to_s
+    self.name
+  end
+
   def name
     instance.name
   end

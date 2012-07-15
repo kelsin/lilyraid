@@ -1,0 +1,35 @@
+%ul.errors
+  - @raid.errors.full_messages do |msg|
+    %li= msg
+%div[@raid]
+  %h3 New Raid
+  = form_for @raid do |f|
+    %dl
+      %dt Name:
+      %dd= f.text_field :name, :size => 30
+      %dt Date:
+      %dd
+        = text_field_tag 'caldate', @raid.caldate, :size => 10
+        @
+        = text_field_tag 'caltime', @raid.caltime, :size => 8
+      %dt Slots:
+      %dd= f.collection_select :template_id, ::Template.all, :id, :name
+      %dt Instance:
+      %dd
+        %ul
+          = f.fields_for :locations do |l|
+            %li= l.collection_select :instance_id, Instance.active, :id, :name, :include_blank => true
+      - if admin?
+        %dt Uses Loot System?
+        %dd= f.check_box :uses_loot_system
+      %dt Creator:
+      %dd
+        = @current_account
+        - if admin?
+          (Admin)
+      %dt
+      %dd= submit_tag
+
+= javascript_tag do
+  $('#caldate').datepicker();
+  $('#caltime').timepicker({ timeSeparator: ":", showPeriod: true });

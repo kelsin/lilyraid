@@ -2,13 +2,13 @@ class Admin::AccountsController < ApplicationController
   before_filter :require_admin
 
   def index
-    @accounts = Account.find(:all, :order => :name)
+    @accounts = Account.order('name').all
 
     @account = Account.new
     @character = Character.new
-    @cclasses = Cclass.find(:all, :order => :name)
-    
-    @deletable = Account.find(:all, :order => :name).select do |account|
+    @cclasses = Cclass.order('name').all
+
+    @deletable = Account.order('name').all.select do |account|
       account.can_delete?
     end
   end
@@ -23,9 +23,9 @@ class Admin::AccountsController < ApplicationController
       @character.save
       redirect_to account_url(@account.id)
     else
-      @cclasses = Cclass.find(:all, :order => :name)
-    
-      @deletable = Account.find(:all, :order => :name).select do |account|
+      @cclasses = Cclass.order('name').all
+
+      @deletable = Account.order('name').all.select do |account|
         account.can_delete?
       end
 
@@ -35,7 +35,7 @@ class Admin::AccountsController < ApplicationController
 
   def rename
     Account.update(params[:id], params[:account])
-    
+
     redirect_to admin_accounts_url
   end
 

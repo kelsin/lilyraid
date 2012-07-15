@@ -1,6 +1,6 @@
-<%- div_for(@loot, :class => "raid") do -%>
+<%= div_for(@loot, :class => "raid") do %>
   <h3>Edit Loot</h3>
-  <% form_for [@raid, @loot] do |f| %>
+  <%= form_for [@raid, @loot] do |f| %>
   <dl>
     <dt>Character</dt>
     <dd><%= render :partial => "shared/character", :object => @loot.character %></dd>

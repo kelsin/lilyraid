@@ -6,7 +6,7 @@
     </dl>
   <% end %>
   <h3>New Template</h3>
-  <% form_for [:admin, @new_template] do |f| %>
+  <%= form_for [:admin, @new_template] do |f| %>
     <%= error_messages_for(:new_template) %>
     <dl>
       <dt><%= f.label :name %></dt>

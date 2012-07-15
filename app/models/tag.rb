@@ -3,7 +3,7 @@ class Tag < ActiveRecord::Base
 
   default_scope :order => 'name'
 
-  named_scope :deletable, :include => :raider_tags, :conditions => 'raider_tags.id is null'
+  scope :deletable, :include => :raider_tags, :conditions => 'raider_tags.id is null'
 
   def to_s
     self.name

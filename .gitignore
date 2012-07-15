@@ -1,12 +1,26 @@
-config/database.yml
-config/config.yml
+# Bundler
+.bundle
+bin
+
+# DB
 db/*.sqlite3
+
+# Rails
+log/*.log
+tmp/**/*
+tmp/*
+
+# Mac
+.DS_Store
+
+# Cached
+public/stylesheets/raid.css
+.sass-cache
+
+# Doc
 doc/api
 doc/app
-log/*.log
-public/stylesheets/raid.css
-tmp/*
-.bundle
-.DS_Store
-.sass-cache
-bin
+
+# Sample files
+config/database.yml
+config/config.yml

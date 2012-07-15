@@ -7,20 +7,16 @@ class Slot < ActiveRecord::Base
   belongs_to :role
   belongs_to :cclass
 
-  named_scope :empty, {
-    :conditions => "signup_id is null"
-  }
+  scope :empty, {
+    :conditions => "signup_id is null" }
 
-  named_scope :filled, {
-    :conditions => "signup_id is not null"
-  }
+  scope :filled, {
+    :conditions => "signup_id is not null" }
 
   default_scope :order => 'slots.id'
 
-  named_scope :in_team, lambda { |team| {
-      :conditions => { :team => team }
-    }
-  }
+  scope :in_team, lambda { |team| {
+      :conditions => { :team => team } } }
 
   def eql?(o)
     o.is_a?(Slot) && self.role_id == o.role_id && self.cclass_id == o.cclass_id

@@ -25,16 +25,17 @@ class Raid < ActiveRecord::Base
 
   has_many :logs
 
-  named_scope :past, :conditions => ['raids.date < ?', Date.today]
-  named_scope :last_month, :conditions => ['raids.date >= ?', Date.today - 1.month]
-  named_scope :last_three_months, :conditions => ['raids.date >= ?', Date.today - 3.months]
+  scope :past, lambda { where('raids.date < ?', Date.today) }
+  scope :last_month, lambda { where('raids.date >= ?', Date.today - 1.month) }
+  scope :last_three_months, lambda { where('raids.date >= ?', Date.today - 3.months) }
+  scope :in_instance, lambda { |instance| where(:instance_id => instance) }
+
+  def to_s
+    self.name
+  end
 
   # Validation
   validates_presence_of :name
-
-  def self.in_instance(instance)
-    find(:all, :conditions => ["instance_id = ?", instance.id])
-  end
 
   def started?
     Time.now > self.date
@@ -67,7 +68,7 @@ class Raid < ActiveRecord::Base
   def waiting_list_by_account
     waiting_list.inject([]) do |list, signup|
       if list.empty?
-        [[signup]]            
+        [[signup]]
       elsif list.last.first.character.account_id == signup.character.account_id
         list.last << signup
         list
@@ -76,7 +77,7 @@ class Raid < ActiveRecord::Base
       end
     end
   end
-  
+
   def is_open
     return true
 
@@ -85,7 +86,7 @@ class Raid < ActiveRecord::Base
         return true
       end
     end
-    
+
     return false
   end
 
@@ -97,8 +98,8 @@ class Raid < ActiveRecord::Base
 
   def remove_character(char)
     # Delete the signup_slot_types and signup row
-    signup = Signup.find(:first, :conditions => ["raid_id = ? and character_id = ?", id, char.id])
-    
+    signup = self.signups.where(:character_id => char).first
+
     if signup
       date = signup.date
       # Destroy signups, this opens the slots up as well
@@ -114,25 +115,23 @@ class Raid < ActiveRecord::Base
   end
 
   def find_character(char)
-    Slot.find(:first,
-              :include => :signup,
-              :conditions => ["slots.raid_id = ? and character_id = ?", id, char.id])
+    self.slots.includes(:signup).where(:character_id => char).first
   end
 
   def resignup(date)
-    signups = Signup.find(:all, :conditions => [ "date >= ?", date])
-    
+    signups = Signup.where('date >= ?', date).all
+
     # Delete all slots that are tied to signsup past this date
     signups.each do |signup|
       signup.clear_slots
     end
-    
+
     # redo all signups that occur on or past this date
     signups.each do |signup|
       place_character(signup)
     end
   end
-  
+
   def waiting_list
     accounts = slots.map { |slot| slot.signup }.compact.map { |signup| signup.character.account }
 
@@ -142,7 +141,7 @@ class Raid < ActiveRecord::Base
   end
 
   def place_character(signup)
-    Slot.find(:all, :conditions => [ "raid_id = ? AND signup_id IS NULL AND closed = ?", id, false ], :order => "cclass_id desc, slot_type_id desc").each do |slot|
+    self.slots.where('signup_id is null and closed = ?', false).order('cclass_id desc, slot_type_id desc').all.each do |slot|
       if slot.accept_char(signup)
         # This slow will accept this character
         slot.signup = signup

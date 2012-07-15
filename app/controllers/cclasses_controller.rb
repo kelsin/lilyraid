@@ -63,7 +63,7 @@ class CclassesController < ApplicationController
     private
 
     def load_cclasses
-        @cclasses = Cclass.find(:all, :order => :name)
+        @cclasses = Cclass.order('name')
     end
 
     def load_cclass
@@ -71,6 +71,6 @@ class CclassesController < ApplicationController
     end
 
     def load_races
-        @races = Race.find(:all)
+        @races = Race.all
     end
 end

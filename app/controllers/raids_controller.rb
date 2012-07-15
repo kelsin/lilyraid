@@ -5,14 +5,9 @@ class RaidsController < ApplicationController
     @old = params[:old]
 
     if @old
-      @raids = Raid.paginate(:all,
-                             :page => params[:page],
-                             :conditions => ["raids.date < ?", Time.zone.now - 5.hours],
-                             :order => "raids.date desc")
+      @raids = Raid.where('raids.date < ?', Time.zone.now - 5.hours).order('raids.date desc')
     else
-      @raids = Raid.find(:all,
-                         :conditions => ["raids.date >= ?", Time.zone.now - 5.hours],
-                         :order => "raids.date")
+      @raids = Raid.where('raids.date >= ?', Time.zone.now - 5.hours).order('raids.date')
     end
   end
 
@@ -22,7 +17,7 @@ class RaidsController < ApplicationController
     end
 
     @tags = Tag.all
-    @recent_raids = Raid.all(:limit => 8, :order => 'date desc', :conditions => ['date < ?', @raid.date]).reverse
+    @recent_raids = Raid.where('date < ?', @raid.date).limit(8).order('date desc').all.reverse
   end
 
   def finalize
@@ -40,8 +35,8 @@ class RaidsController < ApplicationController
 
   def edit
     if @current_account == @raid.account or @current_account.admin
-      @roles = Role.find(:all)
-      @cclasses = Cclass.find(:all)
+      @roles = Role.all
+      @cclasses = Cclass.all
 
       @raid.locations.build
     else

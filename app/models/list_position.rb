@@ -2,32 +2,25 @@ class ListPosition < ActiveRecord::Base
   belongs_to :account
   belongs_to :list
 
-  default_scope :order => "position"
+  default_scope order('position')
 
-  named_scope :in_raid, lambda { |raid| {
-      :include => { :account => { :characters => :signups } },
-      :conditions => ["signups.raid_id = ?", raid.id]
-    }
-  }
+  def self.in_raid(raid)
+    includes(:account => {:characters => :signups}).where('signups.raid_id' => raid.id)
+  end
 
-  named_scope :for_account, lambda { |account| {
-      :conditions => { :account_id => account }
-    }
-  }
+  def self.for_account(account)
+    where(:account_id => account)
+  end
 
-  named_scope :seated_in, lambda { |raid| {
-      :include => { :account => { :characters => { :signups => :slot } } },
-      :conditions => ["signups.raid_id = ? and slots.id is not null", raid.id]
-    }
-  }
+  def self.seated_in(raid)
+    includes(:account => {:characters => {:signups => :slot}}).
+      where('signups.raid_id = ? and slots.id is not null', raid.id)
+  end
 
   def after_destroy
     new_position = self.position
 
-    self.list.list_positions.find(:all,
-                                  :order => :position,
-                                  :conditions => ["position > ?",
-                                                  self.position]).each do |lp|
+    self.list.list_positions.where('position > ?', self.position).all.each do |lp|
       temp = lp.position
       lp.position = new_position
       lp.save

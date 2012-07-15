@@ -1,0 +1,8 @@
+- hide ||= false
+- position.account.characters.each do |character|
+  = content_tag_for(:dd, character,
+                    :class => "account_#{position.account.id} " + ((character.signups.in_raid(raid).first && character.signups.in_raid(raid).first.slot && (!hide)) ? 'seated' : '')) do
+    = position.position
+    = render :partial => "shared/character", :object => character
+    %span.team= character.signups.in_raid(raid).first.slot.team if character.signups.in_raid(raid).first.slot && character.signups.in_raid(raid).first.slot.team > 1
+    .note= render :partial => 'signups/note', :object => character.signups.in_raid(raid).first

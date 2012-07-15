@@ -25,7 +25,7 @@
     <% if characters && characters.length > 0 %>
       <p class="note">Please select your character and if you wish, type a
         note. Please select which roles you wish to sign up for as well.</p>
-      <% form_for([raid, new_signup]) do |f| %>
+      <%= form_for([raid, new_signup]) do |f| %>
         <p>
           <%= f.collection_select(:character_id, characters, :id, :name_with_account,
                                   {},

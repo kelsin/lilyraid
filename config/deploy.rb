@@ -1,4 +1,4 @@
-require 'bundler/capistrano'
+require "bundler/capistrano"
 
 set :stages, %w(cod dota lbd)
 require 'capistrano/ext/multistage'
@@ -21,10 +21,10 @@ set :deploy_via, :remote_cache
 
 set :user, 'kelsin'
 set :ssh_options, { :forward_agent => true }
- 
-role :app, "valefor.com"
-role :web, "valefor.com"
-role :db,  "valefor.com", :primary => true
+
+role :app, "kelsin.net"
+role :web, "kelsin.net"
+role :db,  "kelsin.net", :primary => true
 
 namespace :deploy do
   task :start, :roles => :app do
@@ -42,8 +42,9 @@ namespace :deploy do
 
   desc "Symlink database and config files"
   task :symlink_shared, :roles => :app do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    run "ln -nfs #{shared_path}/config/config.yml #{release_path}/config/config.yml"
+    ['database.yml', 'config.yml', 'initializers/airbrake.rb', 'initializers/secret_token.rb', 'initializers/session_store.rb'].each do |path|
+      run "ln -nfs #{shared_path}/config/#{path} #{release_path}/config/#{path}"
+    end
   end
 end
 

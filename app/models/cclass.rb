@@ -8,6 +8,8 @@ class Cclass < ActiveRecord::Base
                       :with => /[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]/,
                       :message => "must be a valid hex color (#xxxxxx)")
 
+  default_scope order('name')
+
   def self.named(name)
     self.first(:conditions => { :name => name })
   end

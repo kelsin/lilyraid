@@ -1,77 +1,61 @@
-ActionController::Routing::Routes.draw do |map|
-  # The priority is based upon order of creation: first created -> highest priority.
-
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
-  # See how all your routes lay out with "rake routes"
-
-  map.resources :lists
-  map.resource :calendar
-
-  map.resources :accounts, :member => { 'add_to_list' => :post, 'remove_from_list' => :post }  do |accounts|
-    accounts.resources :characters, :member => { 'roles' => :get }
-  end
-
-  map.resources :raids, :member => { 'finalize' => :post } do |raids|
-    raids.resources :signups, :member => { 'preferred' => :post }
-    raids.resources :accounts do |accounts|
-      accounts.resources :raider_tags
+Lilyraid::Application.routes.draw do
+  resources :lists
+  resource :calendar
+  resources :accounts do
+    member do
+      post :add_to_list
+      post :remove_from_list
     end
 
-    raids.resources :loots, :locations
-    raids.resources :slots, :collection => { 'wait_list' => :put }
+    resources :characters do
+      member do
+        get :roles
+      end
+    end
   end
 
-  map.namespace :admin do |admin|
-    admin.resources :characters, :templates, :instances
-    admin.resources :accounts, :collection => { 'rename' => :post }
-    admin.resources :tags
+  resources :raids do
+    member do
+      post :finalize
+    end
+
+    resources :signups do
+      member do
+        post :preferred
+      end
+    end
+
+    resources :accounts do
+      resources :raider_tags
+    end
+
+    resources :loots
+    resources :locations
+    resources :slots do
+      collection do
+        put :wait_list
+      end
+    end
   end
 
-  map.wowhead('wowhead/:search', :controller => 'loots', :action => 'search')
+  namespace :admin do
+    resources :characters
+    resources :templates
+    resources :instances
+    resources :accounts do
+      collection do
+        post :rename
+      end
+    end
+    resources :tags
+  end
 
-  map.login('login',
-            :controller => 'login',
-            :action => 'index',
-            :conditions => { :method => :get })
-  map.logout('logout',
-             :controller => 'login',
-             :action => 'logout',
-             :conditions => { :method => :get })
-  map.login_post('login',
-                 :controller => 'login',
-                 :action => 'login',
-                 :conditions => { :method => :post })
+  match 'wowhead/:search' => 'loots#search', :as => 'wowhead'
+  match 'roles/:id' => 'characters#roles'
 
-  map.root :controller => 'raids'
+  match 'login' => 'login#index', :as => 'login', :via => :get
+  match 'login' => 'login#login', :as => 'login_post', :via => :post
+  match 'logout' => 'login#logout', :as => 'logout', :via => :get
 
-  map.connect 'roles/:id', :controller => 'characters', :action => 'roles'
-
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  root :to => 'raids#index'
 end

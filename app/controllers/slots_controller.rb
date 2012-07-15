@@ -79,7 +79,7 @@ class SlotsController < ApplicationController
     slot_log(@raid, @signup.character, "Moved back to waiting list")
 
     load_list
-    
+
     respond_to do |format|
       format.html { redirect_to raid_url(@raid) }
       format.js { render :template => false }
@@ -97,7 +97,7 @@ class SlotsController < ApplicationController
   end
 
   def load_slots
-    @slots = @raid.slots.find(:all, :order => :name)
+    @slots = @raid.slots.order('name').all
   end
 
   def load_slot
