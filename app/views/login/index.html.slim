@@ -1,0 +1,21 @@
+div.raid
+  - if CONFIG[:auth] == 'login'
+    h3 Login
+    p You can also create a #{link_to "new account", new_account_url}
+    = form_tag :action => 'create' do
+      dl
+        - if flash[:notice]
+          dt
+          dd = flash[:notice]
+        dt Name:
+        dd = text_field_tag :username
+        dt Password:
+        dd = password_field_tag :password
+        dt
+        dd = submit_tag 'Login'
+  - else
+    - if CONFIG[:forum]
+      p Please log in to #{link_to "the forum", CONFIG[:forum]} in order to access the raid site.
+    -
+      p Please login to the forum in order to access the raid site.
+

@@ -1,0 +1,39 @@
+- character = edit_character
+div id="character_#{character.id}" style="padding-bottom: 50px;"
+  = form_for(:character, character, :remote => true \
+             :url => { :action => "update_character", \
+                       :id => character.id }, \
+             :method => :post, \
+             :loading => update_page do |page| \
+                 page["character_#{character.id}_submit"].value = "Saving ..." \
+                 page["character_#{character.id}_submit"].disable \
+             end ) do |f|
+    table.info
+      tr
+        th Name:
+        td = f.text_field :name
+      tr
+        th Level:
+        td = f.text_field :level, :size => 5
+      tr
+        th Race:
+        td = f.collection_select(:race_id, races, :id, :to_s)
+      tr
+        th Class:
+        td = f.collection_select(:cclass_id, cclasses, :id, :to_s)
+      tr
+        th Guild:
+        td = f.text_field :guild
+      tr
+        th Keyed:
+        td
+          - @key_instances.each do |instance|
+            = check_box_tag "character[instance_ids][]", instance.id, character.instances.member?(instance)
+            = instance
+            br
+      tr
+        th
+        td
+          = submit_tag "Save", :id => "character_#{character.id}_submit"
+          = link_to("Delete", { :action => "delete_character", :id => character.id }, :remote => true, \
+                    :confirm => "Are you sure you want to delete #{character.name}?")

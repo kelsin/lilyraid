@@ -1,0 +1,14 @@
+div.raid
+  - if @templates.size > 0
+    h3 Templates
+    dl = render @templates
+  h3 New Template
+  = form_for [:admin, @new_template] do |f|
+    = errors_for @new_template
+    dl
+      dt = f.label :name
+      dd = f.text_field :name
+      dt = f.label :number_of_slots
+      dd = f.text_field :number_of_slots, :size => 3
+      dt
+      dd = submit_tag 'Create'

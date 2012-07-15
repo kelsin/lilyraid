@@ -1,0 +1,23 @@
+div.raid
+  h3 Calendar
+  dl
+    dt
+    dd
+      p
+        | This site provides some urls to use to plug into any calendar program
+        | that uses the ical (*.ics) format. This includes Google Calendar,
+        | Apple's iCal, Evolution (Linux), Mozilla Sunbird and others.
+    dt = link_to "Raid Calendar", :action => :show, :format => :ics
+    dd
+      p This provides a main calendar which shows all raids that are scheduled by the site.
+    - if @current_account
+      dt = link_to "Account Calendar", :action => :account, :id => @current_account.id
+      dd
+        p
+          | You can also access a calendar which only displays the calendar for a
+          | certain account. This allows you to see only the raids that your account
+          | is signed up for. Notice that these are public (since all signups are
+          | public) so if you want the calendar for a different account you just
+          | have to replace the number at the end with the account id that you would
+          | like. This is the same number that's at the top of the main account
+          | pages which you can find using the member list.

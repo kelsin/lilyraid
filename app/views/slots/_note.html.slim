@@ -1,0 +1,9 @@
+= render(:partial => "signups/note", :object => slot.signup)
+br
+b Slot
+| : 
+= render(:partial => "shared/slot", :object => slot)
+- if slot.signup.has_other_signups
+  br
+  br
+  = render(:partial => "signups/note", :collection => slot.signup.other_signups, :spacer_template => "slots/spacer", :locals => { :hide_stats => true })

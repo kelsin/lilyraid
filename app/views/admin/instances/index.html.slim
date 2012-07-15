@@ -1,0 +1,21 @@
+div.raid
+  h3 Instances
+  = form_for [:admin, @new_instance] do |f|
+    dl
+      - if @active.size > 0
+        dt Active
+        dd
+          ul
+            = render @active
+      - unless @new_instance.errors.empty?
+        dt
+        dd = errors_for @new_instance
+      dt = f.label :name, 'New Instance'
+      dd = f.text_field :name
+      dt
+      dd = submit_tag 'Create'
+      - if @inactive.size > 0
+        dt Inactive
+        dd
+          ul
+            = render @inactive

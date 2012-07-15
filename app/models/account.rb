@@ -23,6 +23,8 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :name
 
+  before_save :set_password
+
   def self.named(name)
     self.first(:conditions => { :name => name })
   end
@@ -63,11 +65,11 @@ class Account < ActiveRecord::Base
   def validate
     if CONFIG[:auth] == 'login'
       unless password_confirmation == change_password
-        errors.add_to_base('Password and Password Confirmation must match to change your password')
+        errors.add(:base, 'Password and Password Confirmation must match to change your password')
       end
 
       if new_record? and change_password.blank?
-        errors.add_to_base("Password can't be blank")
+        errors.add(:base, 'Password can\'t be blank')
       end
     end
   end
@@ -191,7 +193,7 @@ class Account < ActiveRecord::Base
               CONFIG[:phpbb_post].to_i)
   end
 
-  def before_save
+  def set_password
     if CONFIG[:auth] == 'login' && (not change_password.blank?)
       self[:password] = Digest::MD5.hexdigest(change_password)
     end

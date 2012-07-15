@@ -1,9 +1,0 @@
-<dd>
-  <%= render(:partial => "shared/character",
-             :object => loot.character) %> won <%= link_to(loot.item_name,
-                                                           loot.item_url,
-                                                           :class => "loot") %>
-  <% if @current_account.admin %>
-    <%= link_to "Edit", edit_raid_loot_url(loot.location.raid, loot), :class => "tiny" %>
-  <% end %>
-</dd>

@@ -1,0 +1,26 @@
+div.raid id=dom_id(account)
+  h3 = @account.name
+  = errors_for @account
+  - form_remote_for(account) do |f|
+    dl
+      dt LJ:
+      dd
+        = f.text_field :lj_account
+        br
+        p.note
+          | This is just your livejournal username. For example, if your journal
+          | exists at "ayashi.livejournal.com", you should only enter "ayashi"
+          | here.
+      dt Age:
+      dd = f.text_field :age
+      dt Location:
+      dd = f.text_field :location
+      dt Bio:
+      dd = f.text_area :bio, :rows => 8
+      - if CONFIG[:auth] == 'login'
+        dt Password:
+        dd = f.password_field :change_password
+        dt Confirm:
+        dd = f.password_field :password_confirmation
+      dt
+      dd = submit_tag "Save"

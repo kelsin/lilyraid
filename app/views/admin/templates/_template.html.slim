@@ -1,0 +1,5 @@
+dt
+dd
+  = template.name
+  = link_to 'Edit', edit_admin_template_url(template), :class => 'tiny'
+  = link_to 'Delete', admin_template_url(template), :method => :delete, :class => 'tiny', :confirm => 'Are you sure?'

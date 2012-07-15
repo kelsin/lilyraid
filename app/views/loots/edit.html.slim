@@ -1,0 +1,22 @@
+div.loot.raid id=dom_id(@loot)
+  h3 Edit Loot
+  = form_for [@raid, @loot] do |f|
+    dl
+      dt Character
+      dd = render :partial => "shared/character", :object => @loot.character
+      dt Item Name
+      dd
+        = f.text_field :item_name
+        = link_to "Swap", "#", :onclick => "swap_loot(); return false;"
+      dt Item Url
+      dd = f.text_field :item_url
+      dt Instance
+      dd
+        = f.collection_select(:location_id, @raid.locations, :id, :name)
+      dt
+      dd
+        = submit_tag "Save"
+        = link_to 'Back to raid', @raid
+  dl = render :partial => 'shared/wowhead'
+
+

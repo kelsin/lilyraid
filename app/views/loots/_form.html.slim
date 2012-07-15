@@ -1,0 +1,26 @@
+- if raid.slots.characters.size > 0
+  = form_remote_for([raid, Loot.new(:raid => raid)],\
+                    :confirm => "Are you sure you want to assign loot? This will move the Master loot list in the correct mannaer", \
+                    :loading => update_page do |page| \
+                        page[:loot_submit].disable \
+                        page[:loot_submit].value = "Saving" \
+                    end) do |f|
+    h2 New Loot
+    table
+      tr
+        th Account
+        td
+          = f.collection_select(:character_id, raid.slots.characters, :id, :name_with_account)
+          br
+      tr
+        th Item URL
+        td = f.text_field :item_url
+      tr
+        th Item Name
+        td = f.text_field :item_name
+      tr
+        th
+        td
+          = submit_tag "Save", :id => "loot_submit"
+          br
+          br

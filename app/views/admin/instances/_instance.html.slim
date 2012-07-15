@@ -1,0 +1,7 @@
+li
+  = instance.name
+  = link_to 'Edit', edit_admin_instance_url(instance), :class => 'tiny'
+  - if instance.raids.size > 0
+    span.tiny - #{pluralize instance.raids.size, 'raid'}
+  - else
+    = link_to 'Remove', admin_instance_url(instance), :method => :delete, :class => 'tiny'

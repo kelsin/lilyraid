@@ -1,0 +1,11 @@
+tr class="#{position.account.characters[0].cclass.name}" style="width: 100%;"
+  td style="width: 100%;" id="#{dom_id(position)}"
+    - if @current_account == position.account
+      b
+        = #{position.position} #{link_to_function(render(:partial => "shared/character", :object => position.account.characters[0])) do |page|
+            page[position].toggle_class_name :highlight
+          end}
+    - else
+      = #{position.position} #{link_to_function(render(:partial => "shared/character", :object => position.account.characters[0])) do |page|
+          page[position].toggle_class_name :highlight
+        end}

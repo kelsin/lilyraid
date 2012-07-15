@@ -1,0 +1,25 @@
+div.raid id=dom_id(character)
+  = form_for([character.account, character], :remote => true, :loading => "$('##{dom_id(character)}_submit').attr('value', 'Saving'); $('##{dom_id(character)}_submit').disable();") do |f|
+    - if character.new_record?
+      h3 New Character
+    dl
+      dt Name:
+      dd = f.text_field :name
+      dt Level:
+      dd = f.text_field :level, :size => 5
+      dt Guild:
+      dd = f.text_field :guild
+      - if character.new_record?
+        dt Race:
+        dd = f.collection_select(:race_id, Race.find(:all), :id, :name)
+        dt Class:
+        dd = f.collection_select(:cclass_id, Cclass.find(:all), :id, :name)
+      - else
+        dt Inactive:
+        dd
+          = f.check_box :inactive
+          p.note
+            | If you mark a character inactive they won't show up when signing up
+            | for raids. You can mark them active again at any time.
+      dt
+      dd = submit_tag "Save", :id => "#{dom_id(character)}_submit"

@@ -1,0 +1,37 @@
+- if signups
+  - if signups.size > 0
+    = render(:layout => "shared/box", :locals => { :title => "Your Signups" }) do
+      - signups.each do |signup|
+        tr
+          td
+            = render(:partial => "shared/character", :object => signup.character)
+            = content_tag(:td, link_to("Remove", raid_signup_url(raid.id, signup.id), :confirm => "Are you sure you want to leave the raid?", :method => :delete)) unless raid.started?
+  - else
+    p You don't have any characters in this raid.
+div style="clear: both;"
+  - if raid.started? and signups
+    | This raid has already started, sign ups are closed!
+  - else
+    - if characters && characters.length > 0
+      p.note Please select your character and if you wish, type a note. Please select which roles you wish to sign up for as well.
+      = form_for([raid, new_signup]) do |f|
+        p
+          = f.collection_select(:character_id, characters, :id, :name_with_account,
+                                {},
+                                { :onchange => remote_function(:url => { :controller => :characters,
+                                                                         :action => "roles",
+                                                                         :account_id => @current_account.id,
+                                                                         :id => "'+this.value+'" },
+                                                               :update => div,
+                                                               :method => :get,
+                                                               :loading => update_page do |page|
+                                                                   page[div].replace_html(image_tag("loading.gif"))
+                                                               end )})
+          = f.text_field :note
+          = submit_tag "Sign up!"
+        p id=div
+          = render(:partial => "characters/roles",
+                   :locals => { :character => characters[0] })
+    - else
+      - if signups.size < 1
+        p You have no characters that can join this raid. Maybe you need to #{link_to("create some", account_url(@current_account))}?

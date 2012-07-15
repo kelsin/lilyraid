@@ -1,0 +1,9 @@
+= render(:layout => "shared/box", :locals => { :title => "Master Loot List" }) do
+  - if !list.nil? && list.list_positions && list.list_positions.length > 0
+    = render(:partial => "loots/position", :collection => list.list_positions)
+  - else
+    tr
+      td.closed Empty
+- if !list.nil?
+  = render(:layout => "shared/box", :locals => { :title => "Display" }) do
+    = render(:partial => "loots/display", :collection => list.cclasses)

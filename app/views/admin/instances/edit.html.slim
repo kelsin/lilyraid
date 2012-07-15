@@ -1,0 +1,10 @@
+div.raid
+  h3 Instance
+  = form_for [:admin, @instance] do |f|
+    dl
+      dt = f.label :name
+      dd = f.text_field :name
+      dt = f.label :active
+      dd = f.check_box :active
+      dt
+      dd = f.submit

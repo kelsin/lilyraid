@@ -1,0 +1,6 @@
+- cclass = display
+tr
+  td
+    input.list_checkboxes type="checkbox" checked="checked" name="#{cclass.name}_Checkbox" value=cclass.name \
+                          onchange="list_display('#{cclass.name}', this.checked);">
+    = render(:partial => "shared/cclass", :object => cclass)

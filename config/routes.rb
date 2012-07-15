@@ -54,7 +54,7 @@ Lilyraid::Application.routes.draw do
   match 'roles/:id' => 'characters#roles'
 
   match 'login' => 'login#index', :as => 'login', :via => :get
-  match 'login' => 'login#login', :as => 'login_post', :via => :post
+  match 'login' => 'login#create', :as => 'login_post', :via => :post
   match 'logout' => 'login#logout', :as => 'logout', :via => :get
 
   root :to => 'raids#index'

@@ -1,0 +1,21 @@
+div.raid
+  h3 Edit Template
+  = form_for [:admin, @raid_template] do |f|
+    = errors_for @raid_template
+    dl
+      dt = f.label :name
+      dd = f.text_field :name
+      dt Slots
+      dd#slots
+        - @raid_template.groups.each do |group|
+          dl#edit_slots.list.template
+            dt Group #{cycle(*(1..8).to_a)}
+            - group.each do |slot|
+              dd
+                = f.fields_for :slots, slot do |s|
+                  = s.collection_select(:role_id, Role.all, :id, :name, :include_blank => "Any")
+                  = s.collection_select(:cclass_id, Cclass.all, :id, :name, :include_blank => "Any")
+                  = s.select(:team, (1..4).inject([]) { |col, x| col << ["Team #{x}", x] })
+                  br
+      dt
+      dd = submit_tag 'Save'

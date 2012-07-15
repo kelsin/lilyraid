@@ -19,7 +19,7 @@ class AccountsController < ApplicationController
         render :action => "new"
       end
     else
-      @account.errors.add_to_base('Wrong account creation password')
+      @account.errors.add(:base, 'Wrong account creation password')
       render :action => "new"
     end
   end
