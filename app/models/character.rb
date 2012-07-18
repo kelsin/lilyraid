@@ -12,6 +12,8 @@ class Character < ActiveRecord::Base
 
   before_destroy :can_delete?
 
+  default_scope :order => 'level desc, name'
+
   scope :active, { :conditions => { :inactive => false } }
   scope :inactive, { :conditions => { :inactive => true } }
 
@@ -35,6 +37,10 @@ class Character < ActiveRecord::Base
                                    from list_positions lp
                                   where lp.account_id = characters.account_id
                                     and lp.list_id = ?)", List.first ? List.first.id : 0] }
+
+  def <=>(other)
+    [other.level, name] <=> [level, other.name]
+  end
 
   def to_s
     self.name

@@ -2,6 +2,8 @@ div.raid id=dom_id(character)
   = form_for([character.account, character]) do |f|
     - if character.new_record?
       h3 New Character
+    - else
+      h3 Edit Character
     dl
       dt Name:
       dd = f.text_field :name

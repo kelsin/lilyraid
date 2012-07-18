@@ -3,9 +3,10 @@ class CalendarsController < ApplicationController
 
   skip_authorization_check
   skip_before_filter :authorize
-  skip_before_filter :fake_authorize
 
   def show
+    @current_account = Account.find_by_id(session[:account_id])
+
     respond_to do |format|
       format.html
       format.ics do

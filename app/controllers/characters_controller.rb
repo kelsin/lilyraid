@@ -1,12 +1,11 @@
 class CharactersController < ApplicationController
   before_filter(:load_account, :except => [:roles])
-  before_filter(:load_character, :only => [:destroy, :edit])
+  before_filter(:load_character, :only => [:destroy, :edit, :update])
 
   def create
-    if can? :edit, @account
-      @character = @account.characters.create(params[:character])
-      @character.update_from_armory!
-    end
+    authorize! :edit, @account
+    @character = @account.characters.create(params[:character])
+    @character.update_from_armory!
 
     respond_to do |format|
       format.html { redirect_to account_url(@account) }
@@ -15,23 +14,18 @@ class CharactersController < ApplicationController
   end
 
   def edit
-    if @current_account.admin || @current_account == @account
-      respond_to do |format|
-        format.js { render :template => false }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to account_url(@account) }
-        format.js { render :js => "window.location = '#{account_url(@account)}';" }
-      end
+    authorize! :update, @character
+
+    respond_to do |format|
+      format.html
+      format.js { render :template => false }
     end
   end
 
   def update
-    if @current_account.admin || @current_account == @account
-      @character = Character.update(params[:id], params[:character])
-      @character.update_from_armory!
-    end
+    authorize! :update, @character
+    @character.attributes = params[:character]
+    @character.update_from_armory!
 
     respond_to do |format|
       format.html { redirect_to account_url(@account) }
@@ -40,7 +34,8 @@ class CharactersController < ApplicationController
   end
 
   def destroy
-    @character.destroy if @current_account.admin || @current_account == @account
+    authorize! :destroy, @character
+    @character.destroy
 
     respond_to do |format|
       format.html { redirect_to account_url(@account) }

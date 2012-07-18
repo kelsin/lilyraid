@@ -33,6 +33,7 @@ div.account dd { float: left; clear: right; position: relative;
 div.character h4 { margin-left: 0; }
 div.character dtdiv.thumbnail { width: 9em; margin: 0; padding: 0; position: absolute; overflow: auto; }
 div.character dt img { border: 1px solid #fff; float: right; }
+div.character.inactive dt img { opacity: 0.2; }
 
 /* p */
 div.raid p { margin: 0.5em 0 0 10em; width: 40em; }
