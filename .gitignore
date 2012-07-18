@@ -24,3 +24,6 @@ doc/app
 # Sample files
 config/database.yml
 config/config.yml
+
+# Sass Cache
+.sass-cache

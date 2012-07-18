@@ -1,0 +1,72 @@
+$color: #333
+$bg-color: #fff
+$border-color: #333
+$hover-color: #fff
+$hover-bg-color: #999
+$hover-border-color: #333
+$selected-color: #fff
+$selected-bg-color: #333
+$selected-border-color: #333
+$container-border-color: #007fbb
+$container-bg-color: rgba(0,0,0,0.95)
+
+#lilydate_container
+  position: absolute
+  top: 0
+  left: 0
+  font: 12px Helvetica, sans-serif
+  font-weight: bold
+  max-width: 470px
+
+  z-index: 5000
+
+  padding: 5px
+  margin: 0 16px 16px 0
+
+  border: 3px solid $container-border-color
+  border-radius: 12px
+  background-color: $container-bg-color
+
+  h2
+    font-size: 12px
+    font-weight: bold
+    margin: 6px 0 2px 0
+    color: #fff
+    padding: 0
+
+  .lilydate_field
+    clear: left
+    overflow: auto
+
+  .lilydate_button
+    cursor: pointer
+    float: left
+    color: $color
+    background-color: $bg-color
+    border: 1px solid $border-color
+    margin: 0 3px 3px 0
+    padding: 5px
+    border-radius: 5px
+    height: 14px
+    min-width: 14px
+    text-align: center
+
+    -moz-user-select: -moz-none
+    -khtml-user-select: none
+    -webkit-user-select: none
+    user-select: none
+
+    &.ui
+      color: lighten($color, 40%)
+      border-color: lighten($border-color, 40%)
+
+    &:hover
+      color: $hover-color
+      background-color: $hover-bg-color
+      border-color: $hover-border-color
+
+    &.selected, &.selected:hover
+      cursor: auto
+      color: $selected-color
+      background-color: $selected-bg-color
+      border-color: $selected-border-color

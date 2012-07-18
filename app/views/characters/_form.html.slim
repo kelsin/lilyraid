@@ -1,20 +1,11 @@
 div.raid id=dom_id(character)
-  = form_for([character.account, character], :remote => true, :loading => "$('##{dom_id(character)}_submit').attr('value', 'Saving'); $('##{dom_id(character)}_submit').disable();") do |f|
+  = form_for([character.account, character]) do |f|
     - if character.new_record?
       h3 New Character
     dl
       dt Name:
       dd = f.text_field :name
-      dt Level:
-      dd = f.text_field :level, :size => 5
-      dt Guild:
-      dd = f.text_field :guild
-      - if character.new_record?
-        dt Race:
-        dd = f.collection_select(:race_id, Race.find(:all), :id, :name)
-        dt Class:
-        dd = f.collection_select(:cclass_id, Cclass.find(:all), :id, :name)
-      - else
+      - unless character.new_record?
         dt Inactive:
         dd
           = f.check_box :inactive

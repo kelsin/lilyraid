@@ -2,7 +2,10 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  check_authorization # make sure to always authorize
+
   helper :all # include all helpers, all the time
+  helper_method :current_user
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store

@@ -2,12 +2,28 @@ class Ability
   include CanCan::Ability
 
   def initialize(account)
-    return if account.nil?
+    # Anyone can create an account
+    can :create, Account
 
-    if account.admin?
-      can :manage, :all
-    else
-      can :manage, Raid, :account => account
+    if account
+      # There is no hidden data in this app
+      can :read, :all
+
+      if account.admin?
+        # Admins can do everything
+        can :manage, :all
+
+      else
+        # We can only update our own account, not destroy
+        can :update, Account, :id => account.id
+
+        # We can fully manage raids that we create
+        can :manage, Raid, :account => account
+
+        # We can fully manage our own characters
+        can :manage, Character, :account => account
+
+      end
     end
 
     # Define abilities for the passed in user here. For example:

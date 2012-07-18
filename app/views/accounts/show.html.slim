@@ -3,5 +3,5 @@
 = render :partial => "accounts/account", :object => @account
 #characters
   = render :partial => "characters/character", :collection => @account.characters
-- if @current_account == @account
+- if can? :edit, @account
   = render :partial => "characters/form", :locals => { :character => Character.new(:account => @account) }

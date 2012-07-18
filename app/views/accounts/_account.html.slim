@@ -1,20 +1,20 @@
-div.account.raid id=dom_id(account)
+div.account id=dom_id(account)
   h3 = account.name
-  - if @current_account == account || @current_account.admin
-    p#editlink
-      = link_to("Edit", edit_account_url(account), :onclick => "$.get('#{edit_account_url(account)}', {}, null, 'script'); return false;")
-    - if @current_account.admin && account.can_delete?
-      p = link_to "Delete", admin_account_url(account), :method => :delete, :confirm => "Are you sure you want to delete this account?"
+  ul.actions
+    - if can? :update, account
+      li = link_to 'Edit', edit_account_url(account), :class => 'edit'
+    - if can? :destroy, account and account.can_delete?
+      li = link_to 'Delete', { :url => admin_account_url(account), :method => :delete }, :class => 'delete'
   dl
-    - unless account.lj_account.blank?
-      dt LJ
-      dd = link_to account.lj_account, lj_link(account), :class => "lj"
-    - if !account.age.blank?
+    - if account.age.present?
       dt Age:
       dd = account.age
-    - if !account.location.blank?
+    - if account.location.present?
       dt Location:
       dd = account.location
-    - if !account.bio.blank?
+    - if account.lj_account.present?
+      dt LJ:
+      dd = link_to account.lj_account, lj_link(account), :class => "lj"
+    - if account.bio.present?
       dt Bio:
       dd = account.bio

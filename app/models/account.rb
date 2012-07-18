@@ -16,7 +16,7 @@ class Account < ActiveRecord::Base
   before_destroy :can_delete?
 
   scope :by_name, order('name')
-  scope :with_characters, includes(:characters => [:account, :cclass, :race]).order('accounts.name, characters.level desc, characters.name')
+  scope :with_characters, includes(:characters => :account).order('accounts.name, characters.level desc, characters.name')
   scope :admins, with_characters.where(:admin => true)
   scope :members, with_characters.where(:admin => false)
 

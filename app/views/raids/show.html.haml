@@ -159,7 +159,7 @@
           %select#tag_select(name="tag_select")
             %option(value="seated") Seated
             - @tags.each do |tag|
-              %option(value=tag.slug)= tag
+              %option(value="#{tag.slug}")= tag
           %table
             %thead
               <tr>

@@ -1,0 +1,32 @@
+ul.errors
+  - @raid.errors.full_messages do |msg|
+    li = msg
+div.raid id=dom_id(@raid)
+  h3 New Raid
+  = form_for @raid do |f|
+    dl
+      dt Name:
+      dd = f.text_field :name, :size => 30
+      dt Date:
+      dd = f.text_field :date, :size => 30, :class => 'lilydate', :value => @raid.date.to_s(:raid_form)
+      dt Slots:
+      dd = f.select :number_of_slots, (1..8).map{|n|n*5}
+      dt Loot:
+      dd = f.text_area :loot_note, :rows => 5, :cols => 40
+      dt Note:
+      dd = f.text_area :note, :rows => 5, :cols => 40
+      dt Instance:
+      dd
+        ul
+          = f.fields_for :locations do |l|
+            li = l.collection_select :instance_id, Instance.active, :id, :name, :include_blank => true
+      - if admin?
+        dt Uses Loot System?
+        dd = f.check_box :uses_loot_system
+      dt Creator:
+      dd
+        = @current_account
+        - if admin?
+          | (Admin)
+      dt
+      dd = submit_tag 'Create Raid'

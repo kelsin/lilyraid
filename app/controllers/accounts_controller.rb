@@ -1,16 +1,25 @@
 class AccountsController < ApplicationController
   skip_before_filter :authorize, :only => [:new, :create]
 
+  def index
+    authorize! :read, Account
+    @admins = Account.admins
+    @members = Account.members
+  end
+
   def show
     @account = Account.find(params[:id])
+    authorize! :read, @account
   end
 
   def new
     @account = Account.new(:name => params[:name])
+    authorize! :create, Account
   end
 
   def create
     @account = Account.new(params[:account])
+    authorize! :create, Account
 
     if params[:creation_password] == CONFIG[:account_creation_password]
       if @account.save
@@ -50,11 +59,10 @@ class AccountsController < ApplicationController
 
   def edit
     @account = Account.find(params[:id],
-                            :include => { :characters => [:cclass,
-                                                          :race,
-                                                          :raids,
+                            :include => { :characters => [:raids,
                                                           :signups,
                                                           :account] } )
+    authorize! :update, @account
 
     if @current_account == @account || @current_account.admin
       respond_to do |format|
@@ -72,17 +80,21 @@ class AccountsController < ApplicationController
   end
 
   def update
-    if @current_account.admin || @current_account.id == params[:id].to_i
-      @account = Account.update(params[:id], params[:account])
-      respond_to do |format|
-        format.html
-        format.js { render :layout => false }
-      end
-    else
-      @account = Account.find(params[:id])
+    @account = Account.find(params[:id],
+                            :include => { :characters => [:raids,
+                                                          :signups,
+                                                          :account] } )
+    authorize! :update, @account
+
+    if @account.update_attributes(params[:account])
       respond_to do |format|
         format.html { redirect_to account_url(@account) }
         format.js { render :layout => false }
+      end
+    else
+      respond_to do |format|
+        format.html { render :edit }
+        format.js
       end
     end
   end

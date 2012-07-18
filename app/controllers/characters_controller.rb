@@ -3,7 +3,7 @@ class CharactersController < ApplicationController
   before_filter(:load_character, :only => [:destroy, :edit])
 
   def create
-    if @current_account.admin || @current_account == @account
+    if can? :edit, @account
       @character = @account.characters.create(params[:character])
       @character.update_from_armory!
     end

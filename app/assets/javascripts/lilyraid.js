@@ -1,6 +1,3 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
-
 function _ajax_request(url, data, callback, type, method) {
     if (jQuery.isFunction(data)) {
         callback = data;
@@ -176,7 +173,7 @@ function raid_edit_slots(ele) {
 
 $(function () {
     // Wow Heroes Lookup
-    $('dd > span.character').live('dblclick', function() { window.open('http://www.wowarmory.com/character-sheet.xml?r=Bronzebeard&n=' + $(this).text(), '_blank'); });
+    $('dd > span.character').live('dblclick', function() { window.open('http://us.battle.net/wow/en/character/Bronzebeard/' + $(this).text() + '/simple')});
 
     // Hide hidden logs
     $('tr.log.hidden').hide();
@@ -198,6 +195,6 @@ $(function () {
         $('dd#tags td span.stat.' + $(this).val()).show();
     });
 
-    $('#caltime').timepicker({ timeSeparator: ":", showPeriod: true });
+    $('.lilydate').lilydate('MMM d yyyy h:mm tt');
 });
 

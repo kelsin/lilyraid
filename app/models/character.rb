@@ -1,7 +1,5 @@
 class Character < ActiveRecord::Base
   belongs_to :account
-  belongs_to :race
-  belongs_to :cclass
 
   has_many :signups, :dependent => :nullify
   has_many :raids, :through => :signups
@@ -58,26 +56,17 @@ class Character < ActiveRecord::Base
     raids.empty?
   end
 
-  def armory_char_data
-    begin
-      response = HTTParty.get(URI::escape("http://#{CONFIG[:region]}.wowarmory.com/character-sheet.xml?r=#{CONFIG[:realm]}&n=#{self.name}&rhtml=no"))
-      response['page']['characterInfo']['character']
-    rescue Exception => e
-      Rails.logger.error "Failed to get armory data for #{self.account.name}/#{self.name}"
-      Rails.logger.error e.message
-      nil
-    end
-  end
+  def update_from_armory!(character = self.name)
+    data = API.character(CONFIG[:realm], character, 'fields' => 'guild')
 
-  def update_from_armory!
-    char = armory_char_data
-
-    if char
-      self.level = char['level']
-      self.guild = char['guildName']
-      self.cclass = Cclass.find_by_name(char['class'])
-      self.race = Race.find_by_name(char['race'])
-      self.reload unless self.save
+    if data
+      self.name = data['name']
+      self.cclass_id = data['class']
+      self.race_id = data['race']
+      self.level = data['level']
+      self.guild = data['guild'].try(:[], 'name')
+      self.thumbnail = data['thumbnail']
+      self.save
     end
   end
 end

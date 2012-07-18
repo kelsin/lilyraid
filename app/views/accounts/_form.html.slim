@@ -1,7 +1,7 @@
-div.raid id=dom_id(account)
-  h3 = @account.name
-  = errors_for @account
-  - form_remote_for(account) do |f|
+div.account id=dom_id(account)
+  h3 = account.name
+  = errors_for account
+  = form_for(account) do |f|
     dl
       dt LJ:
       dd

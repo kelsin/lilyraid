@@ -8,21 +8,42 @@ h1 { width: 416px; height: 175px; background-repeat: none; }
 
 h2 { font-size: 24px; }
 
-h3 { font-size: 2em; }
-div.raid h3 { margin-left: 5em; }
+h3 { font-size: 2em; margin-left: 5em; margin-bottom: 0.2em; }
 
-h4 { font-size: 1.5em; }
-div.raid h4 { margin-top: 0.5em; margin-left: 6.7em; }
+h4 { font-size: 1.5em; margin-left: 6.7em; margin-bottom: 0.2em; }
+
+ul.actions { overflow: auto; }
+ul.actions li { margin: 0; float: left; }
+ul.actions li:after { content: '|'; padding: 0 0.5em; }
+ul.actions li:last-child:after { content: ''; }
+
+/* Account */
+div.account { margin: 0 0 2.2em 0; width: 50em; }
+div.account h3 { margin-left: 5em; }
+div.account ul.actions { margin-left: 10em; }
+div.account dl { position: relative; overflow: hidden; margin: 1em 0; }
+div.account dt { float: left; clear: left;
+                 margin-bottom: 1em; font-weight: bold;
+                 width: 9em; text-align: right; padding-right: 1em; }
+div.account dd { float: left; clear: right; position: relative;
+                 margin-bottom: 1em;
+                 max-width: 40em; }
+
+/* Character Page */
+div.character h4 { margin-left: 0; }
+div.character dtdiv.thumbnail { width: 9em; margin: 0; padding: 0; position: absolute; overflow: auto; }
+div.character dt img { border: 1px solid #fff; float: right; }
 
 /* p */
 div.raid p { margin: 0.5em 0 0 10em; width: 40em; }
-div.raid dl dd p { margin: 0 0 0.5em 0; }
+div.raid dd p { margin: 0 0 0.5em 0; }
+div.raid dd ul { margin: 0 0 0.5em 0; }
 
 p.note {
     font-size: .8em;
     color: #dddddd;
-    margin: 0px;
-    width: auto;
+    margin: 0.2em 0px;
+    width: 30em;
 }
 
 /* Table */
@@ -34,10 +55,10 @@ table tr.even td { background-color: #111; }
 /* Lists */
 div.raid dl { position: relative; overflow: hidden; margin: 1em 0; }
 div.raid dt { float: left; clear: left;
-              margin-bottom: 1em; font-weight: bold; line-height: 1em;
+              margin-bottom: 1em; font-weight: bold;
               width: 9em; text-align: right; padding-right: 1em; }
 div.raid dd { float: left; clear: right; position: relative;
-              margin-bottom: 1em; margin-right: 1em; line-height: 1em;
+              margin-bottom: 1em; margin-right: 1em;
               max-width: 40em; }
 div.raid dd#slots { max-width: 70em; }
 div.raid dd#loot { max-width: 70em; }
@@ -45,8 +66,6 @@ div.raid dd#signups { max-width: 70em; }
 div.raid dd#logs { max-width: 70em; }
 
 div.raid dd ul { list-style: none; }
-div.raid dd ul li { margin-top: 0.5em; }
-div.raid dd ul li:first-child { margin-top: 0; }
 
 table td ul { list-style: none; }
 

@@ -169,7 +169,6 @@ DEPENDENCIES
   capistrano-ext
   coffee-rails (~> 3.2.1)
   haml
-  httparty
   icalendar
   jquery-rails
   mysql

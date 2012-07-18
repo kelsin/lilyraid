@@ -9,9 +9,6 @@ gem 'tzinfo'
 
 gem 'icalendar'
 
-# WoW Armory Integration
-gem 'httparty'
-
 # Battle.net api
 gem 'battlenet'
 

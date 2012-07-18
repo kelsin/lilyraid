@@ -2,6 +2,7 @@ class RaidsController < ApplicationController
   before_filter(:load_raid, :only => [:edit, :update, :destroy, :show, :finalize])
 
   def index
+    authorize! :read, Raid
     @old = params[:old]
 
     if @old
@@ -78,18 +79,21 @@ class RaidsController < ApplicationController
   end
 
   def new
+    authorize! :create, Raid
     @raid = Raid.new
-    @raid.date = Time.zone.parse("Tomorrow 18h00") unless @raid.date
+    @raid.date = Time.zone.parse("Tomorrow 18h30") unless @raid.date
+    @raid.number_of_slots = 10
     @raid.locations.build
     @raid.locations.build
     @raid.locations.build
   end
 
   def create
+    authorize! :create, Raid
+
     # Create raid object
     @raid = Raid.new(params[:raid])
-    @raid.account = @current_account
-    @raid.date = Time.zone.parse("#{params[:caldate]} #{params[:caltime]}")
+    @raid.account = current_user
 
     if @raid.save
       flash[:notice] = 'Raid saved!'

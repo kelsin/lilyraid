@@ -16,6 +16,7 @@ class Raid < ActiveRecord::Base
 
   belongs_to :raid_template
 
+  attr_accessor :number_of_slots
   has_many :slots, :dependent => :destroy
   accepts_nested_attributes_for(:slots,
                                 :allow_destroy => true)
@@ -44,6 +45,15 @@ class Raid < ActiveRecord::Base
   def needed
     slots.empty.count(:include => :role, :group => "roles.name")
   end
+
+  def date=(date)
+    case date
+    when String
+      write_attribute(:date, Time.parse(date))
+    else
+      write_attribute(:date, date)
+    end
+  end        
 
   def confirmed_characters
     slots.map do |slot|

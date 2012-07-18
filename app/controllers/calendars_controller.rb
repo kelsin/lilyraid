@@ -1,6 +1,7 @@
 class CalendarsController < ApplicationController
   include Icalendar
 
+  skip_authorization_check
   skip_before_filter :authorize
   skip_before_filter :fake_authorize
 

@@ -4,14 +4,14 @@ div.raid
   h3 Member List
   h4 Officers
   dl
-    - Account.admins.each do |account|
+    - @admins.each do |account|
       dt = link_to account.name, account_url(account)
       - account.characters.each do |character|
         dd
           = link_to(render(:partial => "shared/character", :object => character), "#{account_url(account)}#character_#{character.id}")
   h4 Members
   dl
-    - Account.members.each do |account|
+    - @members.each do |account|
       dt = link_to account.name, account_url(account)
       - account.characters.each do |character|
         dd = render :partial => "shared/character", :object => character

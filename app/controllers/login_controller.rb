@@ -1,4 +1,5 @@
 class LoginController < ApplicationController
+  skip_authorization_check
   skip_before_filter :authorize
 
   def index
