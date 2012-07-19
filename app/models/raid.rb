@@ -1,7 +1,7 @@
 class Raid < ActiveRecord::Base
   belongs_to :account
-
   belongs_to :instance
+  belongs_to :list
 
   has_many :raider_tags
   has_many :tags, :through => :raider_tags

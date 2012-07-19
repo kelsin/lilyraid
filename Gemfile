@@ -36,6 +36,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'yui-compressor'
+  gem 'awesome_print', :git => 'git@github.com:Kelsin/awesome_print.git'
 end
 
 group :development do

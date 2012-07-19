@@ -3,8 +3,6 @@ class List < ActiveRecord::Base
   has_many :accounts, :through => :list_positions
   has_one :loot
 
-  default_scope where('lists.name' => CONFIG[:guild])
-
   def to_s
     self.name
   end

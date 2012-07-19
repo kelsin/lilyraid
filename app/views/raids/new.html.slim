@@ -20,6 +20,9 @@ div.raid id=dom_id(@raid)
         ul
           = f.fields_for :locations do |l|
             li = l.collection_select :instance_id, Instance.active, :id, :name, :include_blank => true
+      - if can? :edit, List
+        dt Loot List:
+        dd = f.collection_select :list_id, List.all, :id, :name, :include_blank => 'No Loot List'
       - if admin?
         dt Uses Loot System?
         dd = f.check_box :uses_loot_system

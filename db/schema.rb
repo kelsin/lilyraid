@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120718045412) do
+ActiveRecord::Schema.define(:version => 20120719062610) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -45,16 +45,17 @@ ActiveRecord::Schema.define(:version => 20120718045412) do
   end
 
   create_table "characters", :force => true do |t|
-    t.integer  "account_id",                    :null => false
-    t.integer  "race_id",                       :null => false
-    t.integer  "cclass_id",                     :null => false
+    t.integer  "account_id",                            :null => false
+    t.integer  "race_id",                               :null => false
+    t.integer  "cclass_id",                             :null => false
     t.string   "name"
     t.string   "guild"
     t.integer  "level"
-    t.boolean  "inactive",   :default => false, :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.boolean  "inactive",   :default => false,         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "thumbnail"
+    t.string   "realm",      :default => "bronzebeard", :null => false
   end
 
   add_index "characters", ["account_id"], :name => "index_characters_on_account_id"
@@ -147,6 +148,7 @@ ActiveRecord::Schema.define(:version => 20120718045412) do
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.boolean  "finalized",        :default => false, :null => false
+    t.integer  "list_id"
   end
 
   add_index "raids", ["account_id"], :name => "index_raids_on_account_id"

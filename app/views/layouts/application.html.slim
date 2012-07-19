@@ -22,7 +22,6 @@ body
       li = link_to 'Calendars', calendar_path
       - if admin?
         li = link_to 'Admin', admin_accounts_path
-        li = link_to 'Templates', admin_templates_path
         li = link_to 'Instances', admin_instances_path
       - if CONFIG[:auth] == 'login'
         li = link_to 'Logout', logout_path

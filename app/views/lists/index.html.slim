@@ -1,2 +1,6 @@
-div#loot_list
-  = render(:partial => "lists/list", :object => @list)
+div#loot_lists
+  ul
+    - @lists.each do |list|
+      li = link_to list.name, list_path(list)
+- if can? :create, List
+  = render :partial => 'lists/form', :locals => { :list => @list }

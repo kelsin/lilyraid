@@ -7,6 +7,8 @@ div.raid id=dom_id(character)
     dl
       dt Name:
       dd = f.text_field :name
+      dt Realm:
+      dd = f.select :realm, Realms.all.map {|s,n| [n,s]}
       - unless character.new_record?
         dt Inactive:
         dd

@@ -2,29 +2,24 @@ class Admin::AccountsController < ApplicationController
   before_filter :require_admin
 
   def index
+    authorize! :update, Account
     @accounts = Account.order('name').all
-
     @account = Account.new
     @character = Character.new
-    @cclasses = Cclass.order('name').all
-
     @deletable = Account.order('name').all.select do |account|
       account.can_delete?
     end
   end
 
   def create
+    authorize! :create, Account
+
     @account = Account.new(params[:account])
-    @character = Character.new(params[:character])
-    @character.account = @account
-
-    if @account.valid? and @character.valid?
-      @account.save
-      @character.save
-      redirect_to account_url(@account.id)
+    if @account.save
+      redirect_to admin_accounts_url
     else
-      @cclasses = Cclass.order('name').all
-
+      @accounts = Account.order('name').all
+      @character = Character.new
       @deletable = Account.order('name').all.select do |account|
         account.can_delete?
       end

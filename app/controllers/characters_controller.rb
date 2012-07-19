@@ -2,9 +2,14 @@ class CharactersController < ApplicationController
   before_filter(:load_account, :except => [:roles])
   before_filter(:load_character, :only => [:destroy, :edit, :update])
 
+  def new
+    authorize! :edit, @account
+    @character = @account.characters.build(:realm => CONFIG[:realm])
+  end
+
   def create
     authorize! :edit, @account
-    @character = @account.characters.create(params[:character])
+    @character = @account.characters.build(params[:character])
     @character.update_from_armory!
 
     respond_to do |format|

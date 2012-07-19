@@ -1,0 +1,13 @@
+div.list id=dom_id(list)
+  = form_for(list) do |f|
+    - if list.new_record?
+      h3 New Loot List
+    - else
+      h3 Edit Loot List
+    dl
+      dt Name:
+      dd = f.text_field :name
+      dt Note:
+      dd = f.text_field :note
+      dt
+      dd = submit_tag "Save", :id => "#{dom_id(list)}_submit"

@@ -1,20 +1,11 @@
 class Admin::CharactersController < ApplicationController
-  def index
-    @accounts = Account.order('name').all
-
-    @account = Account.new
-    @character = Character.new
-    @cclasses = Cclass.order('name').all
-  end
-
   def create
-    @account = Account.new(params[:account])
-    @account.save
+    @account = Account.find(params[:character][:account_id])
 
+    authorize! :edit, @account
     @character = Character.new(params[:character])
-    @character.account = @account
-    @character.save
+    @character.update_from_armory!
 
-    redirect_to account_url(@account.id)
+    redirect_to admin_accounts_url
   end
 end

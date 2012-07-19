@@ -38,6 +38,21 @@ class Character < ActiveRecord::Base
                                   where lp.account_id = characters.account_id
                                     and lp.list_id = ?)", List.first ? List.first.id : 0] }
 
+  @@sides = { 
+    1 => 'alliance',
+    2 => 'horde',
+    3 => 'alliance',
+    4 => 'alliance',
+    5 => 'horde',
+    6 => 'horde',
+    7 => 'alliance',
+    8 => 'horde',
+    9 => 'horde',
+    10 => 'horde',
+    11 => 'alliance',
+    22 => 'alliance' }
+  @@sides.default = 'neutral'
+
   def <=>(other)
     [other.level, name] <=> [level, other.name]
   end
@@ -62,10 +77,27 @@ class Character < ActiveRecord::Base
     raids.empty?
   end
 
-  def update_from_armory!(character = self.name)
-    data = API.character(CONFIG[:realm], character, 'fields' => 'guild')
+  def is_alliance?
+    self.side == 'alliance'
+  end
+
+  def is_horde?
+    self.side == 'horde'
+  end
+
+  def side
+    @@sides[self.race_id].titlecase
+  end
+
+  def pretty_realm
+    Realms.name(self.realm)
+  end
+
+  def update_from_armory!(realm = self.realm, character = self.name)
+    data = API.character(realm, character, 'fields' => 'guild')
 
     if data
+      self.realm = realm
       self.name = data['name']
       self.cclass_id = data['class']
       self.race_id = data['race']
@@ -74,5 +106,9 @@ class Character < ActiveRecord::Base
       self.thumbnail = data['thumbnail']
       self.save
     end
+  end
+
+  def self.guilds
+    Character.select('distinct guild').map(&:guild).compact
   end
 end

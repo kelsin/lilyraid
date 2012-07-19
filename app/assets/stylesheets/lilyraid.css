@@ -12,28 +12,35 @@ h3 { font-size: 2em; margin-left: 5em; margin-bottom: 0.2em; }
 
 h4 { font-size: 1.5em; margin-left: 6.7em; margin-bottom: 0.2em; }
 
-ul.actions { overflow: auto; }
+ul.actions { overflow: auto; list-style: none; }
 ul.actions li { margin: 0; float: left; }
 ul.actions li:after { content: '|'; padding: 0 0.5em; }
 ul.actions li:last-child:after { content: ''; }
+
+/* DL Structure */
+div.raid dt, div.character dt, div.account dt, div.list dt {
+    float: left; clear: left;
+    margin-bottom: 1em; font-weight: bold;
+    width: 9em; text-align: right; padding-right: 1em; }
+div.raid dd, div.character dd, div.account dd, div.list dd {
+    float: left; clear: right; position: relative;
+    margin-bottom: 1em;
+    max-width: 40em; }
 
 /* Account */
 div.account { margin: 0 0 2.2em 0; width: 50em; }
 div.account h3 { margin-left: 5em; }
 div.account ul.actions { margin-left: 10em; }
 div.account dl { position: relative; overflow: hidden; margin: 1em 0; }
-div.account dt { float: left; clear: left;
-                 margin-bottom: 1em; font-weight: bold;
-                 width: 9em; text-align: right; padding-right: 1em; }
-div.account dd { float: left; clear: right; position: relative;
-                 margin-bottom: 1em;
-                 max-width: 40em; }
 
 /* Character Page */
 div.character h4 { margin-left: 0; }
 div.character dtdiv.thumbnail { width: 9em; margin: 0; padding: 0; position: absolute; overflow: auto; }
 div.character dt img { border: 1px solid #fff; float: right; }
 div.character.inactive dt img { opacity: 0.2; }
+
+/* List */
+div.list { overflow: auto; }
 
 /* p */
 div.raid p { margin: 0.5em 0 0 10em; width: 40em; }
@@ -53,7 +60,8 @@ table td { padding: 0.5em 1em 0.5em 0.5em; vertical-align: top; }
 
 table tr.even td { background-color: #111; }
 
-/* Lists */
+/* Raids */
+div.raid { overflow: auto; }
 div.raid dl { position: relative; overflow: hidden; margin: 1em 0; }
 div.raid dt { float: left; clear: left;
               margin-bottom: 1em; font-weight: bold;

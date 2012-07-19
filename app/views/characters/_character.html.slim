@@ -7,6 +7,7 @@ div.character.raid id=dom_id(character) class=('inactive' if character.inactive?
       - if character.guild.present?
         p = guild_link(character)
       p #{character.level} #{t("race.#{character.race_id}") if character.race_id} #{render(:partial => "shared/cclass", :object => character.cclass_id) if character.cclass_id}
+      p = character.pretty_realm
       - if can? :edit, character
         ul.actions
           li = link_to 'Edit', edit_account_character_path(character.account, character)

@@ -1,38 +1,39 @@
 div.raid
-  h3 Add New Character
+  h3 Add New Account
   = errors_for @account
-  = errors_for @character
   = form_for [:admin, @account] do |a|
     dl
-      dt = a.label :name, "Account Name"
+      dt = a.label :name, "Name"
       dd = a.text_field :name
-      dt Password
-      dd = a.password_field :change_password
-      dt Confirm
-      dd = a.password_field :password_confirmation
-      = fields_for @character do |c|
-        dt = c.label :name, "Character Name"
-        dd = c.text_field :name
-        dt = c.label :cclass, "Class"
-        dd = c.collection_select :cclass_id, Cclass.all, :id, :name
-        dt = c.label :race
-        dd = c.collection_select :race_id, Race.all, :id, :name
-        dt = c.label :level
-        dd = c.text_field :level, :size => 4
-        dt = c.label :guild
-        dd = c.text_field :guild
+      - if CONFIG[:auth] = 'login'
+        dt Password
+        dd = a.password_field :change_password
+        dt Confirm
+        dd = a.password_field :password_confirmation
+      dt
+      dd = submit_tag "Create"
+  h3 Add New Character
+  = errors_for @character
+  = form_for [:admin, @character] do |c|
+    dl
+      dt = c.label :account_id, "Account"
+      dd = c.collection_select :account_id, @accounts, :id, :name
+      dt = c.label :name, "Character Name"
+      dd = c.text_field :name
+      dt = c.label :realm, "Realm"
+      dd = c.select :realm, Realms.all.map {|s,n| [n,s]}
       dt
       dd = submit_tag "Create"
   h3 Rename Account
   = form_tag rename_admin_accounts_url do
-  dl
-    dt Rename
-    dd
-      = select_tag(:id, options_from_collection_for_select(Account.by_name.all, :id, :name))
-      | to
-      = text_field :account, :name
-    dt
-    dd = submit_tag "Rename"
+    dl
+      dt Rename
+      dd
+        = select_tag(:id, options_from_collection_for_select(Account.by_name.all, :id, :name))
+        | to
+        = text_field :account, :name
+      dt
+      dd = submit_tag "Rename"
   h3 Deletable Accounts
   dl
     - @deletable.each do |account|

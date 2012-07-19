@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    @current_account = Account.find_by_id(session[:account_id])
+    @current_account = Account.find_by_id(session[:account_id], :include => :characters)
 
     redirect_to(:controller => 'login', :action => 'index') unless @current_account
   end
