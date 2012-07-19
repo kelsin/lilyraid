@@ -35,7 +35,10 @@ class Admin::AccountsController < ApplicationController
   end
 
   def destroy
-    Account.find(params[:id]).destroy
+    @account = Account.find(params[:id])
+    authorize! :destroy, @account
+
+    @account.destroy
 
     redirect_to accounts_url
   end

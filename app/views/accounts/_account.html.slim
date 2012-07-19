@@ -4,7 +4,7 @@ div.account id=dom_id(account)
     - if can? :update, account
       li = link_to 'Edit', edit_account_url(account), :class => 'edit'
     - if can? :destroy, account and account.can_delete?
-      li = link_to 'Delete', { :url => admin_account_url(account), :method => :delete }, :class => 'delete'
+      li = link_to 'Delete', admin_account_url(account), :method => :delete, :class => 'delete'
   dl
     - if account.age.present?
       dt Age:
