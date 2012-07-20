@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719062610) do
+ActiveRecord::Schema.define(:version => 20120720062301) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -56,9 +56,24 @@ ActiveRecord::Schema.define(:version => 20120719062610) do
     t.datetime "updated_at",                            :null => false
     t.string   "thumbnail"
     t.string   "realm",      :default => "bronzebeard", :null => false
+    t.integer  "rank"
+    t.boolean  "officer"
   end
 
   add_index "characters", ["account_id"], :name => "index_characters_on_account_id"
+
+  create_table "guilds", :force => true do |t|
+    t.string   "name",                            :null => false
+    t.string   "realm",                           :null => false
+    t.integer  "icon"
+    t.integer  "border"
+    t.string   "icon_color"
+    t.string   "border_color"
+    t.string   "background_color"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "officer_rank",     :default => 1
+  end
 
   create_table "instances", :force => true do |t|
     t.string   "name"

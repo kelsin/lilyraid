@@ -3,7 +3,7 @@ html lang="en"
 head
   title = @title || CONFIG[:guild] + " Raid Signups" || "World of Warcraft Raid Signup"
   = favicon_link_tag "#{Rails.env}-favicon.png", :type => 'image/png'
-  = stylesheet_link_tag 'lilydate', 'wow', 'lilyraid', Rails.env
+  = stylesheet_link_tag 'lilydate', 'wow', 'lilyraid', 'lilyraid2', Rails.env
   = javascript_include_tag 'application'
   = csrf_meta_tag
   javascript:
@@ -11,7 +11,6 @@ head
 body
   h1 #{CONFIG[:guild]}: Raid Signups
   h2 A world of warcraft raiding guild
-  #error style="display: none"
   ul#menu
     - if logged_in?
       li = link_to 'Home', raids_path
@@ -29,6 +28,13 @@ body
         li = link_to 'Forums', CONFIG[:forum]
       - if CONFIG[:website]
         li = link_to 'Website', CONFIG[:website]
+  - if flash[:notice]
+    .flash
+      .notice = flash[:notice]
+  - if flash[:alert]
+    .flash
+      .alert = flash[:alert]
+  #error style="display: none"
   - if logged_in? and @current_account.characters.empty?
     .info
       | You currently have no characters created! Please head to the 

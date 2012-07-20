@@ -1,6 +1,7 @@
 Lilyraid::Application.routes.draw do
   resources :lists
   resource :calendar
+  resources :characters
   resources :accounts do
     member do
       post :add_to_list
@@ -48,6 +49,7 @@ Lilyraid::Application.routes.draw do
       end
     end
     resources :tags
+    resources :guilds
   end
 
   match 'wowhead/:search' => 'loots#search', :as => 'wowhead'

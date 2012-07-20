@@ -1,6 +1,11 @@
 class CharactersController < ApplicationController
-  before_filter(:load_account, :except => [:roles])
+  before_filter(:load_account, :except => [:roles, :index])
   before_filter(:load_character, :only => [:destroy, :edit, :update])
+
+  def index
+    authorize! :read, Character
+    @characters = Character.order(:guild, :officer, :name).all
+  end
 
   def new
     authorize! :edit, @account

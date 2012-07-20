@@ -7,8 +7,10 @@ class Character < ActiveRecord::Base
   has_many :loots, :dependent => :nullify
   has_many :logs, :dependent => :destroy
 
-  validates_uniqueness_of :name
-  validates_presence_of :name, :account, :race_id, :cclass_id
+  validates :name, :uniqueness => { :scope => :realm }
+  validates :account_id, :presence => true
+  validates :race_id, :presence => true
+  validates :cclass_id, :presence => true
 
   before_destroy :can_delete?
 

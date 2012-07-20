@@ -17,9 +17,15 @@ ul.actions li { margin: 0; float: left; }
 ul.actions li:after { content: '|'; padding: 0 0.5em; }
 ul.actions li:last-child:after { content: ''; }
 
+/* Flash */
+div.flash { margin-bottom: 1em; overflow: auto; }
+div.flash div.notice, div.flash div.alert { padding: 10px; font-weight: bold; float: left; clear: left;
+                                            border: 2px solid #a00; background-color: #000; }
+div.flash div.notice { border-color: #99f; }
+
 /* DL Structure */
 div.raid dt, div.character dt, div.account dt, div.list dt {
-    float: left; clear: left;
+    float: left; clear: left; position: relative;
     margin-bottom: 1em; font-weight: bold;
     width: 9em; text-align: right; padding-right: 1em; }
 div.raid dd, div.character dd, div.account dd, div.list dd {
@@ -37,7 +43,9 @@ div.account dl { position: relative; overflow: hidden; margin: 1em 0; }
 div.character h4 { margin-left: 0; }
 div.character dtdiv.thumbnail { width: 9em; margin: 0; padding: 0; position: absolute; overflow: auto; }
 div.character dt img { border: 1px solid #fff; float: right; }
-div.character.inactive dt img { opacity: 0.2; }
+div.character dt div.overlay { display: none; }
+div.character.inactive dt img { opacity: 0.25; }
+div.character.inactive dt div.guild_icon div { opacity: 0.25; }
 
 /* List */
 div.list { overflow: auto; }
@@ -108,7 +116,7 @@ ul#menu { clear: both; overflow: auto; margin: 0.5em 0 2em 0; }
 ul#menu li { display: block; float: left; background-color: #222; color: #fdec2c; padding: 0.5em; border: 2px solid #bbb; margin-right: 1em; }
 
 /* Div's */
-div.raid div { margin: 1em 0 0 10em; clear: both; }
+/* div.raid div { margin: 1em 0 0 10em; clear: both; } */
 div.raid dl dd div, div.raid div div { margin: 0 0 0.3em 0; }
 
 div.bio { width: 900px; background-color: #320023; border: 2px solid yellow; padding: 10px; }

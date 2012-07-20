@@ -2,6 +2,8 @@ div.character.raid id=dom_id(character) class=('inactive' if character.inactive?
   dl
     dt
       = image_tag character_image_url(character)
+      - if Guild.named(character.guild)
+        = guild_icon(Guild.named(character.guild))
     dd
       h4 = character_link(character)
       - if character.guild.present?

@@ -1,0 +1,18 @@
+h3 Guilds
+table.guilds
+  thead
+    tr
+      th.emblem Emblem
+      th Name
+      th Realm
+      th Officer Rank
+      th.actions Edit
+  tbody
+    - @guilds.each do |guild|
+      tr
+        td.emblem = guild_icon(guild)
+        td = guild.name
+        td = Realms.name(guild.realm)
+        td = guild.officer_rank
+        td = link_to 'Edit', edit_admin_guild_path(guild)
+  

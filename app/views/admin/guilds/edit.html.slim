@@ -1,0 +1,3 @@
+- if flash[:notice]
+  = flash[:notice]
+= render :partial => "admin/guilds/form", :locals => { :guild => @guild }

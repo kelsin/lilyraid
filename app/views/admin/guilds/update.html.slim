@@ -1,0 +1,14 @@
+h3 Changes
+p #{@guild} was updated and the following changes were made to members:
+table
+  thead
+    tr
+      th Character
+      th Rank
+      th Officer
+  tbody
+    - @changes.each do |character|
+      tr
+        td = link_to(render(:partial => 'shared/character', :object => character), account_character_path(character.account, character))
+        td = character.previous_changes['rank'].try(:[], 1)
+        td = character.previous_changes['officer'].try(:[], 1)

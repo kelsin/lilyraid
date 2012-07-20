@@ -2,6 +2,7 @@ class Admin::InstancesController < ApplicationController
   before_filter :require_admin
 
   def index
+    authorize! :read, Instance
     @active = Instance.active.all
     @inactive = Instance.inactive.all
     @new_instance = Instance.new
@@ -9,10 +10,12 @@ class Admin::InstancesController < ApplicationController
 
   def edit
     @instance = Instance.find(params[:id])
+    authorize! :update, @instance
   end
 
   def update
     @instance = Instance.find(params[:id])
+    authorize! :update, @instance
 
     if @instance.update_attributes(params[:instance])
       redirect_to admin_instances_url
@@ -23,6 +26,7 @@ class Admin::InstancesController < ApplicationController
 
   def create
     @new_instance = Instance.new(params[:instance])
+    authorize! :create, @instance
 
     if @new_instance.save
       redirect_to admin_instances_url
@@ -34,7 +38,9 @@ class Admin::InstancesController < ApplicationController
   end
 
   def destroy
-    Instance.destroy(params[:id])
+    @instance = Instance.find(params[:id])
+    authorize! :destroy, @instance
+    @instance.destroy
     redirect_to admin_instances_url
   end
 end
