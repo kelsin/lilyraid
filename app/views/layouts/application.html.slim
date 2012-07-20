@@ -15,8 +15,9 @@ body
     - if logged_in?
       li = link_to 'Home', raids_path
       li = link_to 'New Raid', new_raid_path
-      li = link_to 'Account', current_account_path
-      li = link_to 'Members', accounts_path
+      li = link_to 'My Account', current_account_path
+      li = link_to 'Accounts', accounts_path
+      li = link_to 'Characters', characters_path
       li = link_to 'Loot', lists_path
       li = link_to 'Calendars', calendar_path
       - if admin?

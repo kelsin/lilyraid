@@ -1,17 +1,17 @@
-- if flash[:notice]
-  = flash[:notice]
 div.raid
-  h3 Member List
-  h4 Officers
-  dl
-    - @admins.each do |account|
-      dt = link_to account.name, account_url(account)
-      - account.characters.each do |character|
-        dd
-          = link_to(render(:partial => "shared/character", :object => character), "#{account_url(account)}#character_#{character.id}")
-  h4 Members
-  dl
-    - @members.each do |account|
-      dt = link_to account.name, account_url(account)
-      - account.characters.each do |character|
-        dd = render :partial => "shared/character", :object => character
+  h3 Accounts
+  - unless @admins.empty?
+    h4 Admins
+    dl
+      - @admins.each do |account|
+        dt = link_to account.name, account_url(account)
+        - account.characters.each do |character|
+          dd
+            = link_to(render(:partial => "shared/character", :object => character), "#{account_url(account)}#character_#{character.id}")
+  - unless @members.empty?
+    h4 Normal Accounts
+    dl
+      - @members.each do |account|
+        dt = link_to account.name, account_url(account)
+        - account.characters.each do |character|
+          dd = render :partial => "shared/character", :object => character

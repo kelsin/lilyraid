@@ -14,32 +14,36 @@ class Guild < ActiveRecord::Base
     @@guilds[name]
   end
 
+  def self.add(guild)
+    @@guilds[guild.name] = guild
+  end
+
   def to_s
     self.name
   end
     
   def icon_color
-    read_attribute(:icon_color)[2..7]
+    read_attribute(:icon_color).try(:[], 2..7)
   end
 
   def icon_color_alpha
-    read_attribute(:icon_color)[0..1]
+    read_attribute(:icon_color).try(:[], 0..1)
   end
 
   def border_color
-    read_attribute(:border_color)[2..7]
+    read_attribute(:border_color).try(:[], 2..7)
   end
 
   def border_color_alpha
-    read_attribute(:border_color)[0..1]
+    read_attribute(:border_color).try(:[], 0..1)
   end
 
   def background_color
-    read_attribute(:background_color)[2..7]
+    read_attribute(:background_color).try(:[], 2..7)
   end
 
   def background_color_alpha
-    read_attribute(:background_color)[0..1]
+    read_attribute(:background_color).try(:[], 0..1)
   end
 
   def update_from_armory!(realm = self.realm, guild = self.name)

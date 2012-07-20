@@ -108,6 +108,17 @@ class Character < ActiveRecord::Base
       self.thumbnail = data['thumbnail']
       self.save
     end
+
+    # Check for new guilds
+    guild = Guild.named(self.guild)
+
+    unless guild
+      guild = Guild.new(:name => self.guild, :realm => self.realm)
+      guild.update_from_armory!
+      Guild.add(guild)
+    end
+
+    self
   end
 
   def self.guilds
