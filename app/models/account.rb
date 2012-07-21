@@ -25,6 +25,9 @@ class Account < ActiveRecord::Base
 
   before_save :set_password
 
+  # Cache of which accounts are officers of which guilds
+  @@officers = nil
+
   def self.named(name)
     self.first(:conditions => { :name => name })
   end
@@ -197,5 +200,25 @@ class Account < ActiveRecord::Base
     if CONFIG[:auth] == 'login' && (not change_password.blank?)
       self[:password] = Digest::MD5.hexdigest(change_password)
     end
+  end
+
+  def officer?(guild)
+    Account.load_officer_cache unless @@officers
+    @@officers[guild] ? @@officers[guild].include?(self.id) : false
+  end    
+
+  def self.clear_officer_cache
+    @@officers = nil
+  end
+
+  def self.load_officer_cache
+    @@officers = {}
+    Account.includes(:characters).where('characters.officer' => true).all.each do |account|
+      account.characters.each do |character|
+        @@officers[character.guild] ||= Set.new
+        @@officers[character.guild] << account.id
+      end
+    end
+    @@officers
   end
 end

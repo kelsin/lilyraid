@@ -1,0 +1,30 @@
+@import compass/typography/text/replacement
+
+/* Background and Main Color */
+body
+  background:
+    color: #17000A
+    image: image-url('dota-bg.gif')
+    repeat: repeat-x
+  color: #fff
+
+// Heading
+h1
+  +replace-text-with-dimensions('dota-h1.png')
+
+// Main Menu List
+ul#menu li
+  background-color: rgb(50,0,35)
+  color: #fdec2c
+  border: 2px solid rgb(115, 0, 101)
+
+// Table
+table tr.even td
+  background-color: rgb(50, 0, 35)
+
+// Links
+a:link, a:visited, a:active
+  color: rgb(253,236,60)
+
+a:hover
+  color: white

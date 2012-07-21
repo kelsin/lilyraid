@@ -1,0 +1,61 @@
+//= require lilydate
+
+// Reset
+@import compass/reset
+
+// Compass imports
+@import compass/typography/vertical_rhythm
+@import compass/utilities/general/float
+@import compass/css3/border-radius
+@import compass/css3/text-shadow
+
+// Base Grid
+@import base
+
+// Wow Specific
+@import wow
+
+// Typography
++establish-baseline
+
+body
+  background-color: #000
+  color: #fff
+  font:
+    family: helvetica, arial, sans serif
+    size: 13px
+
+// Grid
+.page
+  +container
+  +susy-grid-background
+  position: relative
+
+// Auth
+#auth
+  margin-right: gutter()
+  border:
+    style: solid
+    width: 0 0 2px 2px
+  position: absolute
+  top: 0
+  right: 0
+  +clearfix
+  +border-radius(0 0 0 0.5em)
+
+  li
+    +float-left
+    +text-shadow(1px 1px 2px #000)
+    padding: 0.3em 0.8em
+
+    a
+      color: #fff
+      text-decoration: none
+
+      &:hover
+        text-decoration: underline
+
+// Footer
+#footer
+  +span-columns(6,12)
+  +adjust-font-size-to(12px)

@@ -27,3 +27,6 @@ config/config.yml
 
 # Sass Cache
 .sass-cache
+
+# Mac
+.DS_Store

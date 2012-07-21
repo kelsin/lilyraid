@@ -13,4 +13,5 @@ default:
   phpbb_prefix: phpbb_
   phpbb_admin_group: 1
   phpbb_cookie: phpbb3_cookie
-
+  theme:
+    localhost: cod

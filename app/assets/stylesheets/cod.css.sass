@@ -1,0 +1,32 @@
+@import compass/typography/text/replacement
+
+body
+  background-color: #000
+  color: #fff
+
+// Headers
+h1
+  +replace-text-with-dimensions('cod-h1.png')
+  margin: 0 0 2em 0
+
+// Auth
+#auth
+  background-color: darken(#e43e44, 42%)
+  border-color: darken(#e43e44, 20%)
+
+// Main Menu List
+ul#menu li
+  background-color: #222
+  color: #fdec2c
+  border: 2px solid #bbb
+
+// Table
+table tr.even td
+  background-color: #111
+
+// Links
+a:link, a:visited, a:active
+  color: #99f
+
+a:hover
+  color: white

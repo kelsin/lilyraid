@@ -88,6 +88,8 @@ class Guild < ActiveRecord::Base
       end
     end
 
+    Account.clear_officer_cache
+
     changed.sort do |a,b|
       a.name <=> b.name
     end

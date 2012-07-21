@@ -3,48 +3,46 @@ html lang="en"
 head
   title = @title || CONFIG[:guild] + " Raid Signups" || "World of Warcraft Raid Signup"
   = favicon_link_tag "#{Rails.env}-favicon.png", :type => 'image/png'
-  = stylesheet_link_tag 'lilydate', 'wow', 'lilyraid', 'lilyraid2', Rails.env
+  = stylesheet_link_tag 'lilyraid', @theme
   = javascript_include_tag 'application'
   = csrf_meta_tag
   javascript:
     var AUTH_TOKEN = '#{form_authenticity_token}';
 body
-  h1 #{CONFIG[:guild]}: Raid Signups
-  h2 A world of warcraft raiding guild
-  ul#menu
-    - if logged_in?
-      li = link_to 'Home', raids_path
-      li = link_to 'New Raid', new_raid_path
-      li = link_to 'My Account', current_account_path
-      li = link_to 'Accounts', accounts_path
-      li = link_to 'Characters', characters_path
-      li = link_to 'Loot', lists_path
-      li = link_to 'Calendars', calendar_path
-      - if admin?
-        li = link_to 'Admin', admin_accounts_path
-        li = link_to 'Instances', admin_instances_path
-      - if CONFIG[:auth] == 'login'
-        li = link_to 'Logout', logout_path
-      - if CONFIG[:forum]
-        li = link_to 'Forums', CONFIG[:forum]
-      - if CONFIG[:website]
-        li = link_to 'Website', CONFIG[:website]
-  - if flash[:notice]
-    .flash
-      .notice = flash[:notice]
-  - if flash[:alert]
-    .flash
-      .alert = flash[:alert]
-  #error style="display: none"
-  - if logged_in? and @current_account.characters.empty?
-    .info
-      | You currently have no characters created! Please head to the 
-      = link_to 'Account', current_account_path
-      |  page to create some!
-  = yield
-  #footer
-    | Lilyraid was created using #{link_to "Ruby on Rails", 'http://rubyonrails.org/'} by #{link_to "Christopher Giroir", "http://blog.kelsin.net"}.
-    | You can view the #{link_to "source", "http://github.com/Kelsin/lilyraid"} at #{link_to "GitHub", "http://github.com"}.
-    | You can file #{link_to "tickets", "http://valefor.lighthouseapp.com/projects/29579/"} if you find any bugs or want to request new features.
-    | The source is licensed using the #{link_to "GPL v.3", "http://www.gnu.org/copyleft/gpl.html"} license.
+  .page
+    h1 LilyRaid Signups
+    -if logged_in?
+      ul#auth
+        li = link_to 'My Account', current_account_path
+        - if admin?
+          li = link_to 'Admin', admin_accounts_path
+        - if CONFIG[:auth] == 'login'
+          li = link_to 'Logout', logout_path
+    ul#menu
+      - if logged_in?
+        li = link_to 'Home', raids_path
+        li = link_to 'New Raid', new_raid_path
+        li = link_to 'Accounts', accounts_path
+        li = link_to 'Characters', characters_path
+        li = link_to 'Loot', lists_path
+        li = link_to 'Calendars', calendar_path
+        - if CONFIG[:forum]
+          li = link_to 'Forums', CONFIG[:forum]
+        - if CONFIG[:website]
+          li = link_to 'Website', CONFIG[:website]
+    - if flash[:notice]
+      .flash
+        .notice = flash[:notice]
+    - if flash[:alert]
+      .flash
+        .alert = flash[:alert]
+    #error style="display: none"
+    - if logged_in? and @current_account.characters.empty?
+      .info
+        | You currently have no characters created! Please head to the 
+        = link_to 'Account', current_account_path
+        |  page to create some!
+    = yield
+    #footer
+      | Lilyraid was created using #{link_to "Ruby on Rails", 'http://rubyonrails.org/'} by #{link_to "Christopher Giroir", "http://blog.kelsin.net"}. You can view the #{link_to "source", "http://github.com/Kelsin/lilyraid"} at #{link_to "GitHub", "http://github.com"}. You can file #{link_to "tickets", "http://valefor.lighthouseapp.com/projects/29579/"} if you find any bugs or want to request new features. The source is licensed using the #{link_to "GPL v.3", "http://www.gnu.org/copyleft/gpl.html"} license.
   = javascript_include_tag 'http://static.wowhead.com/widgets/power.js', :defer => true

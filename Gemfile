@@ -17,7 +17,6 @@ gem 'unicorn'
 gem 'thin'
 
 # Haml and Sass
-gem 'haml'
 gem 'slim'
 
 gem 'thin'
@@ -36,11 +35,15 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'yui-compressor'
-  gem 'awesome_print', :git => 'git@github.com:Kelsin/awesome_print.git'
+
+  gem 'compass', '>= 0.13.alpha.0'
+  gem 'compass-rails', '>= 1.0.2'
+  gem 'susy'
 end
 
 group :development do
   gem 'capistrano'
   gem 'capistrano-ext'
   gem 'sqlite3'
+  gem 'awesome_print', :git => 'git@github.com:Kelsin/awesome_print.git'
 end

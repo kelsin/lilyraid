@@ -11,9 +11,14 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '599f44b29c4a78b118884b977571fb10'
 
+  before_filter :select_theme
   before_filter :authorize
 
   private
+
+  def select_theme
+    @theme = CONFIG['theme'][request.host]
+  end
 
   def finalize_log(raid)
     Log.create(:source => raid.finalized ? 'finalized' : 'unfinalized',
