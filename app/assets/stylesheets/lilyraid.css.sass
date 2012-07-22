@@ -15,6 +15,9 @@
 // Wow Specific
 @import wow
 
+// Basic site mixins
+@import basic
+
 // Typography
 +establish-baseline
 
@@ -31,7 +34,7 @@ body
   +susy-grid-background
   position: relative
 
-// Auth
+// Header
 #auth
   margin-right: gutter()
   border:
@@ -55,7 +58,96 @@ body
       &:hover
         text-decoration: underline
 
+// Content Headers
+header, nav
+  +span-columns(12)
+  +squish(2,2)
+  +clearfix
+
+// Nav
+nav
+  a
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+
+  li
+    +float-left
+    padding: 0.3em 1em
+    border: 2px solid #fff
+    margin-right: 1em
+    +border-radius(0.5em)
+
+// Content  
+.content
+  +span-columns(16)
+  +clearfix
+
+  h1, h2, h3, h4, h5, h6
+    +span-columns(12)
+    +squish(2,2)
+    +clearfix
+    margin:
+      top: 0.5em
+      bottom: 0.3em
+  h1
+    +adjust-font-size-to(32px)
+
+// Raids Page
+.raids
+  +group
+
+  .raid
+    +row
+
+    .icon
+      +span-columns(2)
+      .guild_icon
+        +push(1,2)
+        +span-columns(1 omega,2)
+        height: 50px
+    .name
+      +span-columns(2)
+    .instances
+      +span-columns(2)
+    .finalized
+      +span-columns(1)
+    .signups
+      +span-columns(2)
+    .date
+      +span-columns(2)
+    .needed
+      +span-columns(1)
+    .actions
+      +span-columns(2 omega)
+      +post(2)
+
+// Admin Guilds Page
+.guilds
+  +group
+
+  .guild
+    +row
+
+    .icon
+      +span-columns(2)
+      .guild_icon
+        +push(1,2)
+        +span-columns(1 omega,2)
+        height: 50px
+    .name
+      +span-columns(3)
+    .realm
+      +span-columns(2)
+    .officer_rank
+      +span-columns(1)
+    .edit
+      +span-columns(4 omega)
+
 // Footer
 #footer
   +span-columns(6,12)
   +adjust-font-size-to(12px)
+  margin:
+    top: 1em
+    bottom: 3em

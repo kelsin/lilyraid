@@ -1,7 +1,7 @@
 class Admin::GuildsController < ApplicationController
   def index
     authorize! :read, Guild
-    @guilds = Guild.order(:name).all
+    @guilds = Guild.cache
   end
 
   def new
@@ -13,6 +13,7 @@ class Admin::GuildsController < ApplicationController
     authorize! :create, Guild
     @guild = Guild.new(params[:guild])
     @changes = @guild.update_from_armory!
+    Guild.add(@guild)
 
     if @changes.empty?
       redirect_to admin_guilds_path, :notice => "#{@guild} was updated and no changes needed to be made to members."
@@ -32,6 +33,7 @@ class Admin::GuildsController < ApplicationController
 
     @guild.attributes = params[:guild]
     @changes = @guild.update_from_armory!
+    Guild.add(@guild)
 
     if @changes.empty?
       redirect_to admin_guilds_path, :notice => "#{@guild} was updated and no changes needed to be made to members."

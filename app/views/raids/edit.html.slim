@@ -1,5 +1,5 @@
 div.raid id=dom_id(@raid)
-  h3 Edit Raid
+  h1 Edit Raid
   = form_for @raid do |f|
     dl
       dt Name:
@@ -30,7 +30,7 @@ div.raid id=dom_id(@raid)
       dd
         - @raid.groups.each do |group|
           dl#edit_slots.list
-            dt Group #{cycle(*(1..8).to_s)
+            dt Group #{cycle(*(1..8).to_s)}
             - group.each do |slot|
               dd
                 = f.fields_for :slots, slot do |s|

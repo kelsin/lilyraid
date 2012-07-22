@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120720062301) do
+ActiveRecord::Schema.define(:version => 20120722014953) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20120720062301) do
     t.datetime "updated_at",                          :null => false
     t.boolean  "finalized",        :default => false, :null => false
     t.integer  "list_id"
+    t.string   "guild"
   end
 
   add_index "raids", ["account_id"], :name => "index_raids_on_account_id"

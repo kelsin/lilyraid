@@ -31,6 +31,8 @@ class Raid < ActiveRecord::Base
   scope :last_three_months, lambda { where('raids.date >= ?', Date.today - 3.months) }
   scope :in_instance, lambda { |instance| where(:instance_id => instance) }
 
+  Inf = 1/0.0
+
   def to_s
     self.name
   end
@@ -226,5 +228,52 @@ class Raid < ActiveRecord::Base
 
   def caltime
     date.strftime("%I:%M %p")
+  end
+
+  def word_date
+    days = self.date.to_date - Date.today
+
+    case days
+    when -Inf..-1
+      "In the past"
+    when 0
+      "Today"
+    when 1
+      "Tomorrow"
+    when 2..days_left_in_week
+      "This #{day_name(self.date)}"
+    when (days_left_in_week + 1)..(days_left_in_week + 7)
+      "Next #{day_name(self.date)}"
+    when (days_left_in_week + 8)..days_left_in_month
+      "Later this month"
+    when (days_left_in_month + 1)..days_left_in_two_months
+      "Next month"
+    when (days_left_in_two_months + 1)..days_left_in_year
+      "Later this year"
+    else
+      "In the future"
+    end
+  end
+
+  private
+
+  def day_name(date)
+    date.strftime("%A")
+  end
+
+  def days_left_in_week
+    Date.today.end_of_week - Date.today
+  end
+
+  def days_left_in_month
+    Date.today.end_of_month - Date.today
+  end
+
+  def days_left_in_two_months
+    (Date.today + 1.month).end_of_month - Date.today
+  end
+
+  def days_left_in_year
+    Date.today.end_of_year - Date.today
   end
 end

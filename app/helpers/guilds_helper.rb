@@ -5,10 +5,11 @@ module GuildsHelper
 
   def guild_icon(guild)
     content_tag(:div,
-                :class => 'guild_icon') do
+                :class => 'guild_icon',
+                :style => "border-color: ##{guild.border_color};") do
       content_tag(:div, '',
                   :class => 'background',
-                  :style => "background-color: ##{guild.background_color}; border-color: ##{guild.border_color}") +
+                  :style => "background-color: ##{guild.background_color};") +
       content_tag(:div, '',
                   :class => 'emblem',
                   :style => "background-color: ##{guild.icon_color}; #{mask_image(icon_image_url(guild))}")

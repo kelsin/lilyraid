@@ -35,14 +35,8 @@ class RaidsController < ApplicationController
   end
 
   def edit
-    if @current_account == @raid.account or @current_account.admin
-      @roles = Role.all
-      @cclasses = Cclass.all
-
-      @raid.locations.build
-    else
-      redirect_to raid_url(@raid)
-    end
+    authorize! :update, @raid
+    @raid.locations.build
   end
 
   def update

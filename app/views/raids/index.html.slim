@@ -1,9 +1,3 @@
-table
-  tr
-    th.raidname Name
-    th Instances
-    th Finalized?
-    th Your Signups
-    th Date
-    th What's Needed
-  = render @raids
+h1 Raids
+.raids
+  = render :partial => 'raid', :collection => @raids

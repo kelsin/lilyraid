@@ -1,0 +1,6 @@
+.guild id=dom_id(guild)
+  .icon = guild_icon(guild)
+  .name = guild.name
+  .realm = Realms.name(guild.realm)
+  .officer_rank = guild.officer_rank
+  .edit = link_to 'Edit', edit_admin_guild_path(guild)

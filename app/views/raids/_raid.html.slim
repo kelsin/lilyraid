@@ -1,0 +1,23 @@
+.raid id=dom_id(raid)
+  .icon = raid_icon(raid)
+  .name = link_to raid, raid
+  .instances
+    ul
+      - raid.locations.each do |location|
+        li = location
+  .finalized = raid.finalized? ? 'Yes' : 'No'
+  .signups = render :partial => 'raids/signup', :collection => raid.signups_from(@current_account), :spacer_template => 'raids/signup_spacer'
+  .date
+    = raid.date.to_s(:raid) if raid.date
+    br
+    = raid.word_date
+  .needed
+    - if (raid.finalized? or admin?(raid)) and raid.needed.count > 0
+      ul
+        - raid.needed.each do |role, count|
+          li = pluralize count, role || 'Open'
+  .actions
+    - if admin?(raid) and raid.can_be_deleted?
+      span.raid id="loader#{dom_id(raid)}"
+        = link_to 'Delete', raid, :remote => true, :confirm => "Are you sure you want to delete #{raid}?", :method => :delete
+        -# TODO Add in the old loader graphic: page["loader_#{raid.id}"].replace_html image_tag("loading.gif")

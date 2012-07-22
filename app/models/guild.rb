@@ -3,19 +3,31 @@ class Guild < ActiveRecord::Base
 
   validates :officer_rank, :numericality => { :only_integer => true }
 
+  def self.cache
+    self.load_cache if @@guilds.nil?
+
+    @@guilds.values.sort
+  end
+
   def self.named(name)
-    if @@guilds.nil?
-      @@guilds = Guild.all.inject({}) do |hash, g|
-        hash[g.name] = g
-        hash
-      end
-    end
+    self.load_cache if @@guilds.nil?
 
     @@guilds[name]
   end
 
   def self.add(guild)
     @@guilds[guild.name] = guild
+  end
+
+  def self.clear_cache
+    @@guilds = nil
+  end
+
+  def self.load_cache
+    @@guilds = Guild.all.inject({}) do |hash, g|
+      hash[g.name] = g
+      hash
+    end
   end
 
   def to_s
@@ -44,6 +56,10 @@ class Guild < ActiveRecord::Base
 
   def background_color_alpha
     read_attribute(:background_color).try(:[], 0..1)
+  end
+
+  def <=>(other)
+    self.name <=> other.name
   end
 
   def update_from_armory!(realm = self.realm, guild = self.name)
