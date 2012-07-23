@@ -1,5 +1,9 @@
 @import compass/typography/text/replacement
 
+$background: darken(#e43e44, 42%)
+$border: darken(#e43e44, 20%)
+$link: #57b6de
+
 body
   background-color: #000
   color: #fff
@@ -8,26 +12,22 @@ body
 header
   h1
     +replace-text-with-dimensions('cod-h1.png')
-    margin: 0 0 2em 0
+    margin: 1em 0 2em 0
 
 // Auth
 #auth
-  background-color: darken(#e43e44, 42%)
-  border-color: darken(#e43e44, 20%)
+  background-color: $background
+  border-color: $border
 
-// Main Menu List
-ul#menu li
-  background-color: #222
-  color: #fdec2c
-  border: 2px solid #bbb
-
-// Table
-table tr.even td
-  background-color: #111
+nav
+  li
+    background-color: $background
+    border-color: $border
 
 // Links
-a:link, a:visited, a:active
-  color: #99f
+a:link, a:visited, a:active, a:hover
+  color: $link
 
-a:hover
-  color: white
+footer
+  border:
+    color: $border

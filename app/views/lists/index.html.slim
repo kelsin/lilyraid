@@ -1,6 +1,15 @@
-div#loot_lists
-  ul
-    - @lists.each do |list|
-      li = link_to list.name, list_path(list)
+h1 Loot Lists
+.lists
+  - @lists.each do |list|
+    .list
+      .guild = guild_icon(Guild.named(list.guild))
+      .name = link_to list.name, list_path(list)
+      .note = list.note
+      .actions
+        ul
+          - if can? :update, list
+            li = link_to 'Edit', edit_list_path(list)
+          - if can? :destroy, list
+            li = link_to 'Delete', list, :confirm => 'Are you sure?', :method => :delete
 - if can? :create, List
   = render :partial => 'lists/form', :locals => { :list => @list }

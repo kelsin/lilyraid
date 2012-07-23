@@ -17,7 +17,13 @@ class ApplicationController < ActionController::Base
   private
 
   def select_theme
-    @theme = CONFIG['theme'][request.host]
+    # For when we want to use host to select a theme
+    # @theme = CONFIG['theme'][request.host]
+    if Rails.env.development?
+      @theme = 'cod'
+    else
+      @theme = Rails.env
+    end
   end
 
   def finalize_log(raid)

@@ -6,4 +6,12 @@ module RaidsHelper
       "&nbsp;".html_safe
     end
   end
+
+  def slots(raid)
+    raid.slots.map do |slot|
+      if @slot.signup
+        "make_slot('#slot_#{slot.id}', '#{slot.accepts}');"
+      end
+    end.compact.join
+  end
 end

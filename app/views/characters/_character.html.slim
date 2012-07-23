@@ -1,11 +1,13 @@
-div.character.raid id=dom_id(character) class=('inactive' if character.inactive?)
-  dl
-    dt
+.character id=dom_id(character) class=('inactive' if character.inactive?)
+  .portrait
+    .avatar
       = image_tag character_image_url(character)
-      - if Guild.named(character.guild)
+    - if Guild.named(character.guild)
+      .guild
+        .bg &nbsp;
         = guild_icon(Guild.named(character.guild))
-    dd
-      h4 = character_link(character)
+  .info
+      h3 = character_link(character)
       - if character.guild.present?
         p = guild_link(character)
       p #{character.level} #{t("race.#{character.race_id}") if character.race_id} #{render(:partial => "shared/cclass", :object => character.cclass_id) if character.cclass_id}
@@ -15,6 +17,6 @@ div.character.raid id=dom_id(character) class=('inactive' if character.inactive?
           li = link_to 'Edit', edit_account_character_path(character.account, character)
           li = link_to 'Reload', account_character_url(character.account, character), :method => :put, :class => 'update'
           - if character.raids.empty?
-            li = link_to 'Delete', account_character_url(character.account, character), :method => :delete, :class => 'delete'
+            li = link_to 'Delete', account_character_url(character.account, character), :confirm => 'Are you sure?', :method => :delete, :class => 'delete'
           - if character.inactive?
             li.inactive Inactive

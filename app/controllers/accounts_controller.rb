@@ -10,6 +10,10 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
     authorize! :read, @account
+
+    if can? :update, @account
+      @character = Character.new(:account => @account)
+    end
   end
 
   def new

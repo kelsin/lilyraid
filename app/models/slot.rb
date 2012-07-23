@@ -1,11 +1,6 @@
 class Slot < ActiveRecord::Base
   belongs_to :raid
-  belongs_to :template
-
   belongs_to :signup
-
-  belongs_to :role
-  belongs_to :cclass
 
   scope :empty, {
     :conditions => "signup_id is null" }
@@ -13,91 +8,68 @@ class Slot < ActiveRecord::Base
   scope :filled, {
     :conditions => "signup_id is not null" }
 
-  default_scope :order => 'slots.id'
-
   scope :in_team, lambda { |team| {
       :conditions => { :team => team } } }
 
+  default_scope :order => 'slots.id'
+
+  ROLE_ALL = 7
+  ROLE_TANK = 2**0
+  ROLE_HEAL = 2**1
+  ROLE_DPS = 2**2
+
   def eql?(o)
-    o.is_a?(Slot) && self.role_id == o.role_id && self.cclass_id == o.cclass_id
+    o.is_a?(Slot) &&
+      self.roles == o.roles &&
+      self.classes == o.classes
   end
 
   def hash
-    "#{self.role.to_s}:#{self.cclass.to_s}".hash
+    "#{self.roles.to_s}:#{self.classes.to_s}".hash
   end
 
   def <=>(slot)
-    if self.cclass != nil && slot.cclass != nil
+    if self.classes > 0 && slot.classes > 0
       # Both have a cclass have to compare
-      if self.role != nil && slot.role != nil
+      if self.roles > 0 && slot.roles > 0
         # Both have both
-        comp = self.cclass <=> slot.cclass
+        comp = self.classes <=> slot.classes
         if comp == 0
-          self.role <=> slot.role
+          self.roles <=> slot.roles
         else
           comp
         end
-      elsif self.role != nil
+      elsif self.roles != nil
         -1
-      elsif slot.role != nil
+      elsif slot.roles != nil
         1
       else
-        self.cclass <=> slot.cclass
+        self.classes <=> slot.classes
       end
-    elsif self.cclass != nil
+    elsif self.classes != nil
       -1
-    elsif slot.cclass != nil
+    elsif slot.classes != nil
       1
     else
       # Both don't have a cclass, compare roles
-      if self.role != nil && slot.role != nil
+      if self.roles != nil && slot.roles != nil
         # Both have a slot type, compare them
-        self.role <=> slot.role
-      elsif self.role != nil
+        self.roles <=> slot.roles
+      elsif self.roles != nil
         -1
-      elsif slot.role != nil
+      elsif slot.roles != nil
         1
       else
         0
       end
     end
-  end            
+  end
+
+  def closed?
+    self.roles == 0
+  end
 
   def accept(su)
-    if role == nil and cclass == nil
-      true
-    elsif cclass == nil and su.roles.member?(role)
-      true
-    elsif role == nil and cclass == su.character.cclass
-      true
-    elsif su.roles.member?(role) and cclass == su.character.cclass
-      true
-    else
-      false
-    end            
-  end
-
-  def accepts
-    a = []
-    
-    (role ? [role] : Role.all).each do |r|
-      (cclass ? [cclass] : r.cclasses).each do |c|
-        a.push(".#{r.name.downcase}.#{c.name.downcase.sub(/ /, '_')}")
-      end
-    end
-
-    a.join(", ")
-  end
-
-  def display
-    if role == nil and cclass == nil
-      "Open"
-    elsif role == nil
-      cclass.to_s
-    elsif cclass == nil
-      role.to_s
-    else
-      "#{cclass} #{role}"
-    end
+    (self.roles & su.roles) > 0
   end
 end

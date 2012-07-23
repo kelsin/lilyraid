@@ -1,2 +1,9 @@
-div#loot_list
-  = render :partial => 'lists/list', :object => @list
+.list
+  h1 = @list.name
+  .guild = guild_icon(Guild.named(@list.guild))
+  dl.positions
+    dt.header Position
+    dd.header Account
+    - @list.list_positions.each do |lp|
+      dt = lp.position
+      dd = link_to(lp.account.name, account_url(lp.account))

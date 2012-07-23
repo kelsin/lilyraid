@@ -28,6 +28,13 @@ body
     family: helvetica, arial, sans serif
     size: 13px
 
+// Links
+a:link, a:visited, a:active
+  color: #fff
+  text-decoration: none
+a:hover
+  text-decoration: underline
+
 // Grid
 .page
   +container
@@ -35,48 +42,41 @@ body
   position: relative
 
 // Header
+header, nav
+  +span-columns(12)
+  +squish(2,2)
+  +clearfix
+
 #auth
   margin-right: gutter()
   border:
     style: solid
-    width: 0 0 2px 2px
+    width: 0 2px 2px 2px
   position: absolute
   top: 0
   right: 0
   +clearfix
-  +border-radius(0 0 0 0.5em)
+  +border-radius(0 0 0.5em 0.5em)
 
   li
     +float-left
     +text-shadow(1px 1px 2px #000)
     padding: 0.3em 0.8em
 
-    a
-      color: #fff
-      text-decoration: none
+  a:link, a:visited, a:active, a:hover
+    color: #fff
 
-      &:hover
-        text-decoration: underline
-
-// Content Headers
-header, nav
-  +span-columns(12)
-  +squish(2,2)
-  +clearfix
 
 // Nav
-nav
-  a
-    text-decoration: none
-    &:hover
-      text-decoration: underline
+nav li
+  +float-left
+  padding: 0.3em 1em
+  border: 2px solid #fff
+  margin-right: 1em
+  +border-radius(0.5em)
 
-  li
-    +float-left
-    padding: 0.3em 1em
-    border: 2px solid #fff
-    margin-right: 1em
-    +border-radius(0.5em)
+  a:link, a:visited, a:active, a:hover
+    color: #fff
 
 // Content  
 .content
@@ -87,11 +87,194 @@ nav
     +span-columns(12)
     +squish(2,2)
     +clearfix
+    font-weight: bold
     margin:
       top: 0.5em
       bottom: 0.3em
   h1
     +adjust-font-size-to(32px)
+  h2
+    +adjust-font-size-to(22px)
+  h3
+    +adjust-font-size-to(16px)
+
+// Forms
+p.note
+  +span-columns(6)
+  +squish(4,6)
+  +adjust-font-size-to(12px)
+  margin:
+    top: -1em
+    bottom: 1em
+
+.input.string, .input.text, .input.select, .input.check_boxes, .input.integer, .input.password
+  +span-columns(10)
+  +squish(2,4)
+  margin-bottom: 0.6em
+
+  label
+    +span-columns(2,10)
+  input
+    +span-columns(6,10)
+
+  span.checkbox
+    overflow: auto
+    +span-columns(6,10)
+    +push(2,10)
+
+    label
+      width: auto
+      +float-left
+    input
+      margin: 0.6em 0.5em 0.4em 0
+      width: auto
+      +float-left
+      clear: left
+
+.input.check_boxes
+  position: relative
+  & > label
+    position: absolute
+    top: 0
+    left: 0
+
+.input.boolean
+  +span-columns(8)
+  +squish(4,4)
+  margin-bottom: 0.6em
+  overflow: auto
+
+  label
+    +float-left
+  input
+    margin: 0.6em 0.5em 0.4em 0
+    +float-left
+
+.submit
+  +span-columns(8)
+  +squish(4,4)
+
+// Actions list
+.actions
+  li
+    +float-left
+    margin-right: 1em
+
+// Account Page
+.account
+  +span-columns(16)
+  +clearfix
+
+  .info
+    +span-columns(6)
+
+    h2
+      +span-columns(6,6)
+      +squish(0,0)
+      margin:
+        top: 0
+        bottom: 0
+
+    h3
+      +span-columns(6,6)
+      +squish(0,0)
+      margin:
+        top: 0
+        bottom: 0
+
+    dl
+      +span-columns(6,6)
+      +clearfix
+
+      dt
+        +float-left
+        clear: left
+        margin-right: 0.5em
+        font-weight: bold
+
+      dd
+        +float-left
+
+    p
+      +span-columns(6,6)
+      +clearfix
+
+    ul.actions
+      +span-columns(6,6)
+      +clearfix
+      margin-bottom: 1.5em
+
+    .input.string, .input.select
+      +span-columns(6,6)
+      +squish(0,0)
+      margin-bottom: 0.6em
+
+      label
+        +span-columns(1,6)
+      input
+        +span-columns(3,6)
+
+    .submit
+      +span-columns(4,6)
+      +squish(1,1,6)
+
+  .characters
+    +span-columns(6)
+
+    h2
+      +span-columns(4 omega, 6)
+      +push(2, 6)
+      margin:
+        top: 0
+        bottom: 0
+      
+    .character
+      +span-columns(6,6)
+      +clearfix
+      margin-bottom: 2em
+
+      .portrait
+        position: relative
+        +span-columns(2,6)
+
+        img
+          +float-right
+          border: 1px solid #fff
+
+        .guild
+          position: absolute
+          top: 60px
+          right: 60px
+          height: 32px
+          width: 32px
+
+          .bg
+            position: absolute
+            top: 0
+            left: 0
+            background: #000
+            height: 100%
+            width: 100%
+
+          .guild_icon
+            height: 30px
+
+      .info
+        +span-columns(4 omega, 6)
+
+        h3
+          +span-columns(4,4)
+          +squish(0,0)
+          margin: 0
+
+      &.inactive
+        .portrait
+          .avatar
+            opacity: 0.25
+
+          .guild
+            .guild_icon
+              opacity: 0.25
 
 // Raids Page
 .raids
@@ -108,19 +291,87 @@ nav
         height: 50px
     .name
       +span-columns(2)
+    .date
+      +span-columns(2)
+      span
+        display: block
+        +adjust-font-size-to(14px)
+        color: darken(#fff, 40%)
     .instances
       +span-columns(2)
     .finalized
-      +span-columns(1)
+      +span-columns(2)
     .signups
       +span-columns(2)
-    .date
-      +span-columns(2)
-    .needed
-      +span-columns(1)
     .actions
       +span-columns(2 omega)
       +post(2)
+
+// Loot List Page
+.lists
+  +span-columns(16)
+
+.list
+  +span-columns(16)
+  margin-bottom: 1em
+
+  .guild
+    +span-columns(2)
+    .guild_icon
+      +push(1,2)
+      +span-columns(1 omega,2)
+      height: 50px
+
+  .positions
+    +span-columns(6)
+
+    dt
+      +span-columns(2,6)
+    dd
+      +span-columns(4 omega,6)
+
+    .header
+      font-weight: bold
+
+  .name
+    +span-columns(4)
+  .note
+    +span-columns(4)
+  .actions
+    +span-columns(6 omega)
+
+// Members Page
+.members
+  +span-columns(15)
+  +squish(1,0)
+
+  .guild
+    +span-columns(5, 15)
+    +nth-omega(3n)
+
+    h2, h3
+      +span-columns(4,4)
+      +squish(0,0)
+      margin:
+        top: 0
+        bottom: 0
+
+    h2
+      line-height: 1em
+      margin-bottom: 0.2em
+
+    .icon
+      +span-columns(1,5)
+        
+      .guild_icon
+        height: 50px
+
+    .list
+      +span-columns(4 omega, 5)
+
+  ul
+    margin:
+      bottom: 1em
 
 // Admin Guilds Page
 .guilds
@@ -145,9 +396,15 @@ nav
       +span-columns(4 omega)
 
 // Footer
-#footer
-  +span-columns(6,12)
+footer
+  border:
+    width: 2px 0 0 0
+    style: solid
+  +span-columns(6)
+  +squish(2,8)
   +adjust-font-size-to(12px)
   margin:
     top: 1em
     bottom: 3em
+  padding:
+    top: 0.5em

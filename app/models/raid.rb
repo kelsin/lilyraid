@@ -14,12 +14,10 @@ class Raid < ActiveRecord::Base
   has_many :instances, :through => :locations
   has_many :loots, :through => :locations
 
-  belongs_to :raid_template
-
   attr_accessor :number_of_slots
+  before_save :apply_number_of_slots
+
   has_many :slots, :dependent => :destroy
-  accepts_nested_attributes_for(:slots,
-                                :allow_destroy => true)
 
   has_many :signups, :dependent => :destroy
   has_many :characters, :through => :signups
@@ -214,20 +212,8 @@ class Raid < ActiveRecord::Base
     end
   end
 
-  def template_id
-    nil
-  end
-
   def uid
     "raid_#{self.id}@raids.dota-guild.com"
-  end
-
-  def caldate
-    date.strftime("%m/%d/%Y")
-  end
-
-  def caltime
-    date.strftime("%I:%M %p")
   end
 
   def word_date
@@ -275,5 +261,20 @@ class Raid < ActiveRecord::Base
 
   def days_left_in_year
     Date.today.end_of_year - Date.today
+  end
+
+  def apply_number_of_slots
+    # If we have a number of slots set, then apply them
+    if self.number_of_slots
+
+      # Get the current number of slots
+      number_in_raid = self.slots.count
+
+      self.slots.all[self.number_of_slots..-1].map(&:destroy) if self.number_of_slots < number_in_raid
+
+      (self.number_of_slots - number_in_raid).times do
+        self.slots.create(:roles => Slot::ROLE_ALL)
+      end
+    end
   end
 end

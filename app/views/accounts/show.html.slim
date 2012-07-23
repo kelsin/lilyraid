@@ -1,7 +1,26 @@
-- if flash[:notice]
-  = flash[:notice]
-= render :partial => "accounts/account", :object => @account
-#characters
-  = render :partial => "characters/character", :collection => @account.characters
-- if can? :edit, @account
-  = render :partial => "characters/form", :locals => { :character => Character.new(:account => @account) }
+h1 = @account.name
+.account
+  .characters
+    h2 Characters
+    = render :partial => "characters/character", :collection => @account.characters
+  .info
+    h2 Account Info
+    dl
+      - if @account.age.present?
+        dt Age:
+        dd = @account.age
+      - if @account.location.present?
+        dt Location:
+        dd = @account.location
+      - if @account.lj_account.present?
+        dt LJ:
+        dd = link_to @account.lj_account, lj_link(@account), :class => "lj"
+    - if @account.bio.present?
+      p = @account.bio
+    ul.actions
+      - if can? :update, @account
+        li = link_to 'Edit', edit_account_url(@account), :class => 'edit'
+      - if can? :destroy, @account and @account.can_delete?
+        li = link_to 'Delete', admin_account_url(@account), :method => :delete, :class => 'delete'
+    - if can? :update, @account
+      = render :partial => 'characters/form', :locals => { :character => @character }

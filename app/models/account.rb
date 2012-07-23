@@ -202,6 +202,19 @@ class Account < ActiveRecord::Base
     end
   end
 
+  # Returns a list of guilds that this account is an officer of
+  def officer_of
+    if @guilds.nil?
+      Account.load_officer_cache unless @@officers
+      @guilds = []
+      @@officers.each do |guild, officers|
+        @guilds << guild if officers.include?(self.id)
+      end
+    end
+    @guilds
+  end
+
+  # Returns true if this account is the officer of this guild
   def officer?(guild)
     Account.load_officer_cache unless @@officers
     @@officers[guild] ? @@officers[guild].include?(self.id) : false

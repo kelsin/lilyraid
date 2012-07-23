@@ -1,31 +1,41 @@
+@import base
 @import compass/typography/text/replacement
 
-/* Background and Main Color */
+$dark-background: #17000a
+$background: #320023
+$border: #730065
+$link: #fdec3c
+
 body
   background:
-    color: #17000A
+    color: $dark-background
     image: image-url('dota-bg.gif')
     repeat: repeat-x
   color: #fff
 
 // Header
 header
+  +span-columns(14)
+  +squish(1,1)
+  margin-bottom: -48px
+
   h1
-    +replace-text-with-dimensions('dota-h1.png')
+    +replace-text-with-dimensions('dota-h1.jpg')
 
-// Main Menu List
-ul#menu li
-  background-color: rgb(50,0,35)
-  color: #fdec2c
-  border: 2px solid rgb(115, 0, 101)
+// Auth
+#auth
+  background-color: $background
+  border-color: $border
 
-// Table
-table tr.even td
-  background-color: rgb(50, 0, 35)
+nav
+  li
+    background-color: $background
+    border-color: $border
 
 // Links
-a:link, a:visited, a:active
-  color: rgb(253,236,60)
+a:link, a:visited, a:active, a:hover
+  color: $link
 
-a:hover
-  color: white
+footer
+  border:
+    color: $border

@@ -1,18 +1,13 @@
 div.guild id=dom_id(guild)
-  = form_for([:admin, guild]) do |f|
-    - if guild.new_record?
-      h3 New Guild
-    - else
-      h3 Edit Guild
-    dl
-      dt Name:
-      dd = f.text_field :name
-      dt Realm:
-      dd = f.select :realm, Realms.all.map {|s,n| [n,s]}
-      dt Officer Rank:
-      dd
-        = f.text_field :officer_rank
-        p.note
-          | This is an integer. All members that are this rank or below will be labeled as officers
-      dt
-      dd = submit_tag "Save", :id => "#{dom_id(guild)}_submit"
+  - if guild.new_record?
+    h1 New Guild
+  - else
+    h1 Edit Guild
+  = simple_form_for([:admin, guild]) do |f|
+    = f.input :name
+    = f.input :realm, :collection => Realms.all.map {|s,n| [n,s]}
+    = f.input :officer_rank
+    p.note
+      | This is an integer. All members that are this rank or below will be labeled as officers
+    .submit
+      = f.submit 'Save'

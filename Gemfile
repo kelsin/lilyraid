@@ -5,8 +5,11 @@ gem 'rails', '3.2.0'
 
 # Accounts from phpbb
 gem 'mysql'
+
+# Timezones
 gem 'tzinfo'
 
+# .ics files
 gem 'icalendar'
 
 # Battle.net api
@@ -19,7 +22,7 @@ gem 'thin'
 # Haml and Sass
 gem 'slim'
 
-gem 'thin'
+# Error Reporting
 gem 'airbrake'
 
 # jQuery
@@ -27,6 +30,9 @@ gem 'jquery-rails'
 
 # Authorization
 gem 'cancan'
+
+# Forms
+gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -36,22 +36,17 @@ class RaidsController < ApplicationController
 
   def edit
     authorize! :update, @raid
-    @raid.locations.build
   end
 
   def update
-    if @current_account.can_edit?(@raid)
-      @raid.update_attributes(params[:raid])
-      @raid.date = Time.zone.parse("#{params[:caldate]} #{params[:caltime]}")
+    authorize! :update, @raid
+    @raid.update_attributes(params[:raid])
 
-      if @raid.save
-        redirect_to raid_url(@raid)
-      else
-        flash[:error] = "Error saving raid"
-        render :action => :edit
-      end
-    else
+    if @raid.save
       redirect_to raid_url(@raid)
+    else
+      flash[:error] = "Error saving raid"
+      render :action => :edit
     end
   end
 
@@ -77,9 +72,6 @@ class RaidsController < ApplicationController
     @raid = Raid.new
     @raid.date = Time.zone.parse("Tomorrow 18h30") unless @raid.date
     @raid.number_of_slots = 10
-    @raid.locations.build
-    @raid.locations.build
-    @raid.locations.build
   end
 
   def create

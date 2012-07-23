@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722014953) do
+ActiveRecord::Schema.define(:version => 20120723000922) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20120722014953) do
     t.text     "note"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "guild"
   end
 
   add_index "lists", ["date"], :name => "index_lists_on_date"
@@ -204,16 +205,15 @@ ActiveRecord::Schema.define(:version => 20120722014953) do
   create_table "slots", :force => true do |t|
     t.integer  "raid_id"
     t.integer  "signup_id"
-    t.integer  "role_id"
-    t.integer  "cclass_id"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
     t.integer  "template_id"
     t.integer  "team",        :default => 1
+    t.integer  "roles"
+    t.integer  "classes"
   end
 
   add_index "slots", ["raid_id"], :name => "index_slots_on_raid_id"
-  add_index "slots", ["role_id", "cclass_id"], :name => "index_slots_on_role_id_and_cclass_id"
   add_index "slots", ["signup_id"], :name => "index_slots_on_signup_id"
 
   create_table "tags", :force => true do |t|

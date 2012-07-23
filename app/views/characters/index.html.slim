@@ -1,14 +1,13 @@
-div.raid
-  h3 Member List
+h1 Member List
+.members
   - @characters.group_by(&:guild).each do |guild, members|
-    dl
-      dt = guild_icon(Guild.named(guild)) if guild
-      dd
-        h4 = guild || 'No Guild'
+    .guild
+      .icon = guild_icon(Guild.named(guild)) if guild
+      .list
+        h2 = guild || 'No Guild'
         - members.group_by(&:officer).each do |officer, characters|
-          - unless characters.empty?
-            - if guild
-              h5 = officer ? "Officers" : "Members"
-            ul
-              - characters.each do |character|
-                li = link_to(render(:partial => "shared/character", :object => character), account_path(character.account_id))
+          - if guild
+            h3 = officer ? 'Officers' : 'Members'
+          ul
+            - characters.each do |character|
+              li = link_to(render(:partial => "shared/character", :object => character), account_path(character.account_id))

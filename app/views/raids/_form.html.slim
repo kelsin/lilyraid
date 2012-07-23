@@ -1,0 +1,17 @@
+div.raid id=dom_id(raid)
+  - if raid.new_record?
+    h1 New Raid
+  - else
+    h1 Edit Raid
+  = simple_form_for raid do |f|
+    = f.input :name
+    = f.input :date, :as => :string, :input_html => { :class => 'lilydate' }
+    = f.input :number_of_slots, :collection => (1..8).map{|n|n*5}
+    - unless current_user.officer_of.empty?
+      = f.input :guild, :collection => current_user.officer_of
+    = f.input :list_id, :collection => List.order(:name).all, :include_blank => 'No Loot List'
+    = f.association :instances, :as => :check_boxes, :collection => Instance.active.all, :label => 'Instance'
+    = f.input :loot_note, :as => :text, :input_html => { :rows => 4}
+    = f.input :note, :as => :text, :input_html => { :rows => 4}
+    .submit
+      = f.submit 'Save'

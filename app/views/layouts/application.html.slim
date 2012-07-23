@@ -11,7 +11,7 @@ head
 body
   .page
     header
-      h1 LilyRaid Signups
+      = link_to(content_tag(:h1, 'LilyRaid Signups'), root_path)
       -if logged_in?
         ul#auth
           li = link_to 'My Account', current_account_path
@@ -22,8 +22,9 @@ body
     - if logged_in?
       nav
         ul
-          li = link_to 'New Raid', new_raid_path
           li = link_to 'Raids', raids_path
+          li = link_to 'New Raid', new_raid_path
+          li = link_to 'Members', characters_path
           li = link_to 'Loot', lists_path
           - if CONFIG[:forum]
             li = link_to 'Forums', CONFIG[:forum]
@@ -43,6 +44,6 @@ body
         |  page to create some!
     .content
       = yield
-    #footer
+    footer
       | Lilyraid was created using #{link_to "Ruby on Rails", 'http://rubyonrails.org/'} by #{link_to "Christopher Giroir", "http://blog.kelsin.net"}. You can view the #{link_to "source", "http://github.com/Kelsin/lilyraid"} at #{link_to "GitHub", "http://github.com"}. You can file #{link_to "tickets", "http://valefor.lighthouseapp.com/projects/29579/"} if you find any bugs or want to request new features. The source is licensed using the #{link_to "GPL v.3", "http://www.gnu.org/copyleft/gpl.html"} license.
   = javascript_include_tag 'http://static.wowhead.com/widgets/power.js', :defer => true

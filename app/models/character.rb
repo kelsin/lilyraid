@@ -112,7 +112,7 @@ class Character < ActiveRecord::Base
     # Check for new guilds
     guild = Guild.named(self.guild)
 
-    unless guild
+    if guild.nil? and self.guild.present?
       guild = Guild.new(:name => self.guild, :realm => self.realm)
       guild.update_from_armory!
       Guild.add(guild)
