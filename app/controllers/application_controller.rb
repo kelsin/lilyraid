@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   check_authorization # make sure to always authorize
 
   helper :all # include all helpers, all the time
-  helper_method :current_user
+  helper_method :current_user, :current_account
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -61,6 +61,10 @@ class ApplicationController < ActionController::Base
     @current_account = Account.find_by_id(session[:account_id], :include => :characters)
 
     redirect_to(:controller => 'login', :action => 'index') unless @current_account
+  end
+
+  def current_account
+    @current_account
   end
 
   def current_user

@@ -5,6 +5,8 @@ class SignupsController < ApplicationController
   def create
     @signup = Signup.new(params[:signup])
     @signup.raid = @raid
+
+    authorize! :create, @signup
     @signup.save
 
     signup_log(@signup, "New signup")
@@ -15,6 +17,7 @@ class SignupsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @signup
     @signup.destroy
 
     # Handle preferred settings if there is one signup left

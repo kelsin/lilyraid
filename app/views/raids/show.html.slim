@@ -1,153 +1,132 @@
 .raid id=dom_id(@raid)
   h1 = @raid.name
-  ul.actions
-    - if can? :update, @raid
-      li = link_to 'Edit', edit_raid_path(@raid)
-    - if can? :destroy, @raid
-      li = link_to 'Delete', @raid, :confirm => "Are you sure you want to delete #{@raid}?", :method => :delete
-  dl.info
-    dt Finalized:
-    dd
-      - if @raid.finalized?
-        | Yes
+  .guild
+    - if @raid.guild.present?
+      = guild_icon(Guild.named(@raid.guild))
+  .data
+    .info
+      ul.actions
         - if can? :update, @raid
-          = link_to 'Un-Finalize', finalize_raid_url(@raid), :method => :post, :class => 'tiny', :confirm => 'Are you sure you want to un-finalize this raid\'s seating?'
+          li = link_to 'Edit', edit_raid_path(@raid)
+          li = link_to (@raid.finalized? ? 'Un-Finalize' : 'Finalize'), finalize_raid_url(@raid), :method => :post, :confirm => "Are you sure you want to #{@raid.finalized? ? 'un-finalize' : 'finalize'} this raid?"
+        - if can? :destroy, @raid
+          li = link_to 'Delete', @raid, :confirm => "Are you sure you want to delete #{@raid}?", :method => :delete
+      dl
+        dt Date:
+        dd = @raid.date.to_s(:raid)
+        - unless @raid.locations.empty?
+          dt Instances:
+          dd
+            ul
+              - @raid.locations.each do |location|
+                li = location.instance
+        dt Created By:
+        dd = @raid.account
+        - if @raid.loot_note.present?
+          dt Loot rules:
+          dd = @raid.loot_note
+        - if @raid.note.present?
+          dt Note:
+          dd = @raid.note
+    .your_signups
+      h2 Your Signups
+      - if @raid.signups.from_account(current_account).empty?
+        p.no_signups None
       - else
-        | No
-        - if can? :update, @raid
-          = link_to 'Finalize', finalize_raid_url(@raid), :method => :post, :class => 'tiny', :confirm => 'Are you sure you want to finalize this raid\'s seating?'
-    dt Created By:
-    dd = @raid.account
-    dt Date:
-    dd = @raid.date.to_s(:raid)
-    - if @raid.loot_note.present?
-      dt Loot rules:
-      dd = @raid.loot_note
-    - unless @raid.locations.empty?
-      dt Instances:
-      dd
-        ul
-          - @raid.locations.each do |location|
-            li = location.instance
-    - if @raid.note.present?
-      dt Note:
-      dd = @raid.note
-    - unless @raid.signups.from_account(@current_account).empty?
-      dt Your Signups:
-      dd#signup
-        ul
-          - @raid.signups.from_account(@current_account).each do |signup|
-            li
-              - if signup.preferred?
-                strong = signup.character
-              - else
-                = signup.character
-              = link_to signup.preferred? ? 'Unprefer' : 'Prefer', preferred_raid_signup_url(@raid, signup), :method => :post unless @raid.signups.from_account(@current_account).empty?
-              = link_to 'Remove', raid_signup_url(@raid, signup), :confirm => 'Are you sure you want to leave the raid?', :class => 'tiny', :method => :delete
-              - unless signup.note.blank?
-                br
-                span.tiny Note:
-                = signup.note
-    - unless @current_account.characters.active.not_signed_up_for(@raid).empty?
-      dt Signup:
-      dd#new_signup
-        - if @raid.started?
-          | This raid has already started, sign ups are closed!
-        - else
-          = form_for [@raid, Signup.new(:note => 'Note')] do |f|
-            div
-              = f.collection_select :character_id, @current_account.characters.active.not_signed_up_for(@raid), :id, :name_with_level, {}, :onchange => "character_roles(this, '#new_signup_roles');"
-              = f.text_field :note, :onfocus => "field_focus(this);", :onblur => "field_blur(this);", :class => "dim"
-              = submit_tag 'Sign up'
-            #new_signup_roles
-              = render :partial => "role", :collection => @current_account.characters.active.not_signed_up_for(@raid).first.cclass.roles
-    - if admin?(@raid) || @raid.finalized?
-      dt Slots:
-      dd#slots
-        = render :partial => 'group', :collection => @raid.groups
-      dt Signups:
-      dd#signups
-        dl#waiting_list.list
-          = render :partial => 'waiting_list', :object => @raid.signups
-        dl#needed_list.list
-          = render :partial => 'needed', :object => @raid.needed
-      - unless @raid.uses_loot_system or @raid.loots.empty?
-        dt Loot:
-        dd#loot
-          - if @raid.uses_loot_system
-            dl#loot_list.list
-              = render :partial => "positions", :locals => {:raid => @raid}
-          - if admin?
-            dl#add_to_loot_list.list style=(@raid.signups.not_in_loot_list.seated.empty? and 'display: none;')
-              dt Add to Loot List
-              - @raid.signups.not_in_loot_list.each do |signup|
-                = content_tag_for :dd, signup.character, :class => signup.classes do
-                  = link_to(render(:partial => "shared/character", :object => signup.character), add_to_list_account_url(signup.character.account), :onclick => "if(confirm('Are you sure you want to add #{signup.character.account.name} to the loot list?')) { $.post('#{add_to_list_account_url(signup.character.account)}', { raid_id: '#{@raid.id}', authenticity_token: AUTH_TOKEN }, null, 'script'); } return false;")
-                  .note = render :partial => 'signups/note', :object => signup
-          dl#item_list.list.item_list = render :partial => 'loots', :object => @raid.loots
-      - if @current_account.can_edit? @raid
-        - if @raid.uses_loot_system
-          dt New Loot:
-          dd#new_loot = render :partial => 'new_loot', :locals => {:raid => @raid}
+        .signups
+          - @raid.signups.from_account(current_account).each do |signup|
+            = render :partial => 'signup', :object => signup
+      - unless @raid.started? or @characters.empty?
+        h2 Add Signup
+        = simple_form_for [@raid, Signup.new] do |f|
+          = f.input :character_id, :collection => @characters, :include_blank => false
+          = f.input :note, :placeholder => 'Note'
+          = submit_tag 'Add Signup'
+          = f.input :roles, :collection => Role.all.map {|r| [t("role.#{r}"), r]}, :as => :check_boxes
+  - if (can? :edit, @raid) || @raid.finalized?
+    .slots
+      h2 Slots
+      .left
+        .waiting_list = render :partial => 'waiting_list', :object => @raid.signups
+      .seated
+        .groups
+          - @raid.slots.each_slice(5) do |group|
+            = render :partial => 'group', :object => group
+  - if @raid.list
+    .loot
+      h2 Loot
+      .left
+        .list = render :partial => 'list', :locals => {:raid => @raid}
+        - if admin?
+          .add
+            .wrapper
+              h3 Add to Loot List
+              ul
+                - @raid.signups.not_in_loot_list.each do |signup|
+                  li = link_to(render(:partial => "shared/character", :object => signup.character), add_to_list_account_url(signup.character.account), :onclick => "if(confirm('Are you sure you want to add #{signup.character.account.name} to the loot list?')) { $.post('#{add_to_list_account_url(signup.character.account)}', { raid_id: '#{@raid.id}', authenticity_token: AUTH_TOKEN }, null, 'script'); } return false;")
+      .items = render :partial => 'loots', :object => @raid.loots
+      - if can?(:edit, @raid) and @raid.list
+        .new
+          h3 New Loot
           = render :partial => 'shared/wowhead'
           - @raid.locations.each do |location|
             dt #{location.instance.name} Loot
             dd
               = select_tag 'instance_loot', "<option value=\"\"></option>" + options_for_select(location.instance.loots.all(:order => "loots.item_name").map { |loot| [loot.item_name, loot.item_url] }.uniq), :onchange => "fill_loot_with_location($(this).find(':selected').text(), this.value, '#{location.id}');"
-        - unless Character.not_signed_up_for(@raid).empty?
-          dt Add Signup:
-          dd#admin_new_signup
-            = form_for [@raid, Signup.new(:note => 'Note')] do |f|
-              div
-                = f.collection_select :character_id, Character.not_signed_up_for(@raid), :id, :name_with_level_and_account, {}, :onchange => "character_roles(this, '#admin_new_signup_roles');"
-                = f.text_field :note, :onfocus => "field_focus(this);", :onblur => "field_blur(this);", :class => 'dim'
-                = submit_tag 'Sign up'
-              div#admin_new_signup_roles
-                = render :partial => 'characters/roles', :locals => { :character => Character.not_signed_up_for(@raid).first }
-        - unless @raid.signups.empty?
-          dt Edit Signups:
-          dd#remove_signup
-            table
-              tr
-                th Signup
-                - if admin?
-                  th Tags
-                th
-              - @raid.signups.each do |signup|
+          /- unless Character.not_signed_up_for(@raid).empty?
+            dt Add Signup:
+            dd#admin_new_signup
+              = form_for [@raid, Signup.new(:note => 'Note')] do |f|
+                div
+                  = f.collection_select :character_id, Character.not_signed_up_for(@raid), :id, :name_with_level_and_account, {}, :onchange => "character_roles(this, '#admin_new_signup_roles');"
+                  = f.text_field :note, :onfocus => "field_focus(this);", :onblur => "field_blur(this);", :class => 'dim'
+                  = submit_tag 'Sign up'
+                div#admin_new_signup_roles
+                  - Role.all.each do |role|
+                    = check_box_tag 'signup[roles][]', role, true
+                    | #{t "role.#{role}"} &nbsp;&nbsp;&nbsp;
+          /- unless @raid.signups.empty?
+            dt Edit Signups:
+            dd#remove_signup
+              table
                 tr
-                  td = signup
+                  th Signup
                   - if admin?
-                    = render :partial => 'tags', :locals => {:signup => signup}
-                  td = link_to 'Remove Signup', raid_signup_url(@raid, signup), :confirm => "Are you sure you want to remove #{signup} from this raid?", :class => 'tiny', :method => :delete
-        - unless @raid.logs.empty?
-          dt Logs
-          dd#logs
-            table
-              tr
-                th Account
-                th Character
-                th Loot
-                th Source
-                th Messages
-                th Time
-              - @raid.logs.each_with_index do |log, index|
-                tr.log id=dom_id(log) class=(index > 9 ? 'hidden' : 'shown')
-                  td = link_to log.account, account_path(log.account)
-                  td
-                    - if log.character
-                      = link_to render(:partial => 'shared/character', :object => log.character),
-                                       account_path(log.character.account, :anchor => "character_#{log.character.id}")
-                  td = link_to log.account, account_path(log.account)
-                  td
-                    - if log.character
-                      = link_to render(:partial => 'shared/character', :object => log.character),
-                                       account_path(log.character.account, :anchor => "character_#{log.character.id}")
-                  td = link_to log.loot.item_name, log.loot.item_url, :class => 'loot' if log.loot
-                  td = log.source
-                  td = log.message
-                  td = log.created_at.to_s(:raid_short)
-        dt Tag Chart
-        dd#tags
+                    th Tags
+                  th
+                - @raid.signups.each do |signup|
+                  tr
+                    td = signup
+                    - if admin?
+                      = render :partial => 'tags', :locals => {:signup => signup}
+                    td = link_to 'Remove Signup', raid_signup_url(@raid, signup), :confirm => "Are you sure you want to remove #{signup} from this raid?", :class => 'tiny', :method => :delete
+          /- unless @raid.logs.empty?
+            dt Logs
+            dd#logs
+              table
+                tr
+                  th Account
+                  th Character
+                  th Loot
+                  th Source
+                  th Messages
+                  th Time
+                - @raid.logs.each_with_index do |log, index|
+                  tr.log id=dom_id(log) class=(index > 9 ? 'hidden' : 'shown')
+                    td = link_to log.account, account_path(log.account)
+                    td
+                      - if log.character
+                        = link_to render(:partial => 'shared/character', :object => log.character), account_path(log.character.account, :anchor => "character_#{log.character.id}")
+                    td = link_to log.account, account_path(log.account)
+                    td
+                      - if log.character
+                        = link_to render(:partial => 'shared/character', :object => log.character), account_path(log.character.account, :anchor => "character_#{log.character.id}")
+                    td = link_to log.loot.item_name, log.loot.item_url, :class => 'loot' if log.loot
+                    td = log.source
+                    td = log.message
+                    td = log.created_at.to_s(:raid_short)
+        /dt Tag Chart
+        /dd#tags
           p
             | Select the tag you want to view from this drop down. If you have no
             | tags defined then the only option will be "Seated". Signups are
@@ -158,23 +137,23 @@
             option(value="seated") Seated
             - @tags.each do |tag|
               option(value="#{tag.slug}")= tag
-          table
-            thead
-              tr
-                th rowspan="2" Account
-                th rowspan="2" Character
-                - @recent_raids.each do |raid|
-                  th = raid.name
-                th rowspan="2" Total
-                th.header rowspan="2" Sign Ups
-              tr
-                - @recent_raids.each do |raid|
-                  th.header = raid.date.strftime('%m-%d-%Y')
-            tbody
-              - @raid.signups.group_by { |signup| signup.character.account }.each do |account, signups|
-                tr.account
-                  td rowspan=signups.size = link_to account, account_path(account)
-                  td.char = link_to(render(:partial => 'shared/character', :object => signups.first.character), account_path(signups.first.character.account, :anchor => "character_#{signups.first.character.id}"))
+            table
+              thead
+                tr
+                  th rowspan="2" Account
+                  th rowspan="2" Character
+                  - @recent_raids.each do |raid|
+                    th = raid.name
+                  th rowspan="2" Total
+                  th.header rowspan="2" Sign Ups
+                tr
+                  - @recent_raids.each do |raid|
+                    th.header = raid.date.strftime('%m-%d-%Y')
+              tbody
+                - @raid.signups.group_by { |signup| signup.character.account }.each do |account, signups|
+                  tr.account
+                    td rowspan=signups.size = link_to account, account_path(account)
+                    td.char = link_to(render(:partial => 'shared/character', :object => signups.first.character), account_path(signups.first.character.account, :anchor => "character_#{signups.first.character.id}"))
                   - @recent_raids.each do |raid|
                     td rowspan=signups.size class=("signed_up" if account.signed_up_for(raid))
                       span.stat.seated = "X" if account.seated_for(raid)
@@ -185,16 +164,16 @@
                     span.stat.total.signed_up = @recent_raids.inject(0) { |total, raid| total + (account.signed_up_for(raid) ? 1 : 0) }
                     - @tags.each do |tag|
                       span.stat.total class=tag.slug = @recent_raids.inject(0) { |total, raid| total + (account.raider_tags.for_raid(raid).empty? ? 0 : 1) }
-                    td.stat.total rowspan=signups.size = @recent_raids.inject(0) { |total, raid| total + (account.signed_up_for(raid) ? 1 : 0) }
+                  td.stat.total rowspan=signups.size = @recent_raids.inject(0) { |total, raid| total + (account.signed_up_for(raid) ? 1 : 0) }
                 - signups[1..-1].each do |signup|
                   tr
                     td.char = link_to(render(:partial => 'shared/character', :object => signup.character), account_path(signup.character.account, :anchor => "character_#{signup.character.id}"))
-    - else
-      dt
-      dd
-        p This raid is not yet finalized. You can edit your signups above but until the raid is finalize you can not see the current signup list.
-        p Please use the note field to indicate any special requests. "Only if there is room", "Prefer Healing" and the like.
-        p We will try to get raids finalize at least 48 hours before they start. Sooner if plenty of people sign up in time.
+      - else
+        dt
+        dd
+          p This raid is not yet finalized. You can edit your signups above but until the raid is finalize you can not see the current signup list.
+          p Please use the note field to indicate any special requests. "Only if there is room", "Prefer Healing" and the like.
+          p We will try to get raids finalize at least 48 hours before they start. Sooner if plenty of people sign up in time.
 
 javascript:
   var raid_id = <%= @raid.id %>;

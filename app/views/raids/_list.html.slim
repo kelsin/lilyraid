@@ -1,0 +1,6 @@
+.wrapper
+  h3 = raid.list
+  ul
+    - raid.list.list_positions.in_raid(raid).each do |position|
+      = render :partial => 'position', :locals => { :position => position, :raid => raid }
+      li.empty class=('seated' if raid.list.list_positions.seated_in(raid).empty?) Empty

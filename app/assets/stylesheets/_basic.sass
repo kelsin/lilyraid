@@ -11,3 +11,31 @@
   &.header
     font-weight: bold
     margin-bottom: 0
+
+=slots($context)
+  +span-columns(2, $context)
+  +nth-omega(($context / 2) + "n")
+  text-align: center
+
+  .wrapper
+    border: 1px solid #000
+    background-color: #111
+
+  h3
+    float: none
+    display: block
+    width: auto
+    color: #ffd302
+    margin: 0.3em 0 0.3em 0
+    padding: 0.25em
+
+  ul
+    li
+      width: auto
+      border: 1px solid #000
+      background-color: #222
+      margin: 0 0.25em 0.25em 0.25em
+
+  // Notes
+  .note
+    display: none

@@ -13,10 +13,8 @@ class RaidsController < ApplicationController
   end
 
   def show
-    if @raid.uses_loot_system
-      @list = List.first
-    end
-
+    authorize! :read, @raid
+    @characters = @current_account.characters.active.not_signed_up_for(@raid)
     @tags = Tag.all
     @recent_raids = Raid.where('date < ?', @raid.date).limit(8).order('date desc').all.reverse
   end

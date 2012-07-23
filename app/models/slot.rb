@@ -13,11 +13,6 @@ class Slot < ActiveRecord::Base
 
   default_scope :order => 'slots.id'
 
-  ROLE_ALL = 7
-  ROLE_TANK = 2**0
-  ROLE_HEAL = 2**1
-  ROLE_DPS = 2**2
-
   def eql?(o)
     o.is_a?(Slot) &&
       self.roles == o.roles &&

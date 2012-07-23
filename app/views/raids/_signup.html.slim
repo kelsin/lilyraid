@@ -1,4 +1,11 @@
-= render :partial => 'shared/character', :object => signup.character
-- if signup.in_raid_slot? and signup.raid.finalized?
-  b (Seated)
-
+.signup class=signup_classes(signup)
+  .avatar
+    = image_tag character_image_url(signup.character)
+    .icons
+      .bg
+    .guild
+      = guild_icon(Guild.named(signup.character.guild))
+  .actions
+    ul
+      li = link_to 'Edit', edit_raid_signup_path(signup.raid, signup)
+      li = link_to 'Delete', raid_signup_path(signup.raid, signup), :method => :delete, :confirm => 'You sure you want to delete this signup?'

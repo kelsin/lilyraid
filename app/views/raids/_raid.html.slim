@@ -10,11 +10,6 @@
         li = location
   .finalized = raid.finalized? ? 'Yes' : 'No'
   .signups = render :partial => 'raids/signup', :collection => raid.signups_from(@current_account), :spacer_template => 'raids/signup_spacer'
-  .needed
-    - if (raid.finalized? or admin?(raid)) and raid.needed.count > 0
-      ul
-        - raid.needed.each do |role, count|
-          li = pluralize count, role || 'Open'
   .actions
     ul
       - if can? :update, raid

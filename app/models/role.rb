@@ -1,15 +1,29 @@
-class Role < ActiveRecord::Base
-  has_many :cclass_roles, :dependent => :destroy
-  has_many :cclasses, :through => :cclass_roles
+class Role
+  NUMBER = 3
+  ALL = 7
+  TANK = 0
+  HEAL = 1
+  DPS = 2
 
-  has_many :signup_roles, :dependent => :destroy
-  has_many :signups, :through => :signup_roles
-
-  def self.named(name)
-    self.first(:conditions => { :name => name })
+  def self.all
+    [TANK, HEAL, DPS]
   end
 
-  def <=>(o)
-    self.name <=> o.name
+  def self.to_array(mask)
+    return [] if mask.nil?
+    (0...NUMBER).inject([]) do |roles, role|
+      roles << role if (mask & (2**role)) > 0
+      roles
+    end
+  end
+
+  def self.to_mask(roles)
+    roles.inject(0) do |num, role|
+      num + (2**role)
+    end
+  end
+
+  def self.mask_for_class(class_id)
+    
   end
 end

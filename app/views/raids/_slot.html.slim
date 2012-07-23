@@ -1,0 +1,14 @@
+- if slot.signup
+  = content_tag_for :li, slot, :class => slot.signup.classes do
+    = render :partial => 'shared/character', :object => slot.signup.character
+    = '*' if slot.signup.has_other_signups?
+    .note = render :partial => 'slots/note', :locals => { :slot => slot }
+- else
+  = content_tag_for :li, slot do
+    = render :partial => 'shared/slot', :object => slot
+    - if slot.team > 1
+      span.team = slot.team
+    .note
+      | Drag a character here from another slot or the waiting list to seat them
+      | here. Only characters allowed into this slow will be able to be dropped
+      | here.

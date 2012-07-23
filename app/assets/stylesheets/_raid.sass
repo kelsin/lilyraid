@@ -1,0 +1,148 @@
+.raid
+  h2
+    +span-columns(14 omega, 14)
+
+  .guild
+    +span-columns(2)
+    .guild_icon
+      +push(1,2)
+      +span-columns(1 omega,2)
+      height: 50px
+
+  .left
+    +span-columns(4,14)
+    +clearfix
+
+  .data
+    +span-columns(14 omega)
+    +clearfix
+
+    .info
+      +span-columns(4, 14)
+
+      .actions
+        +span-columns(4 omega, 4)
+    
+      h2
+        +span-columns(4, 14)
+        +squish(0,0)
+
+      dl
+        +span-columns(14,14)
+        +clearfix
+            
+        dt
+          +float-left
+          clear: left
+          margin-right: 0.5em
+          font-weight: bold
+
+        dd
+          +float-left
+
+    .your_signups
+      +span-columns(10 omega,14)
+
+      h2
+        +span-columns(10 omega, 10)
+        +squish(0,0)
+        line-height: 1em
+        margin:
+          top: 0
+          bottom: 0.6em
+
+      p.no_signups
+        margin-bottom: 1em
+
+      .signup
+        +span-columns(2, 10)
+        +nth-omega(5n)
+        margin-bottom: 1em
+
+        .avatar
+          position: relative
+
+          .icons
+            position: absolute
+            top: 60px
+            width: 84px
+            height: 24px
+
+            .bg
+              background-color: #000
+              opacity: 0.75
+              height: 100%
+              width: 100%
+
+          .guild
+            position: absolute
+            top: 60px
+            left: 60px
+            height: 24px
+            width: 24px
+
+            .guild_icon
+              margin: 0
+              +squish(0,0)
+              height: 22px
+              width: 22px
+
+      .new_signup
+        label
+          display: none
+        span.checkbox
+          +span-columns(1,6)
+          margin-left: 0
+          label
+            display: block
+        div.input.check_boxes
+          +span-columns(6,10)
+          margin:
+            left: 0
+            bottom: 0.5em
+        div.input.select
+          +span-columns(2,10)
+          margin:
+            left: 0
+            bottom: 0.5em
+        div.input.string
+          +span-columns(3,10)
+          margin:
+            left: 0
+            bottom: 0.5em
+        input
+          width: auto
+          +float-left
+
+  .slots
+    +span-columns(14 omega)
+    +clearfix
+
+    div.seated
+      +span-columns(10 omega, 14)
+
+      h2
+        +span-columns(10 omega, 10)
+        +squish(0,0)
+
+      .groups
+        +span-columns(10 omega, 10)
+
+        .group
+          +span-columns(2, 10)
+          +nth-omega(5n)
+
+  .loot
+    +span-columns(14 omega)
+    +clearfix
+
+    .list
+      +slots(4)
+    .add
+      +slots(4)
+
+.waiting_list
+  +slots(4)
+
+.group
+  +slots(10)

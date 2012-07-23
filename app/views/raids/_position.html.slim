@@ -4,5 +4,5 @@
                     :class => "account_#{position.account.id} " + ((character.signups.in_raid(raid).first && character.signups.in_raid(raid).first.slot && (!hide)) ? 'seated' : '')) do
     = position.position
     = render :partial => "shared/character", :object => character
-    %span.team= character.signups.in_raid(raid).first.slot.team if character.signups.in_raid(raid).first.slot && character.signups.in_raid(raid).first.slot.team > 1
-    .note= render :partial => 'signups/note', :object => character.signups.in_raid(raid).first
+    span.team = character.signups.in_raid(raid).first.slot.team if character.signups.in_raid(raid).first.slot && character.signups.in_raid(raid).first.slot.team > 1
+    .note = render :partial => 'signups/note', :object => character.signups.in_raid(raid).first

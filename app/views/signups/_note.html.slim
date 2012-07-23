@@ -1,6 +1,7 @@
 - signup = note
 - hide_stats ||= false
-= render(:partial => "shared/character", :object => signup.character) %><%= " (preferred)" if signup.preferred?
+= render(:partial => "shared/character", :object => signup.character)
+= " (preferred)" if signup.preferred?
 br
 - unless signup.character.account.raider_tags.for_raid(signup.raid).empty?
   b Tags
@@ -20,16 +21,16 @@ br
   b Note
   | : #{signup.note}
   br
-- if signup.roles.length > 0
+- if signup.roles and signup.roles > 0
   b Roles
-  | : #{signup.roles.map { |role| role.name }.join ", "}
+  | : #{Role.to_array(signup.roles).map{|r| t("role.#{r}")}.join ", "}
   br
 = signup.date.to_s(:raid)
 - if @current_account.admin? and !hide_stats
   br
   br
   b Signup Stats
-  dl
+  /dl
     - counts = signup.character.account.signup_stats [counts[:seated], counts[:signed], counts[:not_signed], counts[:raids]].each do |numbers|
       dt = numbers[:title]
       dd

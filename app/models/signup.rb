@@ -2,9 +2,6 @@ class Signup < ActiveRecord::Base
   belongs_to :raid
   belongs_to :character
 
-  has_many :signup_roles, :dependent => :destroy
-  has_many :roles, :through => :signup_roles
-
   has_one :slot, :dependent => :nullify
 
   default_scope :order => 'signups.created_at'
@@ -64,10 +61,7 @@ class Signup < ActiveRecord::Base
   def classes_array
     c = Array.new
     c.push("character_#{character.id}")
-    roles.each do |role|
-      c.push(role.name.downcase)
-    end
-    c.push(character.cclass.name.downcase.sub(/ /, '_'))
+    c.push("class_#{character.class}")
   end
 
   public

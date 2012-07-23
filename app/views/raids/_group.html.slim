@@ -1,0 +1,5 @@
+.group
+  .wrapper
+    h3 Group #{cycle(*(1..8)).to_s}
+    ul
+      = render :partial => "slot", :collection => group

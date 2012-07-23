@@ -1,4 +1,4 @@
-- if slot.role == nil and slot.cclass == nil
+- if slot.roles == Role::ALL
   | Open
 - else
   = render(:partial => "shared/cclass", :object => slot.cclass) if slot.cclass

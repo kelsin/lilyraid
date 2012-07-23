@@ -14,7 +14,6 @@ class Raid < ActiveRecord::Base
   has_many :instances, :through => :locations
   has_many :loots, :through => :locations
 
-  attr_accessor :number_of_slots
   before_save :apply_number_of_slots
 
   has_many :slots, :dependent => :destroy
@@ -42,8 +41,17 @@ class Raid < ActiveRecord::Base
     Time.now > self.date
   end
 
-  def needed
-    slots.empty.count(:include => :role, :group => "roles.name")
+  def number_of_slots
+    self.slots.size || 10
+  end
+
+  def number_of_slots=(num)
+    @number_of_slots = case num
+                       when String
+                         num.to_i
+                       else
+                         num
+                       end
   end
 
   def date=(date)
@@ -265,15 +273,15 @@ class Raid < ActiveRecord::Base
 
   def apply_number_of_slots
     # If we have a number of slots set, then apply them
-    if self.number_of_slots
+    if @number_of_slots
 
       # Get the current number of slots
       number_in_raid = self.slots.count
 
-      self.slots.all[self.number_of_slots..-1].map(&:destroy) if self.number_of_slots < number_in_raid
+      self.slots.all[@number_of_slots..-1].map(&:destroy) if @number_of_slots < number_in_raid
 
-      (self.number_of_slots - number_in_raid).times do
-        self.slots.create(:roles => Slot::ROLE_ALL)
+      (@number_of_slots - number_in_raid).times do
+        self.slots.build(:roles => Role::ALL)
       end
     end
   end

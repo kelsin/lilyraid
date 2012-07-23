@@ -9,7 +9,7 @@ module RaidsHelper
 
   def slots(raid)
     raid.slots.map do |slot|
-      if @slot.signup
+      if slot.signup
         "make_slot('#slot_#{slot.id}', '#{slot.accepts}');"
       end
     end.compact.join

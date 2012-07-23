@@ -1,0 +1,12 @@
+.wrapper
+  h3 Waiting List
+  ul
+    - waiting_list.each do |signup|
+      = content_tag_for :li, signup, :class => signup.classes(false) do
+        - if signup.preferred?
+          strong = render :partial => 'shared/character', :object => signup.character
+        - else
+          = render :partial => 'shared/character', :object => signup.character
+        = ' *' if signup.has_other_signups?
+        .note = render :partial => 'signups/note', :object => signup
+    li.empty class=(waiting_list.waiting_list.select { |signup| signup.character.account.characters.seated_in(signup.raid).count < 1 }.empty? && 'seated') Empty

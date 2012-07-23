@@ -1,0 +1,6 @@
+= form_for [raid, Loot.new(:item_url => 'URL', :item_name => 'Name')] do |f|
+  div = f.collection_select :character_id, raid.characters.in_loot_list.seated_in(raid), :id, :name_with_account
+  div = f.collection_select :location_id, raid.locations, :id, :name
+  div = f.text_field :item_url, :class => 'dim', :onfocus => "field_focus(this);", :onblur => "field_blur(this);"
+  div = f.text_field :item_name, :class => 'dim', :onfocus => "field_focus(this);", :onblur => "field_blur(this);"
+  div = submit_tag('Save', :id => 'loot_submit')
