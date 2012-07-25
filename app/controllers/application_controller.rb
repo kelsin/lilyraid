@@ -20,9 +20,9 @@ class ApplicationController < ActionController::Base
     # For when we want to use host to select a theme
     # @theme = CONFIG['theme'][request.host]
     if Rails.env.development?
-      @theme = 'cod'
+      @css = 'cod'
     else
-      @theme = Rails.env
+      @css = Rails.env
     end
   end
 

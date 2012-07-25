@@ -1,11 +1,26 @@
-h1 Raids
-.raids
-  .raid.header
-    .icon &nbsp;
-    .name Name
-    .date Date
-    .instances Instances
-    .finalized Finalized?
-    .signups Signups
-    .actions &nbsp;
-  = render :partial => 'raid', :collection => @raids
+#raids
+  h1 Raids
+  table
+    thead
+      tr
+        th Name
+        th Date
+        th Instances
+        th Finalized?
+        th Your Signups
+    tbody
+      - @raids.each do |raid|
+        tr id="raid_#{raid.id}"
+          td
+            = link_to raid, raid
+            = raid_icon(raid)
+          td
+            = raid.date.to_s(:raid) if raid.date
+            span.note = raid.word_date
+          td
+            ul
+              - raid.locations.each do |location|
+                li = location
+          td = raid.finalized? ? 'Yes' : 'No'
+          td
+            / = render :partial => 'raids/signup', :collection => raid.signups_from(@current_account), :spacer_template => 'raids/signup_spacer'

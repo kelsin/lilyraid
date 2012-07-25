@@ -1,33 +1,25 @@
+// Use sprockets to pull in lilydate and any other third party css that we want
+// wrapped up into the main compressed css file.
+//= require lilydate
+
+// Compass imports
 @import compass/typography/text/replacement
 
-$background: darken(#e43e44, 42%)
-$border: darken(#e43e44, 20%)
+// Base
+@import base
+
+// Colors defined for COD
+$background: #000
+$text: #eee
+$ui-background: darken(#e43e44, 42%)
+$ui-border: darken(#e43e44, 20%)
 $link: #57b6de
 
-body
-  background-color: #000
-  color: #fff
+// Main Site Styles
+@import lilyraid
 
-// Header
+// Overrides
 header
   h1
     +replace-text-with-dimensions('cod-h1.png')
-    margin: 1em 0 2em 0
-
-// Auth
-#auth
-  background-color: $background
-  border-color: $border
-
-nav
-  li
-    background-color: $background
-    border-color: $border
-
-// Links
-a:link, a:visited, a:active, a:hover
-  color: $link
-
-footer
-  border:
-    color: $border
+    margin: 0.5em 0 1em 0

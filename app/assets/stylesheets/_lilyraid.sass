@@ -1,62 +1,86 @@
-//= require lilydate
-
-// Reset
-@import compass/reset
-
 // Compass imports
 @import compass/typography/vertical_rhythm
 @import compass/utilities/general/float
 @import compass/css3/border-radius
 @import compass/css3/text-shadow
 
-// Base Grid
-@import base
-
-// Wow Specific
-@import wow
-
-// Basic site mixins
-@import basic
-
-// Typography
-+establish-baseline
-
 body
-  background-color: #000
-  color: #fff
+  background-color: $background
+  color: $text
   font:
     family: helvetica, arial, sans serif
-    size: 13px
 
-// Links
 a:link, a:visited, a:active
-  color: #fff
+  color: $link
   text-decoration: none
 a:hover
+  color: $link
   text-decoration: underline
 
-// Grid
-.page
+h1, h2, h3, h4, h5, h6
+  font-weight: bold
+  margin-bottom: 0.3em
+h1
+  +adjust-font-size-to(32px)
+h2
+  +adjust-font-size-to(22px)
+h3
+  +adjust-font-size-to(16px)
+
+table
+  width: 100%
+
+tr:nth-child(2n) td, th
+  background-color: lighten($background, 10%)
+
+tr:nth-child(2n+1) td
+  background-color: lighten($background, 7%)
+
+th
+  font-weight: bold
+
+th, td
+  position: relative
+  vertical-align: top
+  padding:
+    top: 3px
+    left: 8px
+    bottom: 5px
+    right: 8px
+  white-space: nowrap
+  border:
+    width: 0 2px 2px 0
+    style: solid
+    color: $background
+
+  &:last-child
+    border-width: 0 0 2px 0
+
+  > span.note
+    display: block
+    +adjust-font-size-to(10px)
+    color: darken(#fff, 40%)
+
+#container
   +container
   +susy-grid-background
   position: relative
 
-// Header
-header, nav
+header, nav, #page
   +span-columns(12)
-  +squish(2,2)
-  +clearfix
 
 #auth
-  margin-right: gutter()
+  background-color: $ui-background
   border:
     style: solid
     width: 0 2px 2px 2px
+    color: $ui-border
   position: absolute
   top: 0
   right: 0
   +clearfix
   +border-radius(0 0 0.5em 0.5em)
+  margin-right: gutter()
 
   li
     +float-left
@@ -66,37 +90,26 @@ header, nav
   a:link, a:visited, a:active, a:hover
     color: #fff
 
+nav
+  margin-bottom: 1em
 
-// Nav
-nav li
-  +float-left
-  padding: 0.3em 1em
-  border: 2px solid #fff
-  margin-right: 1em
-  +border-radius(0.5em)
+  li
+    +float-left
+    background-color: $ui-background
+    border: 2px solid $ui-border
+    margin-right: 1em
+    padding: 0.3em 1em
+    +border-radius(0.5em)
 
   a:link, a:visited, a:active, a:hover
     color: #fff
 
-// Content  
-.content
-  +span-columns(16)
-  +clearfix
-
-  h1, h2, h3, h4, h5, h6
-    +span-columns(12)
-    +squish(2,2)
-    +clearfix
-    font-weight: bold
-    margin:
-      top: 0.5em
-      bottom: 0.3em
-  h1
-    +adjust-font-size-to(32px)
-  h2
-    +adjust-font-size-to(22px)
-  h3
-    +adjust-font-size-to(16px)
+#raids td .guild_icon
+  height: 30px
+  width: 30px
+  position: absolute
+  top: 5px
+  left: -41px
 
 // Forms
 p.note
@@ -403,8 +416,8 @@ footer
   border:
     width: 2px 0 0 0
     style: solid
+    color: $ui-border
   +span-columns(6)
-  +squish(2,8)
   +adjust-font-size-to(12px)
   margin:
     top: 1em

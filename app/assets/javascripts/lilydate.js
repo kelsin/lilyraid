@@ -1,7 +1,7 @@
 (function($){
     $.fn.lilydate = function(format) {
         if(format === undefined) {
-            format = 'ddd MMM d yyyy HH:mm:ss' }
+            format = 'MMM d yyyy HH:mm:ss' }
 
         function select(type, value) {
             $('#lilydate_' + type + ' .selected').removeClass('selected');

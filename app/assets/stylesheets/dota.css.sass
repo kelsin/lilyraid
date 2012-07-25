@@ -1,41 +1,32 @@
-@import base
+// Use sprockets to pull in lilydate and any other third party css that we want
+// wrapped up into the main compressed css file.
+//= require lilydate
+
+// Compass imports
 @import compass/typography/text/replacement
 
-$dark-background: #17000a
-$background: #320023
-$border: #730065
+// Base
+@import base
+
+// Colors defined for DOTA
+$background: #17000a
+$text: #fff
+$ui-background: #320023
+$ui-border: #730065
 $link: #fdec3c
 
+// Main Site Styles
+@import lilyraid
+
+// Overrides
 body
   background:
-    color: $dark-background
     image: image-url('dota-bg.gif')
     repeat: repeat-x
-  color: #fff
 
-// Header
 header
-  +span-columns(14)
-  +squish(1,1)
+  +span-columns(12)
   margin-bottom: -48px
 
   h1
     +replace-text-with-dimensions('dota-h1.jpg')
-
-// Auth
-#auth
-  background-color: $background
-  border-color: $border
-
-nav
-  li
-    background-color: $background
-    border-color: $border
-
-// Links
-a:link, a:visited, a:active, a:hover
-  color: $link
-
-footer
-  border:
-    color: $border
