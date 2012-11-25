@@ -7,3 +7,5 @@ log/*.log
 public/stylesheets/raid.css
 tmp/*
 .bundle
+.DS_Store
+.sass-cache
