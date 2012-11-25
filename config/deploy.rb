@@ -1,6 +1,6 @@
 require 'bundler/capistrano'
 
-set :stages, %w(cod dota)
+set :stages, %w(cod dota lbd)
 require 'capistrano/ext/multistage'
 
 set :application, "lilyraid"
@@ -48,7 +48,3 @@ namespace :deploy do
 end
 
 after 'deploy:update_code', 'deploy:symlink_shared'
-
-Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', 'hoptoad_notifier-*')].each do |vendored_notifier|
-  $: << File.join(vendored_notifier, 'lib')
-end
