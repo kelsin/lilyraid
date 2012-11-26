@@ -4,7 +4,7 @@ body { background-color: #000; color: #fff; padding-left: 20px; padding-bottom: 
        font-family: helvetica, arial, sans serif; font-size: 13px; }
 
 /* Headers */
-h1 { text-indent: -9999px; background-image: url('/images/cod-logo.png'); width: 416px; height: 175px; background-repeat: none; }
+h1 { width: 416px; height: 175px; background-repeat: none; }
 
 h2 { font-size: 24px; }
 
