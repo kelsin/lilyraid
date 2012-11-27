@@ -1,6 +1,6 @@
 <tr id="raid_<%= raid.id %>" class="<%= cycle("even", "odd") %>">
-  <td><%= raid.date ? raid.date.to_s(:raid_mini) : "" %></td>
   <td class="raidname"><b><%= link_to(raid.name, raid_url(raid.id)) %></b></td>
+  <td><%= raid.date ? raid.date.to_s(:raid_mini) : "" %></td>
   <td>
     <ul>
       <% raid.locations.each do |location| %>
