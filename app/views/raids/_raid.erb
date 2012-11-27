@@ -1,4 +1,5 @@
 <tr id="raid_<%= raid.id %>" class="<%= cycle("even", "odd") %>">
+  <td><%= raid.date ? raid.date.to_s(:raid_mini) : "" %></td>
   <td class="raidname"><b><%= link_to(raid.name, raid_url(raid.id)) %></b></td>
   <td>
     <ul>
@@ -11,7 +12,6 @@
   <td><%= render(:partial => "raids/signup",
                  :collection => raid.signups_from(@current_account),
                  :spacer_template => "raids/signup_spacer") %></td>
-  <td><%= raid.date ? raid.date.to_s(:raid) : "" %></td>
   <td>
     <% if (raid.finalized or @current_account.can_edit?(raid)) and raid.needed.count > 0 %>
       <ul>
