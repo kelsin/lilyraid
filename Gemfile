@@ -10,7 +10,8 @@ gem "icalendar"
 gem "will_paginate"
 gem "httparty"
 
-gem "thin"
+# gem "thin"
+gem "unicorn"
 
 group :development do
   gem "sqlite3-ruby"

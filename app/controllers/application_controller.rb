@@ -50,8 +50,8 @@ class ApplicationController < ActionController::Base
   end
 
   def fake_authorize
-    session[:account_id] = 2
-    @current_account = Account.find(2)
+    session[:account_id] = 3
+    @current_account = Account.find(3)
   end
 
   def authorize
