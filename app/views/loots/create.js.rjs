@@ -1,8 +1,0 @@
-page[:loot_list].replace_html(:partial => "loots/list",
-                              :locals => {:list => @list})
-
-page[:item_list].replace_html(:partial => "loots/items",
-                              :locals => {:raid => @raid})
-
-page[:loot_form].replace_html(:partial => "loots/form",
-                              :locals => { :raid => @raid })

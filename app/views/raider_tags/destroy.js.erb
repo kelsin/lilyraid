@@ -1,0 +1,3 @@
+<% @raid.signups.from_account(@account).each do |signup| %>
+    $('#tags_<%= signup.id %>').replaceWith('<%= escape_javascript(render(:partial => 'raids/tags', :locals => { :signup => signup })) %>');
+<% end %>

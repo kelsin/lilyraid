@@ -1,0 +1,8 @@
+<% if @account.valid? %>
+  $('#account_<%= @account.id %>')
+    .replaceWith('<%= escape_javascript(render(:partial => "accounts/account", :object => @account)) %>');
+<% else %>
+  $('#account_<%= @account.id %>')
+    .replaceWith('<%= escape_javascript(render(:partial => "accounts/form", :locals => { :account => @account })) %>');
+<% end %>
+

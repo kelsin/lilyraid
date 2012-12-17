@@ -71,7 +71,7 @@ class RaidsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to raids_url }
-        format.js
+        format.js { render :layout => false }
       end
     else
       flash[:error] = "You don't have permission to delete that raid"

@@ -59,11 +59,4 @@ class ApplicationController < ActionController::Base
       return false
     end
   end
-
-  def display_error(msg)
-    render :update do |page|
-      page.alert(msg)
-      yield page if block_given?
-    end
-  end
 end

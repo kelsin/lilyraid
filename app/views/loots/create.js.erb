@@ -1,0 +1,6 @@
+$('#loot_list').html('<%= escape_javascript(render(:partial => "loots/list",
+                                                   :locals => {:list => @list})) %>');
+$('#item_list').html('<%= escape_javascript(render(:partial => "loots/item",
+                                                   :locals => {:raid => @raid})) %>');
+$('#loot_form').html('<%= escape_javascript(render(:partial => "loots/form",
+                                                   :locals => {:raid => @raid})) %>');

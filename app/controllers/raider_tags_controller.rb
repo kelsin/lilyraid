@@ -8,7 +8,7 @@ class RaiderTagsController < ApplicationController
     @raider_tag = @account.raider_tags.create(params[:raider_tag][params[:signup_id]].merge({ :raid_id => @raid.id }))
 
     respond_to do |format|
-      format.js
+      format.js { render :layout => false }
     end
   end
 
@@ -20,7 +20,7 @@ class RaiderTagsController < ApplicationController
     @raider_tag.destroy
 
     respond_to do |format|
-      format.js
+      format.js { render :layout => false }
     end
   end
 end

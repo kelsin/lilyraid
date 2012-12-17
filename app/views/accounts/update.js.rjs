@@ -1,6 +1,0 @@
-if @account.valid?
-  page[@account].replace(:partial => "accounts/account", :object => @account)
-else
-  page[@account].replace(:partial => "accounts/form", :locals => { :account => @account })
-end
-

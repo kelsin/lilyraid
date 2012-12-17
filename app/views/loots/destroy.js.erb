@@ -1,0 +1,4 @@
+$('#item_list').html('<%= escape_javascript(render(:layout => "shared/box", :locals => {:title => "Item History" }) do
+    render(:partial => "loots/loot",
+           :collection => @raid.loots)
+end) %>');

@@ -1,3 +1,0 @@
-@raid.signups.from_account(@account).each do |signup|
-  page["tags_#{signup.id}"].replace :partial => 'raids/tags', :locals => { :signup => signup }
-end

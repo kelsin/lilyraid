@@ -23,7 +23,7 @@ class LootsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to raid_url(@raid) }
-      format.js
+      format.js { render :layout => false }
     end
   end
 
@@ -34,6 +34,11 @@ class LootsController < ApplicationController
   def update
     @loot = Loot.find(params[:id])
     @loot.update_attributes(params[:loot]) ? redirect_to(raid_url(@raid)) : render(:action => :edit)
+
+    respond_to do |format|
+      format.html
+      format.js { render :layout => false }
+    end
   end
 
   def search

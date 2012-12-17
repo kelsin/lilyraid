@@ -38,14 +38,6 @@ class SignupsController < ApplicationController
     redirect_to @raid
   end
 
-  def update_char_slot_types
-    @character = Character.find(params[:id])
-    render :update do |page|
-      page[params[:div]].replace_html(render(:partial => "character_slot_types",
-                                             :locals => { :character => @character }))
-    end
-  end
-
   def preferred
     @signup.preferred = ! @signup.preferred
     @signup.save
