@@ -150,3 +150,16 @@ dd#tags td.total { border-left: 1px solid #999; }
 dd#tags td.char { border-right: 1px solid #999; }
 dd#tags td.signed_up { background-color: #222; }
 dd#tags th.header { white-space: nowrap; }
+
+/* Character Classes */
+.class-1 { color: #c79c6e; }
+.class-2 { color: #f58cba; }
+.class-3 { color: #abd473; }
+.class-4 { color: #fff569; }
+.class-5 { color: #ffffff; }
+.class-6 { color: #c41f3b; }
+.class-7 { color: #0070de; }
+.class-8 { color: #69ccf0; }
+.class-9 { color: #9482c9; }
+.class-10 { color: #00ff96; }
+.class-11 { color: #ff7d0a; }

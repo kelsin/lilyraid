@@ -10,11 +10,7 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '599f44b29c4a78b118884b977571fb10'
 
-  if RAILS_ENV == 'development'
-    before_filter :fake_authorize
-  else
-    before_filter :authorize
-  end
+  before_filter :authorize
 
   private
 
@@ -47,11 +43,6 @@ class ApplicationController < ActionController::Base
                :character_id => loot.character.id,
                :loot_id => loot.id,
                :message => message)
-  end
-
-  def fake_authorize
-    session[:account_id] = 3
-    @current_account = Account.find(3)
   end
 
   def authorize

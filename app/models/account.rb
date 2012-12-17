@@ -1,3 +1,5 @@
+require 'digest/md5'
+
 class Account < ActiveRecord::Base
   attr_accessor :change_password, :password_confirmation
 
@@ -129,7 +131,7 @@ class Account < ActiveRecord::Base
 
   def Account.get_account_id_from_info(username, password)
     account = find(:first,
-                   :conditions => ['name = ? and password = md5(?)', username, password])
+                   :conditions => ['name = ? and password = ?', username, Digest::MD5.hexdigest(password)])
     account ? account.id : nil
   end
 
