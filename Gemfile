@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Rails
-gem 'rails', '3.2.0'
+gem 'rails', '3.2.11'
 
 # Accounts from phpbb
 gem 'mysql'
@@ -42,7 +42,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'yui-compressor'
 
-  gem 'compass', '>= 0.13.alpha.0'
+  # gem 'compass', '>= 0.13.alpha.0'
+  gem 'compass', :git => 'git://github.com/chriseppstein/compass.git'
   gem 'compass-rails', '>= 1.0.2'
   gem 'susy'
 end
