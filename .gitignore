@@ -9,3 +9,4 @@ tmp/*
 .bundle
 .DS_Store
 .sass-cache
+bin
