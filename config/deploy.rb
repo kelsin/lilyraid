@@ -1,50 +1,26 @@
-require 'bundler/capistrano'
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-set :stages, %w(cod dota lbd)
-require 'capistrano/ext/multistage'
+# set :application, 'lilyraid'
+set :repo_url, 'git@github.com:Kelsin/lilyraid.git'
 
-set :application, "lilyraid"
-set :rails_env, "development"
+set :user, 'app'
+# set :deploy_to, '/home/app/www/lilyraid'
 
-# If you aren't deploying to /u/apps/#{application} on the target
-# servers (which is the default), you can specify the actual location
-# via the :deploy_to variable:
-# set :deploy_to, "/var/www/#{application}"
+# Default value for :linked_files is []
+set :linked_files, %w{config/database.yml config/config.yml}
 
-# If you aren't using Subversion to manage your source code, specify
-# your SCM below:
-# set :scm, :subversion
-set :scm, :git
-set :repository, "git@github.com:Kelsin/lilyraid.git"
-set :branch, "master"
-set :deploy_via, :remote_cache
+# Default value for linked_dirs is []
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle}
 
-set :user, 'kelsin'
-set :ssh_options, { :forward_agent => true }
- 
-role :app, "valefor.com"
-role :web, "valefor.com"
-role :db,  "valefor.com", :primary => true
+set :rbenv_type, :user
+set :rbenv_ruby, '1.8.7-p371'
 
 namespace :deploy do
-  task :start, :roles => :app do
-    run "touch #{current_release}/tmp/restart.txt"
+  desc 'Restart application'
+  task :restart do
+    invoke 'unicorn:restart'
   end
 
-  task :stop, :roles => :app do
-    # Do nothing.
-  end
-
-  desc "Restart Application"
-  task :restart, :roles => :app do
-    run "touch #{current_release}/tmp/restart.txt"
-  end
-
-  desc "Symlink database and config files"
-  task :symlink_shared, :roles => :app do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    run "ln -nfs #{shared_path}/config/config.yml #{release_path}/config/config.yml"
-  end
+  after :publishing, :restart
 end
-
-after 'deploy:update_code', 'deploy:symlink_shared'
