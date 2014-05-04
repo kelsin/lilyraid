@@ -2,6 +2,8 @@ source :gemcutter
 
 gem "rails", "2.3.11"
 
+gem "rack", "1.1.2"
+
 gem "mysql"
 gem "mysql2"
 gem "activerecord-mysql2-adapter"
