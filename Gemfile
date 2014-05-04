@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 
 gem "rails", "2.3.11"
+gem 'rake'
+gem 'rdoc', '2.4.2'
 
 gem "rack", "1.1.2"
 
@@ -14,10 +16,12 @@ gem "icalendar", "1.1.6"
 gem "will_paginate", "2.3.15"
 gem "httparty", "0.7.4"
 
+gem "sshkit", "1.3.0"
+
 gem "unicorn"
 
 group :development do
-  gem "sqlite3-ruby"
+  gem "sqlite3"
   gem 'capistrano', '3.2.1', :require => false
   gem 'capistrano-rails', :require => false
   gem 'capistrano-bundler', :require => false

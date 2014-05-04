@@ -14,7 +14,7 @@ set :linked_files, %w{config/database.yml config/config.yml}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle}
 
 set :rbenv_type, :user
-set :rbenv_ruby, '1.8.7-p371'
+set :rbenv_ruby, '1.9.2-p326'
 
 namespace :deploy do
   desc 'Restart application'
