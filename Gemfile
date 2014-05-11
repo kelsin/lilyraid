@@ -7,7 +7,7 @@ gem 'rdoc', '2.4.2'
 gem "rack", "1.1.2"
 
 gem "mysql", "2.8.1"
-gem "mysql2", "0.3.13"
+gem "mysql2", "0.3.11"
 gem "activerecord-mysql2-adapter", "0.0.3"
 gem "dbi", "0.4.5"
 gem "tzinfo", "0.3.25"
