@@ -10,7 +10,7 @@ gem "mysql", "2.8.1"
 gem "mysql2", "0.3.11"
 gem "activerecord-mysql2-adapter", "0.0.3"
 gem "dbi", "0.4.5"
-gem "tzinfo", "0.3.25"
+gem "tzinfo", "0.3.61"
 
 gem "icalendar", "1.1.6"
 gem "will_paginate", "2.3.15"
