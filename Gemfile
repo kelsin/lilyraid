@@ -14,7 +14,7 @@ gem "tzinfo", "0.3.25"
 
 gem "icalendar", "1.1.6"
 gem "will_paginate", "2.3.15"
-gem "httparty", "0.7.4"
+gem "httparty", "0.21.0"
 
 gem "sshkit", "1.3.0"
 
